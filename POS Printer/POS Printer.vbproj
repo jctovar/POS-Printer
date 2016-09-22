@@ -1,0 +1,397 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{92C00F98-9866-4127-80F0-AC16F1F68620}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>POS_Printer.My.MyApplication</StartupObject>
+    <RootNamespace>POS_Printer</RootNamespace>
+    <AssemblyName>POS Printer</AssemblyName>
+    <FileAlignment>512</FileAlignment>
+    <MyType>WindowsForms</MyType>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <IsWebBootstrapper>true</IsWebBootstrapper>
+    <HockeyAppResourceId>2a2040abef5b4161ae576a75cd5d5267</HockeyAppResourceId>
+    <PublishUrl>ftp://cuatrocolibri.com.mx/apps/pos/</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Web</InstallFrom>
+    <UpdateEnabled>true</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <InstallUrl>https://apps.cuatrocolibri.com.mx/pos/</InstallUrl>
+    <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+    <WebPage>index.html</WebPage>
+    <ApplicationRevision>45</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>POS Printer.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>POS Printer.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionExplicit>On</OptionExplicit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionCompare>Binary</OptionCompare>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionStrict>Off</OptionStrict>
+  </PropertyGroup>
+  <PropertyGroup>
+    <OptionInfer>On</OptionInfer>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>167DC6922D01195403F0537BC905AD58BC6608DF</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>POS Printer_ClaveTemporal.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\Program Files (x86)\MySQL\MySQL Connector Net 6.9.9\Assemblies\v4.5\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+    <Import Include="System.Linq" />
+    <Import Include="System.Xml.Linq" />
+    <Import Include="System.Threading.Tasks" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="DataBaseClass\CategoryDB.vb" />
+    <Compile Include="DataBaseClass\CustomerDB.vb" />
+    <Compile Include="DataBaseClass\ItemDB.vb" />
+    <Compile Include="DataBaseClass\PaymentDB.vb" />
+    <Compile Include="DataBaseClass\PriceDB.vb" />
+    <Compile Include="DataBaseClass\ProfileDB.vb" />
+    <Compile Include="DataBaseClass\SupplierDB.vb" />
+    <Compile Include="Catalogs.Designer.vb">
+      <DependentUpon>Catalogs.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Catalogs.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditBoxes\CategoryBox.Designer.vb">
+      <DependentUpon>CategoryBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="EditBoxes\CategoryBox.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditBoxes\CustomerBox.Designer.vb">
+      <DependentUpon>CustomerBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="EditBoxes\CustomerBox.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditBoxes\PriceBox.Designer.vb">
+      <DependentUpon>PriceBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="EditBoxes\PriceBox.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditBoxes\ProductBox.Designer.vb">
+      <DependentUpon>ProductBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="EditBoxes\ProductBox.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditBoxes\SupplierBox.Designer.vb">
+      <DependentUpon>SupplierBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="EditBoxes\SupplierBox.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditBoxes\TerminalBox.Designer.vb">
+      <DependentUpon>TerminalBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="EditBoxes\TerminalBox.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditBoxes\UserBox.Designer.vb">
+      <DependentUpon>UserBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="EditBoxes\UserBox.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Main.Designer.vb">
+      <DependentUpon>Main.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ObjectsClass\Item.vb" />
+    <Compile Include="ObjectsClass\Payment.vb" />
+    <Compile Include="ConfigBoxes\SelectTerminal.Designer.vb">
+      <DependentUpon>SelectTerminal.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ConfigBoxes\SelectTerminal.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form11.Designer.vb">
+      <DependentUpon>Form11.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form11.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form12.Designer.vb">
+      <DependentUpon>Form12.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Form12.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CheckOut.Designer.vb">
+      <DependentUpon>CheckOut.vb</DependentUpon>
+    </Compile>
+    <Compile Include="CheckOut.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConfigBoxes\Config.Designer.vb">
+      <DependentUpon>Config.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ConfigBoxes\Config.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConfigBoxes\Serial.Designer.vb">
+      <DependentUpon>Serial.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ConfigBoxes\Serial.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ObjectsClass\Category.vb" />
+    <Compile Include="ObjectsClass\Customer.vb" />
+    <Compile Include="ObjectsClass\Price.vb" />
+    <Compile Include="ObjectsClass\Product.vb" />
+    <Compile Include="ObjectsClass\Profile.vb" />
+    <Compile Include="ObjectsClass\Supplier.vb" />
+    <Compile Include="ObjectsClass\Terminal.vb" />
+    <Compile Include="Splash.Designer.vb">
+      <DependentUpon>Splash.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Splash.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Sale.Designer.vb">
+      <DependentUpon>Sale.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Sale.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Login.Designer.vb">
+      <DependentUpon>Login.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Login.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ProductList.Designer.vb">
+      <DependentUpon>ProductList.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ProductList.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="About.Designer.vb">
+      <DependentUpon>About.vb</DependentUpon>
+    </Compile>
+    <Compile Include="About.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Quantity.Designer.vb">
+      <DependentUpon>Quantity.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Quantity.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Funciones.vb" />
+    <Compile Include="Globales.vb" />
+    <Compile Include="ObjectsClass\Invoice.vb" />
+    <Compile Include="DataBaseClass\InvoiceDB.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="MySql.vb" />
+    <Compile Include="DataBaseClass\MySqlDataBase.vb" />
+    <Compile Include="Numeros2Texto.vb" />
+    <Compile Include="DataBaseClass\ProductDB.vb" />
+    <Compile Include="DataBaseClass\TerminalDB.vb" />
+    <Compile Include="DataBaseClass\TicketDB.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Catalogs.resx">
+      <DependentUpon>Catalogs.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditBoxes\CategoryBox.resx">
+      <DependentUpon>CategoryBox.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditBoxes\CustomerBox.resx">
+      <DependentUpon>CustomerBox.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditBoxes\PriceBox.resx">
+      <DependentUpon>PriceBox.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditBoxes\ProductBox.resx">
+      <DependentUpon>ProductBox.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditBoxes\SupplierBox.resx">
+      <DependentUpon>SupplierBox.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditBoxes\TerminalBox.resx">
+      <DependentUpon>TerminalBox.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditBoxes\UserBox.resx">
+      <DependentUpon>UserBox.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Main.resx">
+      <DependentUpon>Main.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConfigBoxes\SelectTerminal.resx">
+      <DependentUpon>SelectTerminal.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form11.resx">
+      <DependentUpon>Form11.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form12.resx">
+      <DependentUpon>Form12.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CheckOut.resx">
+      <DependentUpon>CheckOut.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConfigBoxes\Config.resx">
+      <DependentUpon>Config.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConfigBoxes\Serial.resx">
+      <DependentUpon>Serial.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Splash.resx">
+      <DependentUpon>Splash.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Sale.resx">
+      <DependentUpon>Sale.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Login.resx">
+      <DependentUpon>Login.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProductList.resx">
+      <DependentUpon>ProductList.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="About.resx">
+      <DependentUpon>About.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Quantity.resx">
+      <DependentUpon>Quantity.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\app.manifest" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5.2">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5.2 %28x86 y x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="favicon.ico" />
+    <None Include="POS Printer_ClaveTemporal.pfx" />
+    <None Include="Resources\albaco.png" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,73 @@
+﻿Public Class Invoice
+    Private varId As Integer
+    Private varAccountId As Integer
+    Private varCustomerId As Integer
+    Private varTerminalId As Integer
+    Private varProfileId As Integer
+    Private varStatus As Integer
+    Private varNote As String
+    Private varTimestamp As Date
+    Public Property Id As Integer
+        Get
+            Return Me.varId
+        End Get
+        Set(value As Integer)
+            Me.varId = value
+        End Set
+    End Property
+    Public Property Account As Integer
+        Get
+            Return Me.varAccountId
+        End Get
+        Set(value As Integer)
+            Me.varAccountId = value
+        End Set
+    End Property
+    Public Property Customer As Integer
+        Get
+            Return Me.varCustomerId
+        End Get
+        Set(value As Integer)
+            Me.varCustomerId = value
+        End Set
+    End Property
+    Public Property Profile As Integer
+        Get
+            Return Me.varProfileId
+        End Get
+        Set(value As Integer)
+            Me.varProfileId = value
+        End Set
+    End Property
+    Public Property Terminal As Integer
+        Get
+            Return Me.varTerminalId
+        End Get
+        Set(value As Integer)
+            Me.varTerminalId = value
+        End Set
+    End Property
+    Public Property Status As Integer
+        Get
+            Return Me.varStatus
+        End Get
+        Set(value As Integer)
+            Me.varStatus = value
+        End Set
+    End Property
+    Public Property Note As String
+        Get
+            Return Me.varNote
+        End Get
+        Set(value As String)
+            Me.varNote = value
+        End Set
+    End Property
+    Public Property Timestamp As Date
+        Get
+            Return Nothing
+        End Get
+        Set(value As Date)
+        End Set
+    End Property
+End Class
