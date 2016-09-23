@@ -90,7 +90,7 @@
                 ' Texbox1 = cantidad
                 ' Texbox3 = peso (Kg) 
                 If TextBox1.Text <= 0.5 Then
-                    Tara = 0.5 * Me.GetPrice(ProductId, 1)
+                    Tara = 0.5 * Me.GetPrice(ProductId, TextBox1.Text)
                 ElseIf TextBox1.Text > 0.5 Then
                     Tara = product.Tare * TextBox1.Text * Me.GetPrice(ProductId, TextBox1.Text)
                 End If
