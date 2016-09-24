@@ -130,4 +130,16 @@
             Me.GetPrices()
         End If
     End Sub
+
+    Private Sub ToolStripMenuItem3_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem3.Click
+        Try
+            If MessageBox.Show("Esta seguro de eliminar el precio?", Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) = DialogResult.Yes Then
+                If PriceDB.DeletePrice(DataGridView1(0, DataGridView1.CurrentRow.Index).Value) = True Then
+                    Me.GetPrices()
+                End If
+            End If
+        Catch ex As Exception
+            MessageBox.Show("Ocurrio un error! " & ex.Message.ToString)
+        End Try
+    End Sub
 End Class

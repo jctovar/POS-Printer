@@ -138,7 +138,6 @@ Public Class PriceDB
             "VALUES (@product,@price,@quantity)"
         Dim dbcommand As New MySqlCommand(Sql, Connection)
 
-        dbcommand.Parameters.AddWithValue("@id", price.Id)
         dbcommand.Parameters.AddWithValue("@product", price.Product)
         dbcommand.Parameters.AddWithValue("@price", price.Price)
         dbcommand.Parameters.AddWithValue("@quantity", price.Quantity)
