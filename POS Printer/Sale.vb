@@ -2,7 +2,6 @@
 Imports System.IO.Ports
 Public Class Sale
     Public TicketID As Integer
-
     Private mySerialPort As New SerialPort
     Private Sale As Invoice
     Private Customer As String
@@ -251,25 +250,7 @@ Public Class Sale
             Me.DialogResult = DialogResult.OK
         End If
     End Sub
-    Private Sub TextBox1_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox1.KeyPress
-        If (Asc(e.KeyChar) = 13) Then
-            If TicketID = 0 Then
-                TicketID = InvoiceDB.AddNewSale(Globales.AccountId, Globales.ProfileId, 1, 1)
-            End If
-            ' Invoca la ventana de productos
-            Dim frmAdd As New ProductList
 
-            frmAdd.TicketID = TicketID
-            frmAdd.ProductString = TextBox1.Text
-            If frmAdd.ShowDialog() = DialogResult.OK Then
-                FillDatagrid()
-                GetTicket()
-                TextBox1.SelectAll()
-            End If
-        ElseIf (Asc(e.KeyChar) = 27) Then ' Captura la tecla de esc
-            Me.Close()
-        End If
-    End Sub
     Private Sub DataGridView1_KeyPress(sender As Object, e As KeyPressEventArgs) Handles DataGridView1.KeyPress
         ' Añade un nuevo producto
         If (Asc(e.KeyChar) = 32) Then
@@ -302,6 +283,27 @@ Public Class Sale
             FillDatagrid()
             GetTicket()
             TextBox1.SelectAll()
+        End If
+    End Sub
+    Private Sub TextBox1_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBox1.KeyDown
+        Console.WriteLine(e.KeyCode)
+
+        If e.KeyCode = 13 Or e.KeyCode = 40 Then
+            If TicketID = 0 Then
+                TicketID = InvoiceDB.AddNewSale(Globales.AccountId, Globales.ProfileId, 1, 1)
+            End If
+            ' Invoca la ventana de productos
+            Dim frmAdd As New ProductList
+
+            frmAdd.TicketID = TicketID
+            frmAdd.ProductString = TextBox1.Text
+            If frmAdd.ShowDialog() = DialogResult.OK Then
+                FillDatagrid()
+                GetTicket()
+                TextBox1.SelectAll()
+            End If
+        ElseIf e.KeyCode = 27 Then
+            Me.Close()
         End If
     End Sub
 End Class

@@ -122,9 +122,9 @@ Partial Class ProductBox
         Me.CheckBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.CheckBox1.Location = New System.Drawing.Point(21, 348)
         Me.CheckBox1.Name = "CheckBox1"
-        Me.CheckBox1.Size = New System.Drawing.Size(91, 17)
+        Me.CheckBox1.Size = New System.Drawing.Size(122, 17)
         Me.CheckBox1.TabIndex = 31
-        Me.CheckBox1.Text = "Disp&onibilidad"
+        Me.CheckBox1.Text = "Producto &bloqueado"
         Me.CheckBox1.UseVisualStyleBackColor = True
         '
         'TextBox6
@@ -337,7 +337,7 @@ Partial Class ProductBox
         '
         Me.mnuPrices.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripMenuItem1, Me.ToolStripMenuItem2, Me.ToolStripMenuItem3})
         Me.mnuPrices.Name = "mnuPrices"
-        Me.mnuPrices.Size = New System.Drawing.Size(154, 92)
+        Me.mnuPrices.Size = New System.Drawing.Size(154, 70)
         '
         'ToolStripMenuItem1
         '
