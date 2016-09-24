@@ -121,6 +121,35 @@ Public Class ProductDB
 
         Return dt
     End Function
+
+    Public Shared Function GetUnitName(UnitId As Integer) As String
+        Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
+        Dim Sql As String = "SELECT * FROM units WHERE unit_id = @id"
+
+        Dim dbcommand As New MySqlCommand(Sql, Connection)
+        Dim result As String
+
+        dbcommand.Parameters.AddWithValue("@id", UnitId)
+
+        Try
+            Connection.Open()
+
+            Dim reader As MySqlDataReader = dbcommand.ExecuteReader(CommandBehavior.SingleRow)
+
+            If reader.Read Then
+                result = reader("unit_name").ToString
+            Else
+                result = Nothing
+            End If
+            reader.Close()
+        Catch ex As Exception
+            Throw ex
+        Finally
+            Connection.Close()
+        End Try
+
+        Return result
+    End Function
     Public Shared Function DeleteProduct(ProductId As Integer) As Boolean
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "DELETE FROM products " &

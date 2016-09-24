@@ -134,8 +134,8 @@ Public Class PriceDB
     Public Shared Function AddPrice(price As Price) As Boolean
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "INSERT INTO prices " &
-            "(price_id,product_id,product_vaalue,product_quantity) " &
-            "VALUES (@id,@product,@price,@quantity)"
+            "(product_id,price_value,price_quantity) " &
+            "VALUES (@product,@price,@quantity)"
         Dim dbcommand As New MySqlCommand(Sql, Connection)
 
         dbcommand.Parameters.AddWithValue("@id", price.Id)

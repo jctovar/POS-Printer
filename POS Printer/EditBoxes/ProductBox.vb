@@ -93,10 +93,39 @@
     End Sub
 
     Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellDoubleClick
+        Me.EditPrice()
+    End Sub
+    Private Sub DataGridView1_MouseDown(sender As Object, e As MouseEventArgs) Handles DataGridView1.MouseDown
+        Dim rowClicked As DataGridView.HitTestInfo = DataGridView1.HitTest(e.X, e.Y)
+
+        If e.Button = MouseButtons.Right Then
+            mnuPrices.Show(MousePosition.X, MousePosition.Y)
+        End If
+    End Sub
+
+    Private Sub ToolStripMenuItem2_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem2.Click
+        Me.EditPrice()
+    End Sub
+
+    Private Sub EditPrice()
         Dim frmPrice As New PriceBox
 
         frmPrice.ProductId = ProductId
         frmPrice.PriceId = DataGridView1(0, DataGridView1.CurrentRow.Index).Value
+        If frmPrice.ShowDialog() = DialogResult.OK Then
+            Me.GetPrices()
+        End If
+    End Sub
+
+    Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
+        Me.AddPrice()
+    End Sub
+
+    Private Sub AddPrice()
+        Dim frmPrice As New PriceBox
+
+        frmPrice.ProductId = ProductId
+        frmPrice.Add = True
         If frmPrice.ShowDialog() = DialogResult.OK Then
             Me.GetPrices()
         End If

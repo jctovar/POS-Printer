@@ -4,12 +4,10 @@
     Private product As New Product
     Private item As New Item
     Private Sub Form9_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Me.GetProduct()
+        Me.GetProductData()
 
-        Me.Text = String.Format("{0} - {1}", Application.ProductName, Product.Name)
-
-        TextBox2.Text = Funciones.Money(Me.GetPrice(ProductId, TextBox1.Text))
-        Label1.Text = Label1.Text & " (" & Product.Unit & ")"
+        Me.Text = String.Format("{0} - {1}", Application.ProductName, product.Name)
+        Label1.Text = String.Format("{0} ( {1} )", Label1.Text, ProductDB.GetUnitName(product.Unit).ToString)
 
         Me.Calcula()
     End Sub
@@ -25,7 +23,6 @@
         If Asc(e.KeyChar) <> 8 Then
             If e.Handled = (Char.IsDigit(e.KeyChar) Or e.KeyChar = ".") Then
                 e.Handled = True
-
             End If
         End If
     End Sub
@@ -55,18 +52,18 @@
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Me.Close()
     End Sub
-    Private Sub GetProduct()
+    Private Sub GetProductData()
         Try
-            product = ProductDB.GetProduct(ProductID)
+            product = ProductDB.GetProduct(ProductId)
 
-            If ItemDB.CheckItem(SaleID, ProductID) = True Then
-                item = ItemDB.GetItem(SaleID, ProductID)
+            If ItemDB.CheckItem(SaleId, ProductId) = True Then
+                item = ItemDB.GetItem(SaleId, ProductId)
 
                 TextBox1.Text = item.Quantity
             Else
                 With item
-                    .Sale = SaleID
-                    .Product = ProductID
+                    .Sale = SaleId
+                    .Product = ProductId
                     .Quantity = CDbl(TextBox1.Text)
                 End With
             End If
@@ -97,6 +94,8 @@
 
                 TextBox4.Text = Funciones.Money(TextBox3.Text * Me.GetPrice(ProductId, TextBox1.Text) - Tara) ' - Tara
             End If
+
+            TextBox2.Text = Funciones.Money(Me.GetPrice(ProductId, TextBox1.Text))
 
         Catch ex As Exception
             TextBox4.Text = "0.00"
