@@ -29,7 +29,9 @@
             TextBox2.Text = product.Key
             ComboBox1.SelectedValue = product.Unit
             TextBox5.Text = product.Tare
+            TextBox6.Text = product.Description
             ComboBox2.SelectedValue = product.Category
+            CheckBox1.Checked = product.Visible
         Catch ex As Exception
             MsgBox("Ocurrio un error! " & ex.Message.ToString)
         End Try
@@ -41,11 +43,13 @@
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         With product
             .Name = TextBox1.Text.ToString
+            .Description = TextBox6.Text
             .Account = Globales.AccountId
             .Key = TextBox2.Text.ToString
             .Unit = ComboBox1.SelectedValue
             .Tare = TextBox5.Text.ToString
             .Category = ComboBox2.SelectedValue
+            .Visible = CheckBox1.Checked
         End With
 
         If MessageBox.Show("Quiere guardar los cambios?", Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) = DialogResult.Yes Then

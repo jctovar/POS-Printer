@@ -62,7 +62,11 @@
         End Try
     End Sub
     Private Sub ToolStripTextBox1_TextChanged(sender As Object, e As EventArgs) Handles ToolStripTextBox1.TextChanged
-        bsData.Filter = "product_key like '" & ToolStripTextBox1.Text & "%'"
+        ' Inyecta la cadena de busqueda, para busqueda de producto, debe de ampliarse a un case para categoria
+        Select Case Search
+            Case "products"
+                bsData.Filter = "product_key LIKE '" & ToolStripTextBox1.Text & "%' OR product_name LIKE '" & ToolStripTextBox1.Text & "%'"
+        End Select
 
         ToolStripStatusLabel1.Text = String.Format("Se encontraron {0} registros", DataGridView1.RowCount)
     End Sub

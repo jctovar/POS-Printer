@@ -15,12 +15,14 @@ Public Class ProductDB
 
             If reader.Read Then
                 With product
-                    .Id = reader("product_id").ToString
+                    .Id = reader("product_id")
                     .Name = reader("product_name").ToString
+                    .Description = reader("product_description").ToString
                     .Key = reader("product_key").ToString
                     .Tare = reader("product_tare")
-                    .Unit = reader("unit_id").ToString
-                    .Category = reader("category_id").ToString
+                    .Unit = reader("unit_id")
+                    .Category = reader("category_id")
+                    .Visible = reader("product_visible")
                 End With
             Else
                 product = Nothing
@@ -38,7 +40,7 @@ Public Class ProductDB
         ' Obtiene la tabla de productos
         Dim dt = New DataTable()
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
-        Dim Sql As String = "SELECT product_id,category_name,product_name,product_key,unit_name " &
+        Dim Sql As String = "SELECT product_id,category_name,product_name,product_key,unit_name,product_visible " &
             "FROM products " &
             "JOIN categories ON products.category_id = categories.category_id " &
             "JOIN units ON products.unit_id = units.unit_id " &
@@ -71,7 +73,7 @@ Public Class ProductDB
     Public Shared Function UpdateProduct(product As Product) As Boolean
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "UPDATE products " &
-            "SET product_name=@name, product_key=@key, unit_id=@unit, product_tare=@tare, category_id=@category " &
+            "SET product_name=@name, product_description=@description, product_key=@key, unit_id=@unit, product_tare=@tare, category_id=@category, product_visible=@visible " &
             "WHERE product_id=@id"
         Dim dbcommand As New MySqlCommand(Sql, Connection)
 
@@ -82,6 +84,7 @@ Public Class ProductDB
         dbcommand.Parameters.AddWithValue("@unit", product.Unit)
         dbcommand.Parameters.AddWithValue("@tare", product.Tare)
         dbcommand.Parameters.AddWithValue("@category", product.Category)
+        dbcommand.Parameters.AddWithValue("@visible", product.Visible)
 
         Try
             Connection.Open()
@@ -172,8 +175,8 @@ Public Class ProductDB
     Public Shared Function AddProduct(product As Product) As Boolean
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "INSERT INTO products " &
-            "(account_id,product_name,product_key,unit_id,product_tare,category_id) " &
-            "VALUES (@account,@name,@key,@unit,@tare,@category)"
+            "(account_id,product_name,product_description,product_key,unit_id,product_tare,category_id,product_visible) " &
+            "VALUES (@account,@name,@description,@key,@unit,@tare,@category,@visible)"
         Dim dbcommand As New MySqlCommand(Sql, Connection)
 
         dbcommand.Parameters.AddWithValue("@account", product.Account)
@@ -183,6 +186,7 @@ Public Class ProductDB
         dbcommand.Parameters.AddWithValue("@unit", product.Unit)
         dbcommand.Parameters.AddWithValue("@tare", product.Tare)
         dbcommand.Parameters.AddWithValue("@category", product.Category)
+        dbcommand.Parameters.AddWithValue("@visible", product.Visible)
 
         Try
             Connection.Open()

@@ -10,6 +10,7 @@
     End Sub
     Public Sub FillDatagrid()
         bsData.DataSource = ProductDB.GetProductsList(Globales.AccountId, ProductString, True)
+        bsData.Filter = "product_visible = 1"
 
         Try
             Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
@@ -23,9 +24,10 @@
                 .Columns(1).HeaderText = "Categoría"
                 .Columns(2).HeaderText = "Producto"
                 .Columns(3).HeaderText = "Clave"
-                .Columns(4).HeaderText = "Menudeo ($)"
-                .Columns(4).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-                .Columns(4).DefaultCellStyle.Format = String.Format("n", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))
+                .Columns(4).HeaderText = "Unidad"
+                '.Columns(4).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                '.Columns(4).DefaultCellStyle.Format = String.Format("n", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))
+                .Columns(5).HeaderText = "Disponibilidad"
                 .Columns(5).Visible = False
                 .Columns(6).HeaderText = "Unidad"
                 .CurrentCell = DataGridView1.Rows(0).Cells(3) ' Columna visible

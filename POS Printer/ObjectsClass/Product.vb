@@ -6,7 +6,8 @@
     Private varDescription As String
     Private varKey As String
     Private varTare As Integer
-    Private varUnitId As Integer
+    Private varUnit As Integer
+    Private varVisible As Boolean
     Public Property Id As Integer
         Get
             Return Me.varId
@@ -57,10 +58,10 @@
     End Property
     Public Property Unit As Integer
         Get
-            Return Me.varUnitId
+            Return Me.varUnit
         End Get
         Set(value As Integer)
-            Me.varUnitId = value
+            Me.varUnit = value
         End Set
     End Property
     Public Property Category As Integer
@@ -69,6 +70,14 @@
         End Get
         Set(value As Integer)
             Me.varCategoryId = value
+        End Set
+    End Property
+    Public Property Visible As Boolean
+        Get
+            Return Me.varVisible
+        End Get
+        Set(value As Boolean)
+            Me.varVisible = value
         End Set
     End Property
 End Class
