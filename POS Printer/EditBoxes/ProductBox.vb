@@ -28,7 +28,6 @@
             TextBox1.Text = product.Name
             TextBox2.Text = product.Key
             ComboBox1.SelectedValue = product.Unit
-            TextBox5.Text = product.Tare
             TextBox6.Text = product.Description
             ComboBox2.SelectedValue = product.Category
             CheckBox1.Checked = product.Visible
@@ -47,7 +46,6 @@
             .Account = Globales.AccountId
             .Key = TextBox2.Text.ToString
             .Unit = ComboBox1.SelectedValue
-            .Tare = TextBox5.Text.ToString
             .Category = ComboBox2.SelectedValue
             .Visible = CheckBox1.Checked
         End With
@@ -84,7 +82,11 @@
                 .Columns(1).DefaultCellStyle.Format = String.Format("n", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))
                 .Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
                 .Columns(2).HeaderText = "Cantidad"
+                .Columns(2).DefaultCellStyle.Format = String.Format("n", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))
                 .Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns(3).HeaderText = "Kg de tara"
+                .Columns(3).DefaultCellStyle.Format = String.Format("n", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))
+                .Columns(3).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
                 .AutoResizeColumns()
                 .CurrentCell = DataGridView1.Rows(0).Cells(1) ' Columna visible
             End With

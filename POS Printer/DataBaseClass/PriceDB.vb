@@ -4,7 +4,7 @@ Public Class PriceDB
         ' Obtiene la tabla de productos
         Dim dt = New DataTable()
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
-        Dim Sql As String = "SELECT price_id,price_value,price_quantity " &
+        Dim Sql As String = "SELECT price_id,price_value,price_quantity,price_tare " &
             "FROM prices WHERE product_id = @product ORDER BY price_quantity"
 
         Dim dbcommand = New MySqlCommand(Sql, Connection)
@@ -42,10 +42,11 @@ Public Class PriceDB
 
             If reader.Read Then
                 With price
-                    .Id = reader("price_id").ToString
-                    .Product = reader("product_id").ToString
-                    .Price = reader("price_value").ToString
-                    .Quantity = reader("price_quantity").ToString
+                    .Id = reader("price_id")
+                    .Product = reader("product_id")
+                    .Price = reader("price_value")
+                    .Quantity = reader("price_quantity")
+                    .Tare = reader("price_tare")
                 End With
             Else
                 price = Nothing
@@ -59,15 +60,15 @@ Public Class PriceDB
 
         Return price
     End Function
-    Public Shared Function GetOnlyPrice(ProductId As Integer, Quantity As Double) As Double
+    Public Shared Function SearchPrice(ProductId As Integer, Quantity As Double) As Price
+        Dim price As New Price
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "SELECT * FROM prices WHERE product_id = @id AND price_quantity <= @qty " &
             "ORDER BY price_quantity DESC LIMIT 1"
         Dim dbcommand As New MySqlCommand(Sql, Connection)
-        Dim result As Double
 
         dbcommand.Parameters.AddWithValue("@id", ProductId)
-        dbcommand.Parameters.AddWithValue("@qty", Quantity)
+        dbcommand.Parameters.AddWithValue("@qty", CDbl(Quantity))
 
         Try
             Connection.Open()
@@ -75,9 +76,15 @@ Public Class PriceDB
             Dim reader As MySqlDataReader = dbcommand.ExecuteReader(CommandBehavior.SingleRow)
 
             If reader.Read Then
-                result = reader("price_value").ToString
+                With price
+                    .Id = reader("price_id").ToString
+                    .Product = reader("product_id").ToString
+                    .Price = reader("price_value")
+                    .Quantity = reader("price_quantity")
+                    .Tare = reader("price_tare")
+                End With
             Else
-                result = 0
+                price = Nothing
             End If
             reader.Close()
         Catch ex As Exception
@@ -86,13 +93,12 @@ Public Class PriceDB
             Connection.Close()
         End Try
 
-        Return result
-
+        Return price
     End Function
     Public Shared Function UpdatePrice(price As Price) As Boolean
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "UPDATE prices " &
-            "SET price_value=@price, price_quantity=@quantity " &
+            "SET price_value=@price, price_quantity=@quantity, price_tare=@tare " &
             "WHERE price_id=@id"
         Dim dbcommand As New MySqlCommand(Sql, Connection)
 
@@ -100,6 +106,7 @@ Public Class PriceDB
         dbcommand.Parameters.AddWithValue("@product", price.Product)
         dbcommand.Parameters.AddWithValue("@price", price.Price)
         dbcommand.Parameters.AddWithValue("@quantity", price.Quantity)
+        dbcommand.Parameters.AddWithValue("@tare", price.Tare)
 
         Try
             Connection.Open()
@@ -134,13 +141,14 @@ Public Class PriceDB
     Public Shared Function AddPrice(price As Price) As Boolean
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "INSERT INTO prices " &
-            "(product_id,price_value,price_quantity) " &
-            "VALUES (@product,@price,@quantity)"
+            "(product_id,price_value,price_quantity,price_tare) " &
+            "VALUES (@product,@price,@quantity,@tare)"
         Dim dbcommand As New MySqlCommand(Sql, Connection)
 
         dbcommand.Parameters.AddWithValue("@product", price.Product)
         dbcommand.Parameters.AddWithValue("@price", price.Price)
         dbcommand.Parameters.AddWithValue("@quantity", price.Quantity)
+        dbcommand.Parameters.AddWithValue("@tare", price.Tare)
 
         Try
             Connection.Open()

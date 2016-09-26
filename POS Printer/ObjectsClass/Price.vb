@@ -2,7 +2,8 @@
     Private varId As Integer
     Private varProduct As Integer
     Private varPrice As Double
-    Private varQuantity As Integer
+    Private varQuantity As Double
+    Private varTare As Double
     Public Property Id As Integer
         Get
             Return Me.varId
@@ -27,12 +28,20 @@
             Me.varPrice = value
         End Set
     End Property
-    Public Property Quantity As Integer
+    Public Property Quantity As Double
         Get
             Return Me.varQuantity
         End Get
-        Set(value As Integer)
+        Set(value As Double)
             Me.varQuantity = value
+        End Set
+    End Property
+    Public Property Tare As Double
+        Get
+            Return Me.varTare
+        End Get
+        Set(value As Double)
+            Me.varTare = value
         End Set
     End Property
 End Class

@@ -25,8 +25,6 @@
                 .Columns(2).HeaderText = "Producto"
                 .Columns(3).HeaderText = "Clave"
                 .Columns(4).HeaderText = "Unidad"
-                '.Columns(4).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-                '.Columns(4).DefaultCellStyle.Format = String.Format("n", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))
                 .Columns(5).HeaderText = "Disponibilidad"
                 .Columns(5).Visible = False
                 .Columns(6).HeaderText = "Unidad"
@@ -38,34 +36,29 @@
         Catch ex As Exception
             ToolStripStatusLabel1.Text = String.Format("Se encontraron {0} registros", DataGridView1.Rows.Count)
         Finally
-            DisconnectDatabase()
             Me.Cursor = System.Windows.Forms.Cursors.Default
         End Try
-    End Sub
-    Private Sub TextBox1_TextChanged(sender As Object, e As EventArgs)
-        ' bsData.Filter = "Clave like '" & TextBox4.Text & "%'"
-        ToolStripStatusLabel1.Text = String.Format("Se encontraron {0} registros", DataGridView1.RowCount)
     End Sub
     Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellDoubleClick
         Me.AddProduct()
     End Sub
-    Private Sub AddProduct()
-        ' Llama la ventana de cantidad y tara
-        Dim frmQuantity As New Quantity
-
-        frmQuantity.SaleID = TicketID
-        frmQuantity.ProductID = DataGridView1(0, DataGridView1.CurrentRow.Index).Value
-
-        If frmQuantity.ShowDialog() = DialogResult.OK Then
-            Me.DialogResult = DialogResult.OK
-        End If
-    End Sub
     Private Sub DataGridView1_KeyPress(sender As Object, e As KeyPressEventArgs) Handles DataGridView1.KeyPress
         ' Captura la tecla de espacio
-        If Asc(e.KeyChar) = 32 Or Asc(e.KeyChar) = 13 Then
+        If Asc(e.KeyChar) = 32 Then
             Me.AddProduct()
         ElseIf (Asc(e.KeyChar) = 27) Then ' Captura la tecla de esc
             Me.Close()
+        End If
+    End Sub
+    Private Sub AddProduct()
+        ' Llama la ventana de cantidad y tara
+        Dim frmQuantity As New QuantityBox
+
+        frmQuantity.SaleId = TicketID
+        frmQuantity.ProductId = DataGridView1(0, DataGridView1.CurrentRow.Index).Value
+
+        If frmQuantity.ShowDialog() = DialogResult.OK Then
+            Me.DialogResult = DialogResult.OK
         End If
     End Sub
 End Class

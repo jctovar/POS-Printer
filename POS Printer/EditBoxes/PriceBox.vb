@@ -15,6 +15,7 @@
             price = PriceDB.GetPrice(PriceId)
             TextBox1.Text = price.Price
             TextBox2.Text = price.Quantity
+            TextBox3.Text = price.Tare
             If price.Quantity = 1 Then TextBox2.ReadOnly = True
         Catch ex As Exception
             MsgBox("Ocurrio un error! " & ex.Message.ToString)
@@ -27,6 +28,7 @@
             .Product = ProductId
             .Price = TextBox1.Text.ToString
             .Quantity = TextBox2.Text.ToString
+            .Tare = TextBox3.Text
         End With
 
         If MessageBox.Show("Quiere guardar los cambios?", Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) = DialogResult.Yes Then

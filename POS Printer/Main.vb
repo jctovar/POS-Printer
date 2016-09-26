@@ -153,7 +153,7 @@ Public Class Main
         Dim frmEdit As New Sale
 
         Try
-            frmEdit.TicketID = DataGridView1(1, DataGridView1.CurrentRow.Index).Value
+            frmEdit.SaleId = DataGridView1(1, DataGridView1.CurrentRow.Index).Value
 
             If frmEdit.ShowDialog() = DialogResult.OK Then
                 FillDatagrid()
@@ -299,5 +299,11 @@ Public Class Main
     End Sub
     Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
         DataGridView1.Refresh()
+    End Sub
+
+    Private Sub BusquedaDeVentaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BusquedaDeVentaToolStripMenuItem.Click
+        Dim frmSales As New SalesSearch
+
+        frmSales.ShowDialog()
     End Sub
 End Class

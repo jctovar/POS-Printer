@@ -5,7 +5,6 @@
     Private varName As String
     Private varDescription As String
     Private varKey As String
-    Private varTare As Integer
     Private varUnit As Integer
     Private varVisible As Boolean
     Public Property Id As Integer
@@ -46,14 +45,6 @@
         End Get
         Set(value As String)
             Me.varKey = value
-        End Set
-    End Property
-    Public Property Tare As Integer
-        Get
-            Return Me.varTare
-        End Get
-        Set(value As Integer)
-            Me.varTare = value
         End Set
     End Property
     Public Property Unit As Integer

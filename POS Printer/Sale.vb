@@ -1,31 +1,37 @@
 ﻿Imports MySql.Data.MySqlClient
 Imports System.IO.Ports
 Public Class Sale
-    Public TicketID As Integer
+    Public SaleId As Integer
     Private mySerialPort As New SerialPort
     Private Sale As Invoice
-    Private Customer As String
     Private Sub Form5_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ' Carga la configuracion del com
         ConfigSerial()
 
         ' Evalua si es un nuevo ticket
-        If TicketID > 0 Then
-            Sale = InvoiceDB.GetInvoice(TicketID)
-            If Sale.Status > 0 Then
-                ' deshabilta controles
-                btnSave.Enabled = False
-                TextBox1.Enabled = False
-                DataGridView1.Enabled = False
-                ToolStripButton1.Enabled = False
-                btnDelete.Enabled = False
-            End If
+        If SaleId > 0 Then
+            Try
+                Sale = InvoiceDB.GetInvoice(SaleId)
 
-            GetTicket()
-            FillDatagrid()
+                If Sale.Status > 0 Then
+                    ' deshabilta controles
+                    btnSave.Enabled = False
+                    TextBox1.Enabled = False
+                    DataGridView1.Enabled = False
+                    ToolStripButton1.Enabled = False
+                    btnDelete.Enabled = False
+                End If
+
+                ToolStripStatusLabel2.Text = Sale.Timestamp
+                TextBox7.Text = Sale.Total.ToString("n2")
+                FillDatagrid()
+            Catch ex As Exception
+                MessageBox.Show("Ocurrio un error; " & ex.ToString, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
+
         End If
 
-        Me.Text = String.Format("{0} - {1}", Application.ProductName, "Ticket " & String.Format("{0:000000}", TicketID))
+        Me.Text = String.Format("{0} - {1}", Application.ProductName, "Ticket " & String.Format("{0:000000}", SaleId))
 
         ToolStripStatusLabel1.Text = String.Format("Se encontraron {0} registros", 0)
 
@@ -40,7 +46,7 @@ Public Class Sale
 
         Try
             Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
-            TableView = ItemDB.GetAllItems(TicketID)
+            TableView = ItemDB.GetAllItems(SaleId)
             ToolStripStatusLabel1.Text = String.Format("Se encontraron {0} registros", TableView.Rows.Count)
 
             With DataGridView1
@@ -64,31 +70,6 @@ Public Class Sale
         Finally
             Me.Cursor = System.Windows.Forms.Cursors.Default
         End Try
-    End Sub
-    Private Sub GetTicket()
-        ' Consulta la cabecera del ticket de venta (sales)
-        Dim rd As MySqlDataReader
-        Dim cmd As New MySqlCommand
-
-        ConnectDatabase()
-
-        cmd.Parameters.AddWithValue("sale_id", TicketID)
-        cmd.CommandText = "SELECT * FROM sales_view WHERE sale_id = @sale_id"
-        cmd.Connection = conn
-        rd = cmd.ExecuteReader
-
-        If rd.Read Then
-            Try
-                Me.Text = Me.Text & " - " & rd.GetString("Fecha de venta")
-                Customer = rd.GetString("Cliente")
-                TextBox7.Text = Funciones.Money(rd.GetString("Importe"))
-            Catch ex As Exception
-            Finally
-                DisconnectDatabase()
-            End Try
-
-        End If
-        rd.Close()
     End Sub
     Private Sub PrintTicket(SaleID As Integer)
         'Dim reader As MySqlDataReader
@@ -117,7 +98,7 @@ Public Class Sale
         Dim Email As String = Globales.AccountEmail
         Dim Username As String = Globales.ProfileUsername
 
-        Dim IdTicket As String = String.Format("{0:000000}", TicketID)
+        Dim IdTicket As String = String.Format("{0:000000}", SaleID)
         Dim DateTicket As String = Format(Date.Now(), "dd MMM yyyy hh:mm")
 
         ConnectDatabase()
@@ -129,21 +110,20 @@ Public Class Sale
         'reader = GetItems(SaleID)
 
         Do While reader.Read()
-            Items += reader.GetString("Cantidad") & Chr(9) & reader.GetString("Unidad") & Chr(9) & reader.GetString("Producto") & NewLine
+            Items += reader.GetString("sale_quantity") & Chr(9) & reader.GetString("unit_short") & Chr(9) & reader.GetString("product_name") & NewLine
             Console.WriteLine(Items)
-            If reader.GetString("Peso") = "" Then
-                Items += TAB & TAB & reader.GetString("Cantidad") & " * " & reader.GetString("Precio") & TAB & TAB & reader.GetString("Importe") & NewLine
-            Else
-                Items += TAB & reader.GetString("Peso") & TAB & TAB & reader.GetString("Importe") & NewLine
-            End If
+            ' If reader.GetString("Peso") = "" Then
+            Items += TAB & TAB & reader.GetString("sale_quantity") & " * " & reader.GetString("sale_price") & TAB & TAB & reader.GetString("sale_import") & NewLine
+            'Else
+            'Items += TAB & reader.GetString("Peso") & TAB & TAB & reader.GetString("Importe") & NewLine
+            'End If
         Loop
 
-        Try
-            ' mySerialPort.PortName = "COM3"
-            mySerialPort.Open()
-        Catch ex As Exception
-            MessageBox.Show(ex.Message)
-        End Try
+
+        reader.Close()
+        DisconnectDatabase()
+
+
 
         Dim Ticket As String = INIT
         Ticket += ESC & Chr(68) & Chr(5) & Chr(15) & Chr(27) & Chr(35) & Chr(0)
@@ -161,7 +141,7 @@ Public Class Sale
         Ticket += "TICKET: " & IdTicket & NewLine
         Ticket += "FECHA DE IMPRESION: " & DateTicket & NewLine
         Ticket += "ATENDIO: " & UCase(Username) & NewLine
-        Ticket += "CLIENTE: " & Customer & NewLine
+        Ticket += "CLIENTE: " & Sale.Customer & NewLine
         Ticket += NewLine
         Ticket += Items
         Ticket += NewLine
@@ -179,12 +159,18 @@ Public Class Sale
         Ticket += NewLine
         Ticket += ESC & Chr(98) & Chr(4) & Chr(2) & Chr(1) & "1" & IdTicket & Chr(30) & NewLine
 
-        mySerialPort.Write(Ticket)
-        mySerialPort.Write(ESC & Chr(100) & Chr(50)) ' Corte de hoja
 
-        reader.Close()
-        DisconnectDatabase()
-        mySerialPort.Close()
+        Try
+            mySerialPort.PortName = "COM3"
+            mySerialPort.Open()
+            mySerialPort.Write(Ticket)
+            mySerialPort.Write(ESC & Chr(100) & Chr(50)) ' Corte de hoja
+        Catch ex As Exception
+            MessageBox.Show(ex.Message)
+        Finally
+            mySerialPort.Close()
+        End Try
+
     End Sub
     Public Function GetItems(sale_id As Integer) As MySqlDataReader
         ' Retorna los productos de un ticket
@@ -211,17 +197,17 @@ Public Class Sale
         ' Invoca la ventana de productos
         Dim frmAdd As New ProductList
 
-        frmAdd.TicketID = TicketID
+        frmAdd.TicketID = SaleId
         If frmAdd.ShowDialog() = DialogResult.OK Then
             FillDatagrid()
-            GetTicket()
+            'GetTicket()
         End If
     End Sub
     Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
         Try
             If ItemDB.DeleteItem(DataGridView1(1, DataGridView1.CurrentRow.Index).Value, DataGridView1(0, DataGridView1.CurrentRow.Index).Value) = True Then
                 Me.FillDatagrid()
-                Me.GetTicket()
+                ' Me.GetTicket()
             End If
         Catch ex As Exception
             MsgBox("Selecione el producto")
@@ -230,7 +216,7 @@ Public Class Sale
     Private Sub btnPrint_Click(sender As Object, e As EventArgs) Handles btnPrint.Click
 
         Try
-            PrintTicket(TicketID)
+            PrintTicket(SaleId)
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
@@ -238,11 +224,11 @@ Public Class Sale
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
         Dim frmPay As New CheckOut
 
-        frmPay.TicketID = TicketID
+        frmPay.TicketID = SaleId
         If frmPay.ShowDialog() = DialogResult.OK Then
             If MessageBox.Show("Imprimir ticket?", Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) = DialogResult.Yes Then
                 Try
-                    PrintTicket(TicketID)
+                    PrintTicket(SaleId)
                 Catch ex As Exception
                     MessageBox.Show(ex.Message)
                 End Try
@@ -260,7 +246,7 @@ Public Class Sale
             Try
                 If ItemDB.DeleteItem(DataGridView1(1, DataGridView1.CurrentRow.Index).Value, DataGridView1(0, DataGridView1.CurrentRow.Index).Value) = True Then
                     Me.FillDatagrid()
-                    Me.GetTicket()
+                    'Me.GetTicket()
                 End If
             Catch ex As Exception
                 MsgBox("Selecione el producto")
@@ -272,7 +258,7 @@ Public Class Sale
     End Sub
 
     Private Sub ChangeQty()
-        Dim frmQuantity As New Quantity
+        Dim frmQuantity As New QuantityBox
 
         With frmQuantity
             .ProductID = DataGridView1(0, DataGridView1.CurrentRow.Index).Value
@@ -281,25 +267,25 @@ Public Class Sale
 
         If frmQuantity.ShowDialog() = DialogResult.OK Then
             FillDatagrid()
-            GetTicket()
+            'GetTicket()
             TextBox1.SelectAll()
         End If
     End Sub
     Private Sub TextBox1_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBox1.KeyDown
-        Console.WriteLine(e.KeyCode)
+        'Console.WriteLine(e.KeyCode)
 
         If e.KeyCode = 13 Or e.KeyCode = 40 Then
-            If TicketID = 0 Then
-                TicketID = InvoiceDB.AddNewSale(Globales.AccountId, Globales.ProfileId, 1, 1)
+            If SaleId = 0 Then
+                SaleId = InvoiceDB.AddNewSale(Globales.AccountId, Globales.ProfileId, 1, 1)
             End If
             ' Invoca la ventana de productos
             Dim frmAdd As New ProductList
 
-            frmAdd.TicketID = TicketID
+            frmAdd.TicketID = SaleId
             frmAdd.ProductString = TextBox1.Text
             If frmAdd.ShowDialog() = DialogResult.OK Then
                 FillDatagrid()
-                GetTicket()
+                'GetTicket()
                 TextBox1.SelectAll()
             End If
         ElseIf e.KeyCode = 27 Then

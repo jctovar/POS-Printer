@@ -29,11 +29,15 @@ Partial Class PriceBox
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Button2 = New System.Windows.Forms.Button()
         Me.Button1 = New System.Windows.Forms.Button()
+        Me.TextBox3 = New System.Windows.Forms.TextBox()
+        Me.Label3 = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         Me.SuspendLayout()
         '
         'GroupBox1
         '
+        Me.GroupBox1.Controls.Add(Me.TextBox3)
+        Me.GroupBox1.Controls.Add(Me.Label3)
         Me.GroupBox1.Controls.Add(Me.TextBox2)
         Me.GroupBox1.Controls.Add(Me.Label2)
         Me.GroupBox1.Controls.Add(Me.TextBox1)
@@ -74,9 +78,9 @@ Partial Class PriceBox
         Me.Label1.AutoSize = True
         Me.Label1.Location = New System.Drawing.Point(14, 26)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(37, 13)
+        Me.Label1.Size = New System.Drawing.Size(99, 13)
         Me.Label1.TabIndex = 1
-        Me.Label1.Text = "&Precio"
+        Me.Label1.Text = "&Precio del producto"
         '
         'Button2
         '
@@ -84,7 +88,7 @@ Partial Class PriceBox
         Me.Button2.Location = New System.Drawing.Point(276, 57)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(86, 34)
-        Me.Button2.TabIndex = 6
+        Me.Button2.TabIndex = 8
         Me.Button2.Text = "Cancelar"
         Me.Button2.UseVisualStyleBackColor = True
         '
@@ -93,9 +97,26 @@ Partial Class PriceBox
         Me.Button1.Location = New System.Drawing.Point(276, 17)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(86, 34)
-        Me.Button1.TabIndex = 5
+        Me.Button1.TabIndex = 7
         Me.Button1.Text = "Guardar"
         Me.Button1.UseVisualStyleBackColor = True
+        '
+        'TextBox3
+        '
+        Me.TextBox3.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox3.Location = New System.Drawing.Point(17, 132)
+        Me.TextBox3.Name = "TextBox3"
+        Me.TextBox3.Size = New System.Drawing.Size(203, 26)
+        Me.TextBox3.TabIndex = 6
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Location = New System.Drawing.Point(14, 116)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(54, 13)
+        Me.Label3.TabIndex = 5
+        Me.Label3.Text = "&Tara (Kg.)"
         '
         'PriceBox
         '
@@ -128,4 +149,6 @@ Partial Class PriceBox
     Friend WithEvents TextBox2 As TextBox
     Friend WithEvents Label2 As Label
     Friend WithEvents TextBox1 As TextBox
+    Friend WithEvents TextBox3 As TextBox
+    Friend WithEvents Label3 As Label
 End Class

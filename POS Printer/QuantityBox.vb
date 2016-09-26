@@ -1,10 +1,17 @@
-﻿Public Class Quantity
+﻿Public Class QuantityBox
     Public SaleId As Integer
     Public ProductId As Integer
     Private product As New Product
+    Private price As New Price
     Private item As New Item
     Private Sub Form9_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Me.GetProductData()
+        Try
+            product = ProductDB.GetProduct(ProductId)
+        Catch ex As Exception
+            MessageBox.Show("Ocurrio un error cargando los datos del producto. " & ex.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+
+        Me.CheckItemData()
 
         Me.Text = String.Format("{0} - {1}", Application.ProductName, product.Name)
         Label1.Text = String.Format("{0} ( {1} )", Label1.Text, ProductDB.GetUnitName(product.Unit).ToString)
@@ -42,20 +49,18 @@
     Private Sub TextBox3_GotFocus(sender As Object, e As EventArgs)
         TextBox3.SelectAll()
     End Sub
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        If ItemDB.CheckItem(SaleID, ProductID) = True Then
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
+        If ItemDB.CheckItem(SaleId, ProductId) = True Then
             Me.UpdateItem()
         Else
             Me.AddItem()
         End If
     End Sub
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles btnCancelar.Click
         Me.Close()
     End Sub
-    Private Sub GetProductData()
+    Private Sub CheckItemData()
         Try
-            product = ProductDB.GetProduct(ProductId)
-
             If ItemDB.CheckItem(SaleId, ProductId) = True Then
                 item = ItemDB.GetItem(SaleId, ProductId)
 
@@ -68,34 +73,35 @@
                 End With
             End If
         Catch ex As Exception
-            MessageBox.Show("Ocurrio un error; " & ex.ToString, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Ocurrio un error " & ex.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
     Private Sub Calcula()
-        Dim Tara As Double = 0
 
         Try
-            If Product.Tare = 0 Then
+            price = PriceDB.SearchPrice(ProductId, CDbl(TextBox1.Text))
+        Catch ex As Exception
+            'MessageBox.Show("Ocurrio un error. " & ex.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
+        End Try
+
+        Try
+            If price.Tare = 0 Then
                 ' Calculo normal
-                TextBox4.Text = Funciones.Money(TextBox1.Text * Me.GetPrice(ProductId, TextBox1.Text))
+                TextBox4.Text = Funciones.Money(TextBox1.Text * price.Price)
             Else
+                ' Calculo por medio de la formula de tara de peso
                 Label3.Visible = True
                 TextBox3.ReadOnly = False
                 TextBox3.TabStop = True
                 TextBox3.Visible = True
-                ' Calculo por medio de la formula de tara de peso
+
                 ' Texbox1 = cantidad
                 ' Texbox3 = peso (Kg) 
-                If TextBox1.Text <= 0.5 Then
-                    Tara = 0.5 * Me.GetPrice(ProductId, TextBox1.Text)
-                ElseIf TextBox1.Text > 0.5 Then
-                    Tara = product.Tare * TextBox1.Text * Me.GetPrice(ProductId, TextBox1.Text)
-                End If
 
-                TextBox4.Text = Funciones.Money(TextBox3.Text * Me.GetPrice(ProductId, TextBox1.Text) - Tara) ' - Tara
+                TextBox4.Text = Funciones.Money((TextBox3.Text * price.Price) - (price.Tare * TextBox1.Text * price.Price))
             End If
 
-            TextBox2.Text = Funciones.Money(Me.GetPrice(ProductId, TextBox1.Text))
+            TextBox2.Text = Funciones.Money(price.Price)
 
         Catch ex As Exception
             TextBox4.Text = "0.00"
@@ -110,7 +116,7 @@
             If TextBox1.Text <= 0.5 Then
                 Tara = 0.5 * TextBox2.Text
             ElseIf TextBox1.Text > 0.5 Then
-                Tara = Product.Tare * TextBox1.Text * TextBox2.Text
+                Tara = price.Tare * TextBox1.Text * TextBox2.Text
             End If
             item.Price = ((TextBox2.Text * TextBox3.Text) - Tara) / TextBox1.Text
             item.Note = TextBox3.Text & " KG (-" & (Tara / TextBox2.Text) & "KG) * " & Funciones.Money(TextBox2.Text)
@@ -123,7 +129,7 @@
                 Me.DialogResult = DialogResult.OK
             End If
         Catch ex As Exception
-            MessageBox.Show("Ocurrio un error agregando producto; " & ex.ToString, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Ocurrio un error agregando producto; " & ex.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
     Private Sub UpdateItem()
@@ -139,10 +145,7 @@
                 Me.DialogResult = DialogResult.OK
             End If
         Catch ex As Exception
-            MessageBox.Show("Ocurrio un error actualizando producto; " & ex.ToString, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
+            MessageBox.Show("Ocurrio un error actualizando producto; " & ex.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
-    Private Function GetPrice(product As Integer, quantity As Double) As Double
-        Return PriceDB.GetOnlyPrice(ProductId, quantity)
-    End Function
 End Class

@@ -6,7 +6,8 @@
     Private varProfileId As Integer
     Private varStatus As Integer
     Private varNote As String
-    Private varTimestamp As Date
+    Private varTimestamp As String
+    Private varTotal As Double
     Public Property Id As Integer
         Get
             Return Me.varId
@@ -63,11 +64,20 @@
             Me.varNote = value
         End Set
     End Property
-    Public Property Timestamp As Date
+    Public Property Timestamp As String
         Get
-            Return Nothing
+            Return varTimestamp
         End Get
-        Set(value As Date)
+        Set(value As String)
+            Me.varTimestamp = value
+        End Set
+    End Property
+    Public Property Total As Double
+        Get
+            Return Me.varTotal
+        End Get
+        Set(value As Double)
+            Me.varTotal = value
         End Set
     End Property
 End Class
