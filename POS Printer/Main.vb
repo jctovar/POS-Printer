@@ -302,6 +302,12 @@ Public Class Main
     End Sub
 
     Private Sub BusquedaDeVentaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BusquedaDeVentaToolStripMenuItem.Click
+        Dim frmSearch As New IdSearchBox
+
+        frmSearch.ShowDialog()
+    End Sub
+
+    Private Sub ListadoDeVentasToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ListadoDeVentasToolStripMenuItem.Click
         Dim frmSales As New SalesSearch
 
         frmSales.ShowDialog()

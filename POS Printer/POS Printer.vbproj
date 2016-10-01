@@ -170,6 +170,12 @@
     <Compile Include="EditBoxes\UserBox.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="IdSearchBox.Designer.vb">
+      <DependentUpon>IdSearchBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="IdSearchBox.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Main.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -314,6 +320,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EditBoxes\UserBox.resx">
       <DependentUpon>UserBox.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IdSearchBox.resx">
+      <DependentUpon>IdSearchBox.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Main.resx">
       <DependentUpon>Main.vb</DependentUpon>
