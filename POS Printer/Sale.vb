@@ -97,6 +97,7 @@ Public Class Sale
         Dim WebSite As String = Globales.AccountWeb
         Dim Email As String = Globales.AccountEmail
         Dim Username As String = Globales.ProfileUsername
+        Dim PaymentTotal As Double = PaymentDB.GetPayment(SaleID)
 
         Dim IdTicket As String = String.Format("{0:000000}", SaleID)
         Dim DateTicket As String = Format(Date.Now(), "dd MMM yyyy hh:mm")
@@ -149,6 +150,7 @@ Public Class Sale
         Ticket += "SUBTOTAL" & TAB & TextBox7.Text & TAB & NewLine
         Ticket += "IMPUESTO" & TAB & "0.00" & TAB & NewLine
         Ticket += StartBold & "TOTAL" & TAB & TextBox7.Text & TAB & EndBold & NewLine
+        Ticket += "CAMBIO" & TAB & (PaymentTotal - CDbl(TextBox7.Text)).ToString("n2") & TAB & NewLine
         Ticket += NewLine
         Ticket += LeftText
         Ticket += Numeros2Texto.Num2Text(CInt(Int(TextBox7.Text))) & " PESOS " & Funciones.Dec_Part(TextBox7.Text, ".") & "/100 M.N." & NewLine

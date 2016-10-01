@@ -27,6 +27,34 @@ Public Class PaymentDB
 
         Return dt
     End Function
+    Public Shared Function GetPayment(SaleId As Integer) As Double
+        Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
+        Dim Sql As String = "SELECT SUM(payment_amount) AS payment_total FROM sales_has_payments WHERE sale_id = @id"
+
+        Dim dbcommand As New MySqlCommand(Sql, Connection)
+        Dim result As Double
+
+        dbcommand.Parameters.AddWithValue("@id", SaleId)
+
+        Try
+            Connection.Open()
+
+            Dim reader As MySqlDataReader = dbcommand.ExecuteReader(CommandBehavior.SingleRow)
+
+            If reader.Read Then
+                result = reader("payment_total").ToString
+            Else
+                result = Nothing
+            End If
+            reader.Close()
+        Catch ex As Exception
+            Throw ex
+        Finally
+            Connection.Close()
+        End Try
+
+        Return result
+    End Function
     Public Shared Function AddPayment(payment As Payment) As Boolean
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "INSERT INTO sales_has_payments " &

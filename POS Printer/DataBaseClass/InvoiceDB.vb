@@ -154,4 +154,29 @@ Public Class InvoiceDB
         End Try
 
     End Function
+
+    Public Shared Function GetSaleType() As DataTable
+        ' Se usa en Main para obtener el listado de ventas
+        Dim dt = New DataTable()
+        Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
+        Dim Sql = "SELECT * FROM status"
+
+        Dim dbcommand As New MySqlCommand(Sql, Connection)
+
+        Try
+            Connection.Open()
+
+            Dim reader As MySqlDataReader = dbcommand.ExecuteReader()
+            If reader.HasRows Then
+                dt.Load(reader)
+            End If
+            reader.Close()
+        Catch ex As Exception
+            Throw ex
+        Finally
+            Connection.Close()
+        End Try
+
+        Return dt
+    End Function
 End Class

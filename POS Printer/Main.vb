@@ -57,6 +57,7 @@ Public Class Main
                 .Columns(4).Visible = False
                 .Columns(7).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
                 .Columns(7).DefaultCellStyle.Format = String.Format("n", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))
+                .Columns(9).Visible = False
                 .AutoResizeColumns()
                 .CurrentCell = DataGridView1.Rows(0).Cells(1) ' Columna visible
             End With

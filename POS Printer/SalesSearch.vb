@@ -3,6 +3,21 @@
         Me.Text = String.Format("{0} - {1}", Application.ProductName, "Busqueda de ventas")
 
         ToolStripStatusLabel1.Text = String.Format("Se encontraron {0} registros", 0)
+
+        With Me.ComboBox1
+            .DisplayMember = "terminal_name"
+            .ValueMember = "terminal_id"
+            .DataSource = TerminalDB.GetTerminalsList(Globales.AccountId)
+            .SelectedValue = My.Settings.terminal
+        End With
+
+        With Me.ComboBox2
+            .DisplayMember = "status_name"
+            .ValueMember = "status_id"
+            .DataSource = InvoiceDB.GetSaleType()
+            .SelectedValue = 0
+        End With
+
         FillDatagrid()
     End Sub
 
