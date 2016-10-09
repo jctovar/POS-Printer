@@ -72,6 +72,7 @@ Partial Class Main
         Me.btnReport = New System.Windows.Forms.ToolStripButton()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
+        Me.ImprimirVentaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.StatusStrip1.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
@@ -187,7 +188,7 @@ Partial Class Main
         '
         'VentasToolStripMenuItem
         '
-        Me.VentasToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NuevaVentaToolStripMenuItem, Me.CancelarVentaToolStripMenuItem, Me.ToolStripSeparator10, Me.BusquedaDeVentaToolStripMenuItem, Me.ListadoDeVentasToolStripMenuItem, Me.ToolStripSeparator5, Me.RecargarListadoToolStripMenuItem})
+        Me.VentasToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.NuevaVentaToolStripMenuItem, Me.ImprimirVentaToolStripMenuItem, Me.CancelarVentaToolStripMenuItem, Me.ToolStripSeparator10, Me.BusquedaDeVentaToolStripMenuItem, Me.ListadoDeVentasToolStripMenuItem, Me.ToolStripSeparator5, Me.RecargarListadoToolStripMenuItem})
         Me.VentasToolStripMenuItem.Name = "VentasToolStripMenuItem"
         Me.VentasToolStripMenuItem.Size = New System.Drawing.Size(53, 20)
         Me.VentasToolStripMenuItem.Text = "&Ventas"
@@ -424,6 +425,12 @@ Partial Class Main
         Me.Timer1.Enabled = True
         Me.Timer1.Interval = 30000
         '
+        'ImprimirVentaToolStripMenuItem
+        '
+        Me.ImprimirVentaToolStripMenuItem.Name = "ImprimirVentaToolStripMenuItem"
+        Me.ImprimirVentaToolStripMenuItem.Size = New System.Drawing.Size(193, 22)
+        Me.ImprimirVentaToolStripMenuItem.Text = "&Imprimir venta"
+        '
         'Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -494,4 +501,5 @@ Partial Class Main
     Friend WithEvents ToolStripSeparator10 As ToolStripSeparator
     Friend WithEvents BusquedaDeVentaToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ListadoDeVentasToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ImprimirVentaToolStripMenuItem As ToolStripMenuItem
 End Class

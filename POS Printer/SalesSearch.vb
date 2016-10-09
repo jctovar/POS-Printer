@@ -1,4 +1,7 @@
 ﻿Public Class SalesSearch
+    Public Search As String
+    Dim ds As New DataSet
+    WithEvents bsData As New BindingSource
     Private Sub SaleSearch_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Text = String.Format("{0} - {1}", Application.ProductName, "Busqueda de ventas")
 
@@ -21,21 +24,21 @@
         FillDatagrid()
     End Sub
 
-
-
     Private Sub FillDatagrid()
         Dim TableView As New DataTable
 
+        bsData.DataSource = InvoiceDB.GetAllInvoices(Globales.AccountId)
+
         Try
             Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
-            TableView = InvoiceDB.GetAllSalesByDate(Globales.AccountId, Globales.ProfileId, "20/09/2016")
+            'TableView = InvoiceDB.GetAllInvoices(Globales.AccountId)
 
             'ToolStripStatusLabel3.Text = String.Format("Se encontraron {0} registros", TableView.Rows.Count)
 
             With DataGridView1
                 .RowTemplate.Height = 32
                 .AutoGenerateColumns = True
-                .DataSource = TableView
+                .DataSource = bsData
                 .Columns(0).Visible = False
                 .Columns(1).HeaderText = "Folio"
                 .Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
@@ -55,5 +58,11 @@
         Finally
             Me.Cursor = System.Windows.Forms.Cursors.Default
         End Try
+    End Sub
+
+    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        bsData.Filter = "terminal LIKE '" & ComboBox1.Text & "%' AND status LIKE '" & ComboBox2.Text & "%'"
+
+        ToolStripStatusLabel1.Text = String.Format("Se encontraron {0} registros", DataGridView1.RowCount)
     End Sub
 End Class

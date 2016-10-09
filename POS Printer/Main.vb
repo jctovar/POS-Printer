@@ -1,5 +1,6 @@
 ﻿Imports System.ComponentModel
 Imports MySql.Data.MySqlClient
+Imports System.IO.Ports
 Public Class Main
     Friend dbconn As MySqlConnection
     Private SaleId As Integer = 0
@@ -56,7 +57,7 @@ Public Class Main
                 .Columns(3).Visible = False
                 .Columns(4).Visible = False
                 .Columns(7).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-                .Columns(7).DefaultCellStyle.Format = String.Format("n", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))
+                .Columns(7).DefaultCellStyle.Format = String.Format("c", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))
                 .Columns(9).Visible = False
                 .AutoResizeColumns()
                 .CurrentCell = DataGridView1.Rows(0).Cells(1) ' Columna visible
@@ -312,5 +313,21 @@ Public Class Main
         Dim frmSales As New SalesSearch
 
         frmSales.ShowDialog()
+    End Sub
+
+    Private Sub ImprimirVentaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImprimirVentaToolStripMenuItem.Click
+        Dim mySerialPort As New SerialPort
+
+        Try
+            mySerialPort.PortName = "COM3"
+            mySerialPort.Open()
+            mySerialPort.Write(PrintSale.Print(147))
+            'mySerialPort.Write(ESC & Chr(100) & Chr(50)) ' Corte de hoja
+        Catch ex As Exception
+            MessageBox.Show("Ocurrio un error; " & ex.ToString, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
+        Finally
+            mySerialPort.Close()
+        End Try
+
     End Sub
 End Class

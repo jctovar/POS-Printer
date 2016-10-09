@@ -1,9 +1,9 @@
-﻿Imports MySql.Data.MySqlClient
-Public Class TicketDB
-    Public Shared Function GetTicket(SaleID As Integer) As String
+﻿Public Class PrintSale
+    Public Shared Function Print(SaleId As Integer) As String
+        Dim Sale As Invoice
+
         Dim ESC As String = Chr(27) 'ESC byte in hex notation
         Dim INIT As String = ESC & Chr(64)
-        Dim TAB As String = Chr(9)
         Dim LeftText As String = ESC & Chr(29) & Chr(97) & "0"
         Dim CenterText As String = ESC & Chr(29) & Chr(97) & "1"
         Dim RightText As String = ESC & Chr(29) & Chr(97) & "2"
@@ -12,8 +12,6 @@ Public Class TicketDB
         Dim NormalFont As String = ESC & Chr(105) & "00"
         Dim StartBold As String = ESC & Chr(69)
         Dim EndBold As String = ESC & Chr(70)
-
-        Dim Items As String = "CANT" & TAB & "UNIDAD" & TAB & "DESCRIPCION" & TAB & TAB & "IMPORTE" & NewLine
 
         Dim Title As String = Globales.AccountName
         Dim Address As String = Globales.AccountAddres_1 & NewLine & Globales.AccountAddres_2
@@ -24,31 +22,26 @@ Public Class TicketDB
         Dim WebSite As String = Globales.AccountWeb
         Dim Email As String = Globales.AccountEmail
         Dim Username As String = Globales.ProfileUsername
-        Dim Invoice As Invoice = InvoiceDB.GetInvoice(SaleID)
-        Dim Customer As Customer = CustomerDB.GetCustomer(Invoice.Customer)
+        Dim PaymentTotal As Double = PaymentDB.GetPayment(SaleId)
 
-        Dim IdTicket As String = String.Format("{0:000000}", SaleID)
+        Dim IdTicket As String = String.Format("{0:000000}", SaleId)
         Dim DateTicket As String = Format(Date.Now(), "dd MMM yyyy hh:mm")
 
-        ConnectDatabase()
-
-        Dim Sql As String = "SELECT * FROM items_view WHERE sale_id = " & SaleID
-        Dim dbcommand As New MySqlCommand(Sql, conn)
-        Dim reader As MySqlDataReader = dbcommand.ExecuteReader()
-
-        'reader = GetItems(SaleID)
-
-        Do While reader.Read()
-            Items += reader.GetString("Cantidad") & Chr(9) & reader.GetString("Unidad") & Chr(9) & reader.GetString("Producto") & NewLine
-            Console.WriteLine(Items)
-            If reader.GetString("Peso") = "" Then
-                Items += TAB & TAB & reader.GetString("Cantidad") & " * " & reader.GetString("Precio") & TAB & TAB & reader.GetString("Importe") & NewLine
-            Else
-                Items += TAB & reader.GetString("Peso") & TAB & TAB & reader.GetString("Importe") & NewLine
-            End If
-        Loop
-
         Dim Ticket As String = INIT
+        Dim Items As String
+
+        Try
+            Sale = InvoiceDB.GetInvoice(SaleId)
+        Catch ex As Exception
+            Throw ex
+        End Try
+
+        Try
+            Items = PrintAllItems(SaleId)
+        Catch ex As Exception
+            Throw ex
+        End Try
+
         Ticket += ESC & Chr(68) & Chr(5) & Chr(15) & Chr(27) & Chr(35) & Chr(0)
         Ticket += CenterText
         Ticket += SuperFont ' aumenta el tamaño de la fuente
@@ -64,27 +57,61 @@ Public Class TicketDB
         Ticket += "TICKET: " & IdTicket & NewLine
         Ticket += "FECHA DE IMPRESION: " & DateTicket & NewLine
         Ticket += "ATENDIO: " & UCase(Username) & NewLine
-        Ticket += "CLIENTE: " & Customer.Name & NewLine
+        Ticket += "CLIENTE: " & Sale.Customer & NewLine
         Ticket += NewLine
         Ticket += Items
         Ticket += NewLine
         Ticket += RightText
-        Ticket += "SUBTOTAL" & TAB & Invoice.Account & TAB & NewLine
-        Ticket += "IMPUESTO" & TAB & "0.00" & TAB & NewLine
-        Ticket += StartBold & "TOTAL" & TAB & Invoice.Account & TAB & EndBold & NewLine
+        Ticket += "SUBTOTAL" & TAB() & Sale.Total.ToString("c") & TAB() & NewLine
+        Ticket += "IMPUESTO" & TAB() & 0.ToString("c") & TAB() & NewLine
+        Ticket += "SU PAGO" & TAB() & PaymentTotal.ToString("c") & TAB() & NewLine
+        Ticket += "CAMBIO" & TAB() & (PaymentTotal - CDbl(Sale.Total)).ToString("c") & TAB() & NewLine
+        Ticket += StartBold & "TOTAL" & TAB() & Sale.Total.ToString("c") & TAB() & EndBold & NewLine
         Ticket += NewLine
         Ticket += LeftText
-        Ticket += Numeros2Texto.Num2Text(CInt(Int(Invoice.Account))) & " PESOS " & Funciones.Dec_Part(Invoice.Account, ".") & "/100 M.N." & NewLine
+        Ticket += Numeros2Texto.Num2Text(CInt(Sale.Total)) & " PESOS " & (Sale.Total - CInt(Sale.Total)).ToString & "/100 M.N." & NewLine
+        Ticket += NewLine
+        Ticket += Sale.Note
         Ticket += NewLine
         Ticket += CenterText
         Ticket += ESC & Chr(45) & "1" & WebSite & ESC & Chr(45) & "0" & NewLine
         Ticket += EndText & NewLine
         Ticket += NewLine
         Ticket += ESC & Chr(98) & Chr(4) & Chr(2) & Chr(1) & "1" & IdTicket & Chr(30) & NewLine
+        Ticket += ESC & Chr(100) & Chr(50)
 
         Return Ticket
 
-        reader.Close()
-        DisconnectDatabase()
+    End Function
+    Private Shared Function PrintAllItems(Saleid) As String
+        Dim TableView As New DataTable
+        Dim NewLine As String = Chr(10)
+        Dim Items As String = "CANT" & TAB & "UNIDAD" & TAB & "DESCRIPCION" & TAB & TAB & "IMPORTE" & NewLine
+
+        TableView = ItemDB.GetAllItems(Saleid)
+
+        Using reader As DataTableReader = TableView.CreateDataReader
+            Do
+                If reader.HasRows Then
+                    Do While reader.Read()
+                        Items += CDbl(reader("sale_quantity")).ToString("n") & TAB & reader("unit_short") & TAB & reader("product_name") & NewLine
+                        Items += TAB(2) & CDbl(reader("sale_quantity")).ToString("n") & " * " & CDbl(reader("sale_price")).ToString("c") & TAB(2) & CDbl(reader("sale_import")).ToString("c") & NewLine
+                    Loop
+                End If
+
+            Loop While reader.NextResult()
+        End Using
+
+        Return Items
+
+    End Function
+    Private Shared Function TAB(Optional Count As Integer = 1) As String
+        Dim result As String = Nothing
+
+        For x = 1 To Count
+            result = result + Chr(9)
+        Next
+
+        Return result
     End Function
 End Class

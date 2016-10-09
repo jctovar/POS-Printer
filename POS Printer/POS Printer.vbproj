@@ -28,7 +28,7 @@
     <InstallUrl>https://apps.cuatrocolibri.com.mx/pos/</InstallUrl>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.html</WebPage>
-    <ApplicationRevision>54</ApplicationRevision>
+    <ApplicationRevision>57</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -183,6 +183,12 @@
       <DependentUpon>Main.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="NoteBox.Designer.vb">
+      <DependentUpon>NoteBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="NoteBox.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ObjectsClass\Item.vb" />
     <Compile Include="ObjectsClass\Payment.vb" />
     <Compile Include="ConfigBoxes\SelectTerminal.Designer.vb">
@@ -228,6 +234,7 @@
     <Compile Include="ObjectsClass\Profile.vb" />
     <Compile Include="ObjectsClass\Supplier.vb" />
     <Compile Include="ObjectsClass\Terminal.vb" />
+    <Compile Include="MoreClasses\PrintSale.vb" />
     <Compile Include="SalesSearch.Designer.vb">
       <DependentUpon>SalesSearch.vb</DependentUpon>
     </Compile>
@@ -271,7 +278,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Funciones.vb" />
-    <Compile Include="Globales.vb" />
+    <Compile Include="MoreClasses\Globales.vb" />
     <Compile Include="ObjectsClass\Invoice.vb" />
     <Compile Include="DataBaseClass\InvoiceDB.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -291,10 +298,9 @@
     </Compile>
     <Compile Include="MySql.vb" />
     <Compile Include="DataBaseClass\MySqlDataBase.vb" />
-    <Compile Include="Numeros2Texto.vb" />
+    <Compile Include="MoreClasses\Numeros2Texto.vb" />
     <Compile Include="DataBaseClass\ProductDB.vb" />
     <Compile Include="DataBaseClass\TerminalDB.vb" />
-    <Compile Include="DataBaseClass\TicketDB.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Catalogs.resx">
@@ -344,6 +350,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ConfigBoxes\Serial.resx">
       <DependentUpon>Serial.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NoteBox.resx">
+      <DependentUpon>NoteBox.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SalesSearch.resx">
       <DependentUpon>SalesSearch.vb</DependentUpon>

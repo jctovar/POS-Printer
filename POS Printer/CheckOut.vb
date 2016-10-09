@@ -16,8 +16,6 @@ Public Class CheckOut
             .SelectedValue = invoice.Customer
         End With
 
-
-
         Me.GetTicket()
 
     End Sub
@@ -115,7 +113,7 @@ Public Class CheckOut
             With invoice
                 .Status = 1
                 .Customer = ComboBox1.SelectedValue
-                .Note = "OK"
+                .Note = TextBox5.Text
             End With
 
             Try

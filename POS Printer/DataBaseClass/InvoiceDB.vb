@@ -26,16 +26,15 @@ Public Class InvoiceDB
 
         Return dt
     End Function
-    Public Shared Function GetAllSalesByDate(AccountId As Integer, ProfileId As Integer, Date1 As String) As DataTable
+    Public Shared Function GetAllInvoices(AccountId As Integer) As DataTable
         ' Se usa en Main para obtener el listado de ventas
         Dim dt = New DataTable()
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
-        Dim Sql = "SELECT * FROM sales_view"
+        Dim Sql = "SELECT * FROM sales_view WHERE account_id = @account"
 
         Dim dbcommand As New MySqlCommand(Sql, Connection)
         dbcommand.Parameters.AddWithValue("@account", AccountId)
-        dbcommand.Parameters.AddWithValue("@profile", ProfileId)
-        dbcommand.Parameters.AddWithValue("@date1", Date1)
+
 
         Try
             Connection.Open()
@@ -56,7 +55,7 @@ Public Class InvoiceDB
     Public Shared Function GetInvoice(InvoiceId As Integer) As Invoice
         Dim invoice As New Invoice
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
-        Dim Sql As String = "SELECT t1.sale_id,t1.account_id,t1.customer_id,t1.profile_id,t1.terminal_id,t1.status_id,t1.status_id,t1.sale_note,t1.sale_timestamp," &
+        Dim Sql As String = "SELECT t1.sale_id,t1.account_id,t1.customer_id,t1.profile_id,t1.terminal_id,t1.status_id,t1.sale_note,t1.sale_timestamp," &
             "SUM(t2.sale_price * t2.sale_quantity) AS sale_total " &
             "FROM sales t1 LEFT JOIN products_has_sales t2 " &
             "ON t1.sale_id = t2.sale_id " &

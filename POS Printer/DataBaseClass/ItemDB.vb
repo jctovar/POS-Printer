@@ -1,13 +1,13 @@
 ﻿Imports MySql.Data.MySqlClient
 Public Class ItemDB
-    Public Shared Function GetAllItems(invoiceID As Integer) As DataTable
+    Public Shared Function GetAllItems(SaleId As Integer) As DataTable
         ' Se usa en Invoice para obtener el listado de productos de una venta
         Dim dt = New DataTable()
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "SELECT * FROM items_view WHERE sale_id = @id"
 
         Dim dbcommand = New MySqlCommand(Sql, Connection)
-        dbcommand.Parameters.AddWithValue("@id", invoiceID)
+        dbcommand.Parameters.AddWithValue("@id", SaleId)
 
         Try
             Connection.Open()

@@ -8,10 +8,4 @@ Public Class Funciones
 
         Return value.ToString("D" + decimalLength.ToString())
     End Function
-    Public Shared Function Dec_Part(ByVal Num As String, ByVal Seperator As String) As String
-
-        Dec_Part = Split(CStr(Num), Seperator)(1)
-    End Function
-
-
 End Class
