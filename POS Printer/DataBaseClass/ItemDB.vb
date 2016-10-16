@@ -75,8 +75,8 @@ Public Class ItemDB
     Public Shared Function AddItem(item As Item) As Boolean
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "INSERT INTO products_has_sales " &
-            "(sale_id,product_id,sale_quantity,sale_price,sale_note) " &
-            "VALUES (@sale,@product,@quantity,@price,@note)"
+            "(sale_id,product_id,sale_quantity,sale_price,sale_tax,sale_note) " &
+            "VALUES (@sale,@product,@quantity,@price,@tax,@note)"
         Dim Result As Boolean
         Dim dbcommand As New MySqlCommand(Sql, Connection)
 
@@ -84,6 +84,7 @@ Public Class ItemDB
         dbcommand.Parameters.AddWithValue("@product", item.Product)
         dbcommand.Parameters.AddWithValue("@quantity", item.Quantity)
         dbcommand.Parameters.AddWithValue("@price", item.Price)
+        dbcommand.Parameters.AddWithValue("@tax", item.Tax)
         dbcommand.Parameters.AddWithValue("@note", item.Note)
 
         Try
@@ -103,7 +104,7 @@ Public Class ItemDB
     Public Shared Function UpdateItem(item As Item) As Boolean
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "UPDATE products_has_sales " &
-            "SET sale_quantity=@quantity, sale_price=@price, sale_note=@note " &
+            "SET sale_quantity=@quantity, sale_price=@price, sale_tax=@tax, sale_note=@note " &
             "WHERE sale_id=@sale AND product_id=@product"
         Dim dbcommand As New MySqlCommand(Sql, Connection)
 
@@ -111,6 +112,7 @@ Public Class ItemDB
         dbcommand.Parameters.AddWithValue("@product", item.Product)
         dbcommand.Parameters.AddWithValue("@quantity", item.Quantity)
         dbcommand.Parameters.AddWithValue("@price", item.Price)
+        dbcommand.Parameters.AddWithValue("@tax", item.Tax)
         dbcommand.Parameters.AddWithValue("@note", item.Note)
 
         Try
@@ -144,6 +146,7 @@ Public Class ItemDB
                     .Product = reader("product_id")
                     .Quantity = reader("sale_quantity")
                     .Price = reader("sale_price")
+                    .Tax = reader("sale_tax")
                     .Note = reader("sale_note").ToString
                 End With
             Else

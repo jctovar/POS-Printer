@@ -7,6 +7,8 @@
     Private varStatus As Integer
     Private varNote As String
     Private varTimestamp As String
+    Private varSubtotal As Double
+    Private varTax As Double
     Private varTotal As Double
     Public Property Id As Integer
         Get
@@ -70,6 +72,22 @@
         End Get
         Set(value As String)
             Me.varTimestamp = value
+        End Set
+    End Property
+    Public Property Subtotal As Double
+        Get
+            Return Me.varSubtotal
+        End Get
+        Set(value As Double)
+            Me.varSubtotal = value
+        End Set
+    End Property
+    Public Property Tax As Double
+        Get
+            Return Me.varTax
+        End Get
+        Set(value As Double)
+            Me.varTax = value
         End Set
     End Property
     Public Property Total As Double

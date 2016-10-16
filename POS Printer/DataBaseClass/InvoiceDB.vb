@@ -56,7 +56,9 @@ Public Class InvoiceDB
         Dim invoice As New Invoice
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "SELECT t1.sale_id,t1.account_id,t1.customer_id,t1.profile_id,t1.terminal_id,t1.status_id,t1.sale_note,t1.sale_timestamp," &
-            "SUM(t2.sale_price * t2.sale_quantity) AS sale_total " &
+            "SUM(t2.sale_price * t2.sale_quantity) AS sale_subtotal, " &
+            "SUM((t2.sale_price * t2.sale_quantity) * (t2.sale_tax / 100)) AS sale_tax, " &
+            "SUM((t2.sale_price * t2.sale_quantity) + ((t2.sale_price * t2.sale_quantity) * (t2.sale_tax / 100))) AS sale_total " &
             "FROM sales t1 LEFT JOIN products_has_sales t2 " &
             "ON t1.sale_id = t2.sale_id " &
             "WHERE t1.sale_id = @id " &
@@ -80,6 +82,16 @@ Public Class InvoiceDB
                     .Status = reader("status_id")
                     .Note = reader("sale_note").ToString
                     .Timestamp = reader("sale_timestamp")
+                    If IsDBNull(reader("sale_subtotal")) Then
+                        .Subtotal = 0
+                    Else
+                        .Subtotal = reader("sale_subtotal")
+                    End If
+                    If IsDBNull(reader("sale_tax")) Then
+                        .Tax = 0
+                    Else
+                        .Tax = reader("sale_tax")
+                    End If
                     If IsDBNull(reader("sale_total")) Then
                         .Total = 0
                     Else
@@ -92,6 +104,7 @@ Public Class InvoiceDB
             End If
             reader.Close()
         Catch ex As Exception
+            ' MessageBox.Show("Ocurrio un error; " & ex.ToString, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
             Throw ex
         Finally
             Connection.Close()

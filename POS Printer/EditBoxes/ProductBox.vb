@@ -17,6 +17,12 @@
             .DataSource = CategoryDB.GetCategoriesList(Globales.AccountId)
         End With
 
+        With ComboBox3
+            .DisplayMember = "tax_name"
+            .ValueMember = "tax_id"
+            .DataSource = ProductDB.GetTaxList()
+        End With
+
         If Add = False Then
             Me.Edit()
             Me.GetPrices()
@@ -30,6 +36,7 @@
             ComboBox1.SelectedValue = product.Unit
             TextBox6.Text = product.Description
             ComboBox2.SelectedValue = product.Category
+            ComboBox3.SelectedValue = product.Tax
             CheckBox1.Checked = product.Visible
         Catch ex As Exception
             MsgBox("Ocurrio un error! " & ex.Message.ToString)
@@ -47,6 +54,7 @@
             .Key = TextBox2.Text.ToString
             .Unit = ComboBox1.SelectedValue
             .Category = ComboBox2.SelectedValue
+            .Tax = ComboBox3.SelectedValue
             .Visible = CheckBox1.Checked
         End With
 

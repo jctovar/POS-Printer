@@ -69,6 +69,7 @@
                 With item
                     .Sale = SaleId
                     .Product = ProductId
+                    .Tax = ProductDB.GetTaxValue(product.Tax)
                     .Quantity = CDbl(TextBox1.Text)
                 End With
             End If
@@ -122,6 +123,7 @@
             item.Note = TextBox3.Text & " KG (-" & (Tara / TextBox2.Text) & "KG) * " & Funciones.Money(TextBox2.Text)
         Else
             item.Price = TextBox2.Text
+            item.Note = ""
         End If
 
         Try

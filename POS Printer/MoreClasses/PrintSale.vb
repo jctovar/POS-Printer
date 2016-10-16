@@ -42,7 +42,7 @@
             Throw ex
         End Try
 
-        Ticket += ESC & Chr(68) & Chr(5) & Chr(15) & Chr(27) & Chr(35) & Chr(0)
+        Ticket += ESC & Chr(68) & Chr(6) & Chr(13) & Chr(27) & Chr(36) & Chr(0) ' Tabuladores
         Ticket += CenterText
         Ticket += SuperFont ' aumenta el tamaño de la fuente
         Ticket += ESC & Chr(69) & Title & ESC & Chr(70) & NewLine
@@ -62,8 +62,8 @@
         Ticket += Items
         Ticket += NewLine
         Ticket += RightText
-        Ticket += "SUBTOTAL" & TAB() & Sale.Total.ToString("c") & TAB() & NewLine
-        Ticket += "IMPUESTO" & TAB() & 0.ToString("c") & TAB() & NewLine
+        Ticket += "SUBTOTAL" & TAB() & Sale.Subtotal.ToString("c") & TAB() & NewLine
+        Ticket += "IMPUESTO" & TAB() & Sale.Tax.ToString("c") & TAB() & NewLine
         Ticket += "SU PAGO" & TAB() & PaymentTotal.ToString("c") & TAB() & NewLine
         Ticket += "CAMBIO" & TAB() & (PaymentTotal - CDbl(Sale.Total)).ToString("c") & TAB() & NewLine
         Ticket += StartBold & "TOTAL" & TAB() & Sale.Total.ToString("c") & TAB() & EndBold & NewLine
@@ -94,11 +94,15 @@
             Do
                 If reader.HasRows Then
                     Do While reader.Read()
-                        Items += CDbl(reader("sale_quantity")).ToString("n") & TAB & reader("unit_short") & TAB & reader("product_name") & NewLine
-                        Items += TAB(2) & CDbl(reader("sale_quantity")).ToString("n") & " * " & CDbl(reader("sale_price")).ToString("c") & TAB(2) & CDbl(reader("sale_import")).ToString("c") & NewLine
+                        Items += CDbl(reader("sale_quantity")).ToString("n") & TAB() & reader("unit_short") & TAB() & reader("product_name") & NewLine
+                        If reader("sale_note") = "" Then
+                            Items += TAB(2) & CDbl(reader("sale_quantity")).ToString("n") & " * " & CDbl(reader("sale_price")).ToString("c") & TAB(2) & CDbl(reader("sale_import")).ToString("c") & NewLine
+                        Else
+                            Items += TAB(2) & reader("sale_note") & TAB() & CDbl(reader("sale_import")).ToString("c") & NewLine
+                        End If
+
                     Loop
                 End If
-
             Loop While reader.NextResult()
         End Using
 

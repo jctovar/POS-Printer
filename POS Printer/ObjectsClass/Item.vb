@@ -3,6 +3,7 @@
     Private varSaleId As Integer
     Private varQty As Double
     Private varPrice As Double
+    Private varTax As Double
     Private varNote As String
     Public Property Product As Integer
         Get
@@ -34,6 +35,14 @@
         End Get
         Set(value As Double)
             Me.varPrice = value
+        End Set
+    End Property
+    Public Property Tax As Double
+        Get
+            Return Me.varTax
+        End Get
+        Set(value As Double)
+            Me.varTax = value
         End Set
     End Property
     Public Property Note As String

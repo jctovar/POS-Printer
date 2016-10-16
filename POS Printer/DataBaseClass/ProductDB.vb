@@ -20,6 +20,7 @@ Public Class ProductDB
                     .Description = reader("product_description").ToString
                     .Key = reader("product_key").ToString
                     .Unit = reader("unit_id")
+                    .Tax = reader("tax_id")
                     .Category = reader("category_id")
                     .Visible = reader("product_visible")
                 End With
@@ -72,7 +73,7 @@ Public Class ProductDB
     Public Shared Function UpdateProduct(product As Product) As Boolean
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "UPDATE products " &
-            "SET product_name=@name, product_description=@description, product_key=@key, unit_id=@unit, category_id=@category, product_visible=@visible " &
+            "SET product_name=@name, product_description=@description, product_key=@key, unit_id=@unit, category_id=@category, product_visible=@visible, tax_id=@tax " &
             "WHERE product_id=@id"
         Dim dbcommand As New MySqlCommand(Sql, Connection)
 
@@ -82,6 +83,7 @@ Public Class ProductDB
         dbcommand.Parameters.AddWithValue("@key", product.Key)
         dbcommand.Parameters.AddWithValue("@unit", product.Unit)
         dbcommand.Parameters.AddWithValue("@category", product.Category)
+        dbcommand.Parameters.AddWithValue("@tax", product.Tax)
         dbcommand.Parameters.AddWithValue("@visible", product.Visible)
 
         Try
@@ -122,7 +124,61 @@ Public Class ProductDB
 
         Return dt
     End Function
+    Public Shared Function GetTaxList() As DataTable
+        ' Obtiene la tabla de impuestos
+        Dim dt = New DataTable()
+        Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
+        Dim Sql As String = "SELECT * FROM taxes"
 
+        Dim dbcommand = New MySqlCommand(Sql, Connection)
+
+        dbcommand.Parameters.AddWithValue("@account", AccountId)
+
+        Try
+            Connection.Open()
+
+            Dim reader As MySqlDataReader = dbcommand.ExecuteReader()
+            If reader.HasRows Then
+                dt.Load(reader)
+            End If
+            reader.Close()
+        Catch ex As Exception
+            Throw ex
+        Finally
+            Connection.Close()
+        End Try
+
+        Return dt
+    End Function
+    Public Shared Function GetTaxValue(TaxId As Integer) As Double
+        Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
+        Dim Sql As String = "SELECT * FROM taxes WHERE tax_id = @id"
+
+        Dim dbcommand As New MySqlCommand(Sql, Connection)
+        Dim result As Double
+
+        dbcommand.Parameters.AddWithValue("@id", TaxId)
+
+        Try
+            Connection.Open()
+
+            Dim reader As MySqlDataReader = dbcommand.ExecuteReader(CommandBehavior.SingleRow)
+
+            If reader.Read Then
+                result = reader("tax_value")
+            Else
+                result = Nothing
+            End If
+            reader.Close()
+        Catch ex As Exception
+            Throw ex
+        Finally
+            Connection.Close()
+        End Try
+
+        Return result
+
+    End Function
     Public Shared Function GetUnitName(UnitId As Integer) As String
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "SELECT * FROM units WHERE unit_id = @id"
@@ -173,8 +229,8 @@ Public Class ProductDB
     Public Shared Function AddProduct(product As Product) As Boolean
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "INSERT INTO products " &
-            "(account_id,product_name,product_description,product_key,unit_id,category_id,product_visible) " &
-            "VALUES (@account,@name,@description,@key,@unit,@category,@visible)"
+            "(account_id,product_name,product_description,product_key,unit_id,category_id,product_visible,tax_id) " &
+            "VALUES (@account,@name,@description,@key,@unit,@category,@visible,@tax)"
         Dim dbcommand As New MySqlCommand(Sql, Connection)
 
         dbcommand.Parameters.AddWithValue("@account", product.Account)
@@ -183,6 +239,7 @@ Public Class ProductDB
         dbcommand.Parameters.AddWithValue("@key", product.Key)
         dbcommand.Parameters.AddWithValue("@unit", product.Unit)
         dbcommand.Parameters.AddWithValue("@category", product.Category)
+        dbcommand.Parameters.AddWithValue("@tax", product.Tax)
         dbcommand.Parameters.AddWithValue("@visible", product.Visible)
 
         Try

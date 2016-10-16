@@ -6,6 +6,7 @@
     Private varDescription As String
     Private varKey As String
     Private varUnit As Integer
+    Private varTax As Double
     Private varVisible As Boolean
     Public Property Id As Integer
         Get
@@ -53,6 +54,14 @@
         End Get
         Set(value As Integer)
             Me.varUnit = value
+        End Set
+    End Property
+    Public Property Tax As Double
+        Get
+            Return Me.varTax
+        End Get
+        Set(value As Double)
+            Me.varTax = value
         End Set
     End Property
     Public Property Category As Integer
