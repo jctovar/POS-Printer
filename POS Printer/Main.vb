@@ -1,8 +1,8 @@
 ﻿Imports System.ComponentModel
-Imports MySql.Data.MySqlClient
 Imports System.IO.Ports
 Public Class Main
-    Friend dbconn As MySqlConnection
+    Dim ds As New DataSet
+    WithEvents bsData As New BindingSource
     Private SaleId As Integer = 0
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.GetAccount()
@@ -25,7 +25,7 @@ Public Class Main
     End Sub
     Private Sub ShowStatus()
         ' Muestra usuario y caja en la barra de estado
-        ToolStripStatusLabel1.Text = "Caja: " & TerminalDB.GetName(My.Settings.terminal)
+        ToolStripStatusLabel1.Text = "Caja: " & TerminalDB.GetTerminalName(My.Settings.terminal)
 
         If Globales.ProfileId = False Then
             ToolStripStatusLabel4.Text = "Usuario: No autentificado"
@@ -39,16 +39,16 @@ Public Class Main
     Private Sub FillDatagrid()
         Dim TableView As New DataTable
 
+        bsData.DataSource = InvoiceDB.GetAllInvoices(Globales.AccountId)
+        bsData.Filter = "username = '" & Globales.ProfileUsername & "'"
+
         Try
             Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
-            TableView = InvoiceDB.GetAllSales(Globales.AccountId, Globales.ProfileId)
-
-            ToolStripStatusLabel3.Text = String.Format("Se encontraron {0} registros", TableView.Rows.Count)
 
             With DataGridView1
                 .RowTemplate.Height = 32
                 .AutoGenerateColumns = True
-                .DataSource = TableView
+                .DataSource = bsData
                 .Columns(0).Visible = False
                 .Columns(1).HeaderText = "Folio"
                 .Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
@@ -56,18 +56,22 @@ Public Class Main
                 .Columns(2).Visible = False
                 .Columns(3).Visible = False
                 .Columns(4).Visible = False
+                .Columns(5).HeaderText = "Fecha"
+                .Columns(6).HeaderText = "Cliente"
                 .Columns(7).Visible = False
-                .Columns(7).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-                .Columns(7).DefaultCellStyle.Format = String.Format("c", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))
                 .Columns(8).Visible = False
-                .Columns(8).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-                .Columns(8).DefaultCellStyle.Format = String.Format("c", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))
+                .Columns(9).HeaderText = "Importe"
                 .Columns(9).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
                 .Columns(9).DefaultCellStyle.Format = String.Format("c", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))
-                ' .Columns(9).Visible = False
+                .Columns(10).HeaderText = "Pago"
+                .Columns(10).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns(10).DefaultCellStyle.Format = String.Format("c", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))
+                .Columns(11).HeaderText = "Estado"
                 .AutoResizeColumns()
                 .CurrentCell = DataGridView1.Rows(0).Cells(1) ' Columna visible
             End With
+
+            ToolStripStatusLabel3.Text = String.Format("Se encontraron {0} registros", TableView.Rows.Count)
 
         Catch ex As Exception
             ToolStripStatusLabel3.Text = String.Format("Se encontraron {0} registros", TableView.Rows.Count)
@@ -126,31 +130,20 @@ Public Class Main
         Me.Autentificacion()
     End Sub
     Private Sub GetAccount()
-        Dim rd As MySqlDataReader
-        Dim cmd As New MySqlCommand
+        Dim account As New Account
 
-        ConnectDatabase()
+        account = AccountDB.GetAccount(My.Settings.account.ToString)
 
-        cmd.Parameters.AddWithValue("account_key", My.Settings.account.ToString)
-        cmd.CommandText = "SELECT * FROM accounts WHERE account_key = @account_key"
-        cmd.Connection = conn
-        rd = cmd.ExecuteReader
+        Globales.AccountId = account.Id
+        Globales.AccountName = account.Account
+        Globales.AccountRfc = account.Rfc
+        Globales.AccountSlogan = account.Slogan
+        Globales.AccountAddres_1 = account.Address1
+        Globales.AccountAddres_2 = account.Address2
+        Globales.AccountEmail = account.Email
+        Globales.AccountPostalCode = account.PostalCode
+        Globales.AccountPhone = account.Phone
 
-        If rd.Read Then
-            Globales.AccountId = rd.GetString("account_id")
-            Globales.AccountName = rd.GetString("account_name")
-            Globales.AccountRfc = rd.GetString("account_rfc")
-            Globales.AccountSlogan = rd.GetString("account_slogan")
-            Globales.AccountAddres_1 = rd.GetString("account_address_1")
-
-            Globales.AccountAddres_2 = rd.GetString("account_address_2")
-            Globales.AccountEmail = rd.GetString("account_email")
-            Globales.AccountPostalCode = rd.GetString("account_postalcode")
-            Globales.AccountPhone = rd.GetString("account_phone")
-        End If
-
-        rd.Close()
-        DisconnectDatabase()
     End Sub
     Private Sub btnNew_Click(sender As Object, e As EventArgs) Handles btnNew.Click
         ' Invoca ventana para nueva venta
@@ -191,7 +184,7 @@ Public Class Main
     End Sub
     Private Sub CheckTerminal()
 
-        If String.IsNullOrEmpty(TerminalDB.GetName(My.Settings.terminal)) Then
+        If String.IsNullOrEmpty(TerminalDB.GetTerminalName(My.Settings.terminal)) Then
             ' Selecciona terminal
             Dim frmTerminal As New SelectTerminal
 
@@ -202,17 +195,6 @@ Public Class Main
 
     End Sub
     Private Sub CancelarVentaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CancelarVentaToolStripMenuItem.Click
-        Dim frmCancel As New Form11
-
-        Try
-            frmCancel.TicketID = (DataGridView1(1, DataGridView1.CurrentRow.Index).Value)
-
-            If frmCancel.ShowDialog() = DialogResult.OK Then
-
-            End If
-        Catch ex As Exception
-            MsgBox("Selecione venta")
-        End Try
 
     End Sub
     Private Sub btnReport_Click(sender As Object, e As EventArgs) Handles btnReport.Click
@@ -327,8 +309,7 @@ Public Class Main
         Try
             mySerialPort.PortName = "COM3"
             mySerialPort.Open()
-            mySerialPort.Write(PrintSale.Print(147))
-            'mySerialPort.Write(ESC & Chr(100) & Chr(50)) ' Corte de hoja
+            mySerialPort.Write(PrintSale.Print(DataGridView1(1, DataGridView1.CurrentRow.Index).Value))
         Catch ex As Exception
             MessageBox.Show("Ocurrio un error; " & ex.ToString, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally

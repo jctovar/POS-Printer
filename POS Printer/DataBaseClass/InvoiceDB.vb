@@ -1,31 +1,5 @@
 ﻿Imports MySql.Data.MySqlClient
 Public Class InvoiceDB
-    Public Shared Function GetAllSales(AccountId As Integer, ProfileId As Integer) As DataTable
-        ' Se usa en Main para obtener el listado de ventas
-        Dim dt = New DataTable()
-        Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
-        Dim Sql = "SELECT * FROM sales_view WHERE account_id = @account AND profile_id LIKE @profile"
-
-        Dim dbcommand As New MySqlCommand(Sql, Connection)
-        dbcommand.Parameters.AddWithValue("@account", AccountId)
-        dbcommand.Parameters.AddWithValue("@profile", ProfileId)
-
-        Try
-            Connection.Open()
-
-            Dim reader As MySqlDataReader = dbcommand.ExecuteReader()
-            If reader.HasRows Then
-                dt.Load(reader)
-            End If
-            reader.Close()
-        Catch ex As Exception
-            Throw ex
-        Finally
-            Connection.Close()
-        End Try
-
-        Return dt
-    End Function
     Public Shared Function GetAllInvoices(AccountId As Integer) As DataTable
         ' Se usa en Main para obtener el listado de ventas
         Dim dt = New DataTable()
@@ -34,7 +8,6 @@ Public Class InvoiceDB
 
         Dim dbcommand As New MySqlCommand(Sql, Connection)
         dbcommand.Parameters.AddWithValue("@account", AccountId)
-
 
         Try
             Connection.Open()

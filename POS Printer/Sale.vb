@@ -132,7 +132,7 @@ Public Class Sale
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
         Dim frmPay As New CheckOut
 
-        frmPay.TicketID = SaleId
+        frmPay.SaleId = SaleId
         If frmPay.ShowDialog() = DialogResult.OK Then
             If MessageBox.Show("Imprimir ticket?", Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) = DialogResult.Yes Then
                 Try

@@ -1,13 +1,14 @@
-﻿Imports MySql.Data.MySqlClient
-Public Class CheckOut
-    Public TicketID As Integer
+﻿Public Class CheckOut
+    Public SaleId As Integer
     Private payment1 As New Payment
     Private payment2 As New Payment
     Private invoice As Invoice
     Private Sub Form13_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Text = String.Format("{0} - {1}", Application.ProductName, "Registrar pago")
 
-        invoice = InvoiceDB.GetInvoice(TicketID)
+        invoice = InvoiceDB.GetInvoice(SaleId)
+
+        TextBox1.Text = invoice.Total.ToString("c")
 
         With ComboBox1
             .DisplayMember = "customer_name"
@@ -15,8 +16,6 @@ Public Class CheckOut
             .DataSource = CustomerDB.GetCustomersList(Globales.AccountId)
             .SelectedValue = invoice.Customer
         End With
-
-        Me.GetTicket()
 
     End Sub
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
@@ -28,9 +27,9 @@ Public Class CheckOut
         Try
             Pago = CDbl(TextBox2.Text) + CDbl(TextBox3.Text)
 
-            TextBox4.Text = Funciones.Money(Pago - TextBox1.Text)
+            TextBox4.Text = (Pago - TextBox1.Text).ToString("c")
         Catch ex As Exception
-            TextBox4.Text = Funciones.Money(0)
+            TextBox4.Text = (0).ToString("c")
         End Try
 
     End Sub
@@ -54,35 +53,11 @@ Public Class CheckOut
             End If
         End If
     End Sub
-    Private Sub GetTicket()
-        ' Consulta la cabecera del ticket de venta (sales)
-        Dim rd As MySqlDataReader
-        Dim cmd As New MySqlCommand
-
-        ConnectDatabase()
-
-        cmd.Parameters.AddWithValue("sale_id", TicketID)
-        cmd.CommandText = "SELECT * FROM sales_view WHERE sale_id = @sale_id"
-        cmd.Connection = conn
-        rd = cmd.ExecuteReader
-
-        If rd.Read Then
-            Try
-                TextBox1.Text = Funciones.Money(rd.GetString("Importe"))
-            Catch ex As Exception
-                TextBox1.Text = "Error!"
-            Finally
-                DisconnectDatabase()
-            End Try
-
-        End If
-        rd.Close()
-    End Sub
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         If CDbl(TextBox4.Text >= 0) Then
             If CDbl(TextBox2.Text) > 0 Then
                 With payment1
-                    .SaleId = TicketID
+                    .SaleId = SaleId
                     .PaymentId = 1
                     .Amount = CDbl(TextBox2.Text)
                 End With
@@ -98,7 +73,7 @@ Public Class CheckOut
 
             If CDbl(TextBox3.Text) > 0 Then
                 With payment2
-                    .SaleId = TicketID
+                    .SaleId = SaleId
                     .PaymentId = 2
                     .Amount = CDbl(TextBox3.Text)
                 End With

@@ -45,6 +45,7 @@ Partial Class Main
         Me.SalirToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.VentasToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.NuevaVentaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ImprimirVentaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CancelarVentaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator10 = New System.Windows.Forms.ToolStripSeparator()
         Me.BusquedaDeVentaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -72,7 +73,8 @@ Partial Class Main
         Me.btnReport = New System.Windows.Forms.ToolStripButton()
         Me.DataGridView1 = New System.Windows.Forms.DataGridView()
         Me.Timer1 = New System.Windows.Forms.Timer(Me.components)
-        Me.ImprimirVentaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SesionesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToolStripSeparator9 = New System.Windows.Forms.ToolStripSeparator()
         Me.StatusStrip1.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
         Me.ToolStrip1.SuspendLayout()
@@ -87,9 +89,9 @@ Partial Class Main
         'StatusStrip1
         '
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel3, Me.ToolStripStatusLabel1, Me.ToolStripStatusLabel4})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 566)
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 611)
         Me.StatusStrip1.Name = "StatusStrip1"
-        Me.StatusStrip1.Size = New System.Drawing.Size(904, 35)
+        Me.StatusStrip1.Size = New System.Drawing.Size(927, 35)
         Me.StatusStrip1.TabIndex = 2
         Me.StatusStrip1.Text = "StatusStrip1"
         '
@@ -97,7 +99,7 @@ Partial Class Main
         '
         Me.ToolStripStatusLabel3.Font = New System.Drawing.Font("Segoe UI", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.ToolStripStatusLabel3.Name = "ToolStripStatusLabel3"
-        Me.ToolStripStatusLabel3.Size = New System.Drawing.Size(516, 30)
+        Me.ToolStripStatusLabel3.Size = New System.Drawing.Size(539, 30)
         Me.ToolStripStatusLabel3.Spring = True
         Me.ToolStripStatusLabel3.Text = "No se encontraron registros"
         Me.ToolStripStatusLabel3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
@@ -121,7 +123,7 @@ Partial Class Main
         Me.MenuStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ArchivoToolStripMenuItem, Me.VentasToolStripMenuItem, Me.CatalogosToolStripMenuItem, Me.AyudaToolStripMenuItem})
         Me.MenuStrip1.Location = New System.Drawing.Point(0, 0)
         Me.MenuStrip1.Name = "MenuStrip1"
-        Me.MenuStrip1.Size = New System.Drawing.Size(904, 24)
+        Me.MenuStrip1.Size = New System.Drawing.Size(927, 24)
         Me.MenuStrip1.TabIndex = 3
         Me.MenuStrip1.Text = "MenuStrip1"
         '
@@ -201,6 +203,12 @@ Partial Class Main
         Me.NuevaVentaToolStripMenuItem.Size = New System.Drawing.Size(193, 22)
         Me.NuevaVentaToolStripMenuItem.Text = "&Nueva venta"
         '
+        'ImprimirVentaToolStripMenuItem
+        '
+        Me.ImprimirVentaToolStripMenuItem.Name = "ImprimirVentaToolStripMenuItem"
+        Me.ImprimirVentaToolStripMenuItem.Size = New System.Drawing.Size(193, 22)
+        Me.ImprimirVentaToolStripMenuItem.Text = "&Imprimir venta"
+        '
         'CancelarVentaToolStripMenuItem
         '
         Me.CancelarVentaToolStripMenuItem.Enabled = False
@@ -240,7 +248,7 @@ Partial Class Main
         '
         'CatalogosToolStripMenuItem
         '
-        Me.CatalogosToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ClientesToolStripMenuItem, Me.ProveedoresToolStripMenuItem, Me.ProductosToolStripMenuItem, Me.ToolStripSeparator8, Me.CuentasToolStripMenuItem, Me.CategoríasToolStripMenuItem, Me.TerminalesToolStripMenuItem})
+        Me.CatalogosToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ClientesToolStripMenuItem, Me.ProveedoresToolStripMenuItem, Me.ProductosToolStripMenuItem, Me.ToolStripSeparator8, Me.CuentasToolStripMenuItem, Me.CategoríasToolStripMenuItem, Me.TerminalesToolStripMenuItem, Me.ToolStripSeparator9, Me.SesionesToolStripMenuItem})
         Me.CatalogosToolStripMenuItem.Name = "CatalogosToolStripMenuItem"
         Me.CatalogosToolStripMenuItem.Size = New System.Drawing.Size(72, 20)
         Me.CatalogosToolStripMenuItem.Text = "&Catalogos"
@@ -314,7 +322,7 @@ Partial Class Main
         Me.ToolStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.btnLogin, Me.ToolStripSeparator3, Me.btnNew, Me.ToolStripSeparator4, Me.ToolStripButton1, Me.ToolStripButton2, Me.ToolStripSeparator7, Me.btnReport})
         Me.ToolStrip1.Location = New System.Drawing.Point(0, 24)
         Me.ToolStrip1.Name = "ToolStrip1"
-        Me.ToolStrip1.Size = New System.Drawing.Size(904, 39)
+        Me.ToolStrip1.Size = New System.Drawing.Size(927, 39)
         Me.ToolStrip1.TabIndex = 4
         Me.ToolStrip1.Text = "ToolStrip1"
         '
@@ -417,7 +425,7 @@ Partial Class Main
         Me.DataGridView1.ReadOnly = True
         Me.DataGridView1.RowTemplate.Height = 24
         Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DataGridView1.Size = New System.Drawing.Size(904, 503)
+        Me.DataGridView1.Size = New System.Drawing.Size(927, 548)
         Me.DataGridView1.TabIndex = 6
         '
         'Timer1
@@ -425,17 +433,22 @@ Partial Class Main
         Me.Timer1.Enabled = True
         Me.Timer1.Interval = 30000
         '
-        'ImprimirVentaToolStripMenuItem
+        'SesionesToolStripMenuItem
         '
-        Me.ImprimirVentaToolStripMenuItem.Name = "ImprimirVentaToolStripMenuItem"
-        Me.ImprimirVentaToolStripMenuItem.Size = New System.Drawing.Size(193, 22)
-        Me.ImprimirVentaToolStripMenuItem.Text = "&Imprimir venta"
+        Me.SesionesToolStripMenuItem.Name = "SesionesToolStripMenuItem"
+        Me.SesionesToolStripMenuItem.Size = New System.Drawing.Size(158, 22)
+        Me.SesionesToolStripMenuItem.Text = "&Sesiones"
+        '
+        'ToolStripSeparator9
+        '
+        Me.ToolStripSeparator9.Name = "ToolStripSeparator9"
+        Me.ToolStripSeparator9.Size = New System.Drawing.Size(155, 6)
         '
         'Main
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(904, 601)
+        Me.ClientSize = New System.Drawing.Size(927, 646)
         Me.Controls.Add(Me.DataGridView1)
         Me.Controls.Add(Me.ToolStrip1)
         Me.Controls.Add(Me.StatusStrip1)
@@ -502,4 +515,6 @@ Partial Class Main
     Friend WithEvents BusquedaDeVentaToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ListadoDeVentasToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ImprimirVentaToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToolStripSeparator9 As ToolStripSeparator
+    Friend WithEvents SesionesToolStripMenuItem As ToolStripMenuItem
 End Class

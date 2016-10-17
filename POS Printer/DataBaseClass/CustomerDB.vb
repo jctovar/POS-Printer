@@ -25,13 +25,13 @@ Public Class CustomerDB
 
         Return dt
     End Function
-    Public Shared Function GetCustomer(CustomerID As Integer) As Customer
+    Public Shared Function GetCustomer(CustomerId As Integer) As Customer
         Dim customer As New Customer
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "SELECT * FROM customers WHERE customer_id = @id"
         Dim dbcommand As New MySqlCommand(Sql, Connection)
 
-        dbcommand.Parameters.AddWithValue("@id", CustomerID)
+        dbcommand.Parameters.AddWithValue("@id", CustomerId)
 
         Try
             Connection.Open()
@@ -60,6 +60,33 @@ Public Class CustomerDB
         End Try
 
         Return customer
+    End Function
+    Public Shared Function GetCustomerName(CustomerId As Integer) As String
+        Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
+        Dim Customer As String
+        Dim Sql As String = "SELECT * FROM customers WHERE customer_id = @customer"
+        Dim dbcommand As New MySqlCommand(Sql, Connection)
+
+        dbcommand.Parameters.AddWithValue("@customer", CustomerId)
+
+        Try
+            Connection.Open()
+
+            Dim reader As MySqlDataReader = dbcommand.ExecuteReader(CommandBehavior.SingleRow)
+
+            If reader.Read Then
+                Customer = reader("customer_name").ToString
+            Else
+                Customer = Nothing
+            End If
+            reader.Close()
+        Catch ex As Exception
+            Throw ex
+        Finally
+            Connection.Close()
+        End Try
+
+        Return Customer
     End Function
     Public Shared Function UpdateCustomer(customer As Customer) As Boolean
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection

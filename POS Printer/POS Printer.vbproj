@@ -26,9 +26,13 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>https://apps.cuatrocolibri.com.mx/pos/</InstallUrl>
+    <SupportUrl>http://albaco.com/POS</SupportUrl>
+    <ProductName>Albaco POS</ProductName>
+    <PublisherName>Cuatro Colibri SA de CV</PublisherName>
+    <SuiteName>Albaco</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.html</WebPage>
-    <ApplicationRevision>60</ApplicationRevision>
+    <ApplicationRevision>64</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -85,6 +89,10 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EPPlus, Version=4.1.0.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.1.0\lib\net40\EPPlus.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="MySql.Data, Version=6.9.9.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\MySQL\MySQL Connector Net 6.9.9\Assemblies\v4.5\MySql.Data.dll</HintPath>
@@ -115,12 +123,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="DataBaseClass\AccountDB.vb" />
     <Compile Include="DataBaseClass\CategoryDB.vb" />
     <Compile Include="DataBaseClass\CustomerDB.vb" />
     <Compile Include="DataBaseClass\ItemDB.vb" />
     <Compile Include="DataBaseClass\PaymentDB.vb" />
     <Compile Include="DataBaseClass\PriceDB.vb" />
     <Compile Include="DataBaseClass\ProfileDB.vb" />
+    <Compile Include="DataBaseClass\SessionDB.vb" />
     <Compile Include="DataBaseClass\SupplierDB.vb" />
     <Compile Include="Catalogs.Designer.vb">
       <DependentUpon>Catalogs.vb</DependentUpon>
@@ -189,18 +199,13 @@
     <Compile Include="NoteBox.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ObjectsClass\Account.vb" />
     <Compile Include="ObjectsClass\Item.vb" />
     <Compile Include="ObjectsClass\Payment.vb" />
     <Compile Include="ConfigBoxes\SelectTerminal.Designer.vb">
       <DependentUpon>SelectTerminal.vb</DependentUpon>
     </Compile>
     <Compile Include="ConfigBoxes\SelectTerminal.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form11.Designer.vb">
-      <DependentUpon>Form11.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Form11.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form12.Designer.vb">
@@ -232,6 +237,7 @@
     <Compile Include="ObjectsClass\Price.vb" />
     <Compile Include="ObjectsClass\Product.vb" />
     <Compile Include="ObjectsClass\Profile.vb" />
+    <Compile Include="ObjectsClass\Session.vb" />
     <Compile Include="ObjectsClass\Supplier.vb" />
     <Compile Include="ObjectsClass\Terminal.vb" />
     <Compile Include="MoreClasses\PrintSale.vb" />
@@ -277,7 +283,6 @@
     <Compile Include="QuantityBox.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Funciones.vb" />
     <Compile Include="MoreClasses\Globales.vb" />
     <Compile Include="ObjectsClass\Invoice.vb" />
     <Compile Include="DataBaseClass\InvoiceDB.vb" />
@@ -335,9 +340,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ConfigBoxes\SelectTerminal.resx">
       <DependentUpon>SelectTerminal.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form11.resx">
-      <DependentUpon>Form11.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form12.resx">
       <DependentUpon>Form12.vb</DependentUpon>
@@ -409,6 +411,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
+    <None Include="packages.config" />
     <None Include="POS Printer_ClaveTemporal.pfx" />
     <None Include="Resources\albaco.png" />
   </ItemGroup>

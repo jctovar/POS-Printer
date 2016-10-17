@@ -42,7 +42,7 @@
             Throw ex
         End Try
 
-        Ticket += ESC & Chr(68) & Chr(6) & Chr(13) & Chr(27) & Chr(36) & Chr(0) ' Tabuladores
+        Ticket += ESC & Chr(68) & Chr(6) & Chr(13) & Chr(28) & Chr(36) & Chr(0) ' Tabuladores
         Ticket += CenterText
         Ticket += SuperFont ' aumenta el tamaño de la fuente
         Ticket += ESC & Chr(69) & Title & ESC & Chr(70) & NewLine
@@ -55,18 +55,20 @@
         Ticket += "CODIGO POSTAL: " & AccountPostalCode & NewLine
         Ticket += NewLine
         Ticket += "TICKET: " & IdTicket & NewLine
-        Ticket += "FECHA DE IMPRESION: " & DateTicket & NewLine
+        'Ticket += "FECHA DE IMPRESION: " & DateTicket & NewLine
+        Ticket += "FECHA DE VENTA: " & Sale.Timestamp & NewLine
         Ticket += "ATENDIO: " & UCase(Username) & NewLine
-        Ticket += "CLIENTE: " & Sale.Customer & NewLine
+        Ticket += "CLIENTE: " & CustomerDB.GetCustomerName(Sale.Customer) & NewLine
         Ticket += NewLine
         Ticket += Items
         Ticket += NewLine
         Ticket += RightText
         Ticket += "SUBTOTAL" & TAB() & Sale.Subtotal.ToString("c") & TAB() & NewLine
         Ticket += "IMPUESTO" & TAB() & Sale.Tax.ToString("c") & TAB() & NewLine
+        Ticket += StartBold & "TOTAL" & TAB(2) & Sale.Total.ToString("c") & TAB() & EndBold & NewLine
+        Ticket += NewLine
         Ticket += "SU PAGO" & TAB() & PaymentTotal.ToString("c") & TAB() & NewLine
-        Ticket += "CAMBIO" & TAB() & (PaymentTotal - CDbl(Sale.Total)).ToString("c") & TAB() & NewLine
-        Ticket += StartBold & "TOTAL" & TAB() & Sale.Total.ToString("c") & TAB() & EndBold & NewLine
+        Ticket += "CAMBIO" & TAB() & (PaymentTotal - Sale.Total).ToString("c") & TAB() & NewLine
         Ticket += NewLine
         Ticket += LeftText
         Ticket += Numeros2Texto.Num2Text(CInt(Sale.Total)) & " PESOS " & (Sale.Total - CInt(Sale.Total)).ToString & "/100 M.N." & NewLine
@@ -96,9 +98,9 @@
                     Do While reader.Read()
                         Items += CDbl(reader("sale_quantity")).ToString("n") & TAB() & reader("unit_short") & TAB() & reader("product_name") & NewLine
                         If reader("sale_note") = "" Then
-                            Items += TAB(2) & CDbl(reader("sale_quantity")).ToString("n") & " * " & CDbl(reader("sale_price")).ToString("c") & TAB(2) & CDbl(reader("sale_import")).ToString("c") & NewLine
+                            Items += TAB() & CDbl(reader("sale_quantity")).ToString("n") & " * " & CDbl(reader("sale_price")).ToString("c") & TAB(2) & CDbl(reader("sale_import")).ToString("c") & NewLine
                         Else
-                            Items += TAB(2) & reader("sale_note") & TAB() & CDbl(reader("sale_import")).ToString("c") & NewLine
+                            Items += TAB() & reader("sale_note") & TAB() & CDbl(reader("sale_import")).ToString("c") & NewLine
                         End If
 
                     Loop

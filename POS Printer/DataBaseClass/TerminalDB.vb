@@ -1,6 +1,6 @@
 ﻿Imports MySql.Data.MySqlClient
 Public Class TerminalDB
-    Public Shared Function GetName(terminalID As Integer) As String
+    Public Shared Function GetTerminalName(terminalID As Integer) As String
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Terminal As String
         Dim Sql As String = "SELECT * FROM terminals WHERE terminal_id = @terminal"

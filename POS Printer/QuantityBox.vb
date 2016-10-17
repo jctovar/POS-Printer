@@ -88,7 +88,7 @@
         Try
             If price.Tare = 0 Then
                 ' Calculo normal
-                TextBox4.Text = Funciones.Money(TextBox1.Text * price.Price)
+                TextBox4.Text = (TextBox1.Text * price.Price).ToString("c")
             Else
                 ' Calculo por medio de la formula de tara de peso
                 Label3.Visible = True
@@ -99,10 +99,10 @@
                 ' Texbox1 = cantidad
                 ' Texbox3 = peso (Kg) 
 
-                TextBox4.Text = Funciones.Money((TextBox3.Text * price.Price) - (price.Tare * TextBox1.Text * price.Price))
+                TextBox4.Text = ((TextBox3.Text * price.Price) - (price.Tare * TextBox1.Text * price.Price)).ToString("c")
             End If
 
-            TextBox2.Text = Funciones.Money(price.Price)
+            TextBox2.Text = price.Price.ToString("c")
 
         Catch ex As Exception
             TextBox4.Text = "0.00"
@@ -114,13 +114,11 @@
 
         If TextBox3.ReadOnly = False Then
             Dim Tara As Double
-            If TextBox1.Text <= 0.5 Then
-                Tara = 0.5 * TextBox2.Text
-            ElseIf TextBox1.Text > 0.5 Then
-                Tara = price.Tare * TextBox1.Text * TextBox2.Text
-            End If
+
+            Tara = price.Tare * TextBox1.Text * TextBox2.Text
+
             item.Price = ((TextBox2.Text * TextBox3.Text) - Tara) / TextBox1.Text
-            item.Note = TextBox3.Text & " KG (-" & (Tara / TextBox2.Text) & "KG) * " & Funciones.Money(TextBox2.Text)
+            item.Note = CDbl(TextBox3.Text).ToString("n") & " KG (-" & (Tara / TextBox2.Text) & "KG) * " & TextBox2.Text
         Else
             item.Price = TextBox2.Text
             item.Note = ""
