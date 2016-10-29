@@ -18,7 +18,7 @@
         Dim PostalCode As String = Globales.AccountPostalCode
         Dim RFC As String = Globales.AccountRfc
         Dim SloganText As String = Globales.AccountSlogan
-        Dim EndText As String = "PARA CUALQUIER ACLARACION SOLO CON SU TICKET," & NewLine & "MAXIMO 8 DIAS. GRACIAS POR SU COMPRA."
+        Dim EndText As String = "PARA CUALQUIER ACLARACION SOLO CON SU TICKET," & NewLine & "MAXIMO 8 DIAS. GRACIAS POR SU COMPRA." ' Tiene que ir en una variable
         Dim WebSite As String = Globales.AccountWeb
         Dim Email As String = Globales.AccountEmail
         Dim Username As String = Globales.ProfileUsername
@@ -42,6 +42,8 @@
             Throw ex
         End Try
 
+        Dim Total() As String = Split(Format(Sale.Total, "0.00"), ".")
+
         Ticket += ESC & Chr(68) & Chr(6) & Chr(13) & Chr(28) & Chr(36) & Chr(0) ' Tabuladores
         Ticket += CenterText
         Ticket += SuperFont ' aumenta el tamaño de la fuente
@@ -55,7 +57,6 @@
         Ticket += "CODIGO POSTAL: " & AccountPostalCode & NewLine
         Ticket += NewLine
         Ticket += "TICKET: " & IdTicket & NewLine
-        'Ticket += "FECHA DE IMPRESION: " & DateTicket & NewLine
         Ticket += "FECHA DE VENTA: " & Sale.Timestamp & NewLine
         Ticket += "ATENDIO: " & UCase(Username) & NewLine
         Ticket += "CLIENTE: " & CustomerDB.GetCustomerName(Sale.Customer) & NewLine
@@ -71,7 +72,7 @@
         Ticket += "CAMBIO" & TAB() & (PaymentTotal - Sale.Total).ToString("c") & TAB() & NewLine
         Ticket += NewLine
         Ticket += LeftText
-        Ticket += Numeros2Texto.Num2Text(CInt(Sale.Total)) & " PESOS " & (Sale.Total - CInt(Sale.Total)).ToString & "/100 M.N." & NewLine
+        Ticket += Numeros2Texto.Num2Text(CInt(Total(0))) & " PESOS " & Total(1) & "/100 M.N." & NewLine
         Ticket += NewLine
         Ticket += Sale.Note
         Ticket += NewLine
@@ -97,10 +98,10 @@
                 If reader.HasRows Then
                     Do While reader.Read()
                         Items += CDbl(reader("sale_quantity")).ToString("n") & TAB() & reader("unit_short") & TAB() & reader("product_name") & NewLine
-                        If reader("sale_note") = "" Then
-                            Items += TAB() & CDbl(reader("sale_quantity")).ToString("n") & " * " & CDbl(reader("sale_price")).ToString("c") & TAB(2) & CDbl(reader("sale_import")).ToString("c") & NewLine
+                        If reader("sale_tare") = 0 Then
+                            Items += TAB() & CDbl(reader("sale_quantity")).ToString("n") & " " & reader("unit_short") & " * " & CDbl(reader("sale_price")).ToString("c") & TAB(2) & CDbl(reader("sale_import")).ToString("c") & NewLine
                         Else
-                            Items += TAB() & reader("sale_note") & TAB() & CDbl(reader("sale_import")).ToString("c") & NewLine
+                            Items += TAB() & reader("sale_formula") & TAB() & CDbl(reader("sale_import")).ToString("c") & NewLine
                         End If
 
                     Loop

@@ -18,6 +18,8 @@
                 Title = "categorías"
             Case "terminals"
                 Title = "terminales"
+            Case "stocks"
+                Title = "existencias"
         End Select
 
         Me.Text = String.Format("{0} - {1}", Application.ProductName, "Catalogo de " & title)
@@ -38,6 +40,8 @@
                 bsData.DataSource = CategoryDB.GetCategoriesList(Globales.AccountId)
             Case "terminals"
                 bsData.DataSource = TerminalDB.GetTerminalsList(Globales.AccountId)
+            Case "stocks"
+                bsData.DataSource = StockDB.GetStocksList(Globales.AccountId)
         End Select
 
         Try
@@ -122,6 +126,13 @@
                 If frmTerminal.ShowDialog() = DialogResult.OK Then
                     Me.FillDatagrid("")
                 End If
+            Case "stocks"
+                Dim frmStock As New StockBox
+
+                frmStock.StockId = DataGridView1(0, DataGridView1.CurrentRow.Index).Value
+                If frmStock.ShowDialog() = DialogResult.OK Then
+                    Me.FillDatagrid("")
+                End If
         End Select
     End Sub
     Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellDoubleClick
@@ -173,6 +184,13 @@
                 If frmTerminal.ShowDialog() = DialogResult.OK Then
                     Me.FillDatagrid("")
                 End If
+            Case "stocks"
+                Dim frmStock As New StockBox
+
+                frmStock.Add = True
+                If frmStock.ShowDialog() = DialogResult.OK Then
+                    Me.FillDatagrid("")
+                End If
         End Select
     End Sub
 
@@ -204,6 +222,10 @@
                             Me.FillDatagrid("")
                         End If
                     Case "terminals"
+                        If TerminalDB.DeleteTerminal(DataGridView1(0, DataGridView1.CurrentRow.Index).Value) = True Then
+                            Me.FillDatagrid("")
+                        End If
+                    Case "stocks"
                         If TerminalDB.DeleteTerminal(DataGridView1(0, DataGridView1.CurrentRow.Index).Value) = True Then
                             Me.FillDatagrid("")
                         End If

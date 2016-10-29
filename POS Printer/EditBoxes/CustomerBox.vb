@@ -28,6 +28,7 @@
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+
         With customer
             .Account = Globales.AccountId
             .Name = TextBox1.Text.ToString

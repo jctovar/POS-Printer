@@ -4,16 +4,18 @@
     Public TicketID As Integer
     Public ProductString As String
     Private Sub Form7_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
         Me.Text = String.Format("{0} - {1}", Application.ProductName, "Añadir producto al ticket " & TicketID)
 
         FillDatagrid()
     End Sub
     Public Sub FillDatagrid()
-        bsData.DataSource = ProductDB.GetProductsList(Globales.AccountId, ProductString, True)
-        bsData.Filter = "product_visible = 1"
 
         Try
             Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
+
+            bsData.DataSource = ProductDB.GetProductsList(Globales.AccountId, ProductString, True)
+            bsData.Filter = "product_visible = 1"
 
             With DataGridView1
                 .RowTemplate.Height = 32
@@ -21,13 +23,16 @@
                 .DataSource = bsData
                 .AutoResizeColumns()
                 .Columns(0).Visible = False
-                .Columns(1).HeaderText = "Categoría"
-                .Columns(2).HeaderText = "Producto"
-                .Columns(3).HeaderText = "Clave"
-                .Columns(4).HeaderText = "Unidad"
-                .Columns(5).HeaderText = "Disponibilidad"
-                .Columns(5).Visible = False
-                .Columns(6).HeaderText = "Unidad"
+                .Columns(1).Visible = False
+                .Columns(2).HeaderText = "Categoría"
+                .Columns(3).HeaderText = "Producto"
+                .Columns(4).HeaderText = "Clave"
+                .Columns(5).HeaderText = "Unidad"
+                .Columns(6).HeaderText = "Precio"
+                .Columns(6).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns(6).DefaultCellStyle.Format = String.Format("c", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))
+                .Columns(7).Visible = False
+                .Columns(8).Visible = False
                 .CurrentCell = DataGridView1.Rows(0).Cells(3) ' Columna visible
             End With
 
@@ -59,6 +64,12 @@
 
         If frmQuantity.ShowDialog() = DialogResult.OK Then
             Me.DialogResult = DialogResult.OK
+        End If
+    End Sub
+
+    Private Sub DataGridView1_KeyDown(sender As Object, e As KeyEventArgs) Handles DataGridView1.KeyDown
+        If e.KeyCode = 13 Then
+            Me.AddProduct()
         End If
     End Sub
 End Class

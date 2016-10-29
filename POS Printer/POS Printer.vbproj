@@ -26,13 +26,13 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>https://apps.cuatrocolibri.com.mx/pos/</InstallUrl>
-    <SupportUrl>http://albaco.com/POS</SupportUrl>
+    <SupportUrl>http://albaco.com.mx/POS</SupportUrl>
     <ProductName>Albaco POS</ProductName>
-    <PublisherName>Cuatro Colibri SA de CV</PublisherName>
+    <PublisherName>Cuatro Colibri</PublisherName>
     <SuiteName>Albaco</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.html</WebPage>
-    <ApplicationRevision>64</ApplicationRevision>
+    <ApplicationRevision>75</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -123,6 +123,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="ConfigBoxes\AccountBox.Designer.vb">
+      <DependentUpon>AccountBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ConfigBoxes\AccountBox.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="DataBaseClass\AccountDB.vb" />
     <Compile Include="DataBaseClass\CategoryDB.vb" />
     <Compile Include="DataBaseClass\CustomerDB.vb" />
@@ -131,6 +137,7 @@
     <Compile Include="DataBaseClass\PriceDB.vb" />
     <Compile Include="DataBaseClass\ProfileDB.vb" />
     <Compile Include="DataBaseClass\SessionDB.vb" />
+    <Compile Include="DataBaseClass\StockDB.vb" />
     <Compile Include="DataBaseClass\SupplierDB.vb" />
     <Compile Include="Catalogs.Designer.vb">
       <DependentUpon>Catalogs.vb</DependentUpon>
@@ -160,6 +167,12 @@
       <DependentUpon>ProductBox.vb</DependentUpon>
     </Compile>
     <Compile Include="EditBoxes\ProductBox.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditBoxes\StockBox.Designer.vb">
+      <DependentUpon>StockBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="EditBoxes\StockBox.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="EditBoxes\SupplierBox.Designer.vb">
@@ -311,6 +324,9 @@
     <EmbeddedResource Include="Catalogs.resx">
       <DependentUpon>Catalogs.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ConfigBoxes\AccountBox.resx">
+      <DependentUpon>AccountBox.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EditBoxes\CategoryBox.resx">
       <DependentUpon>CategoryBox.vb</DependentUpon>
     </EmbeddedResource>
@@ -322,6 +338,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EditBoxes\ProductBox.resx">
       <DependentUpon>ProductBox.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditBoxes\StockBox.resx">
+      <DependentUpon>StockBox.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditBoxes\SupplierBox.resx">
       <DependentUpon>SupplierBox.vb</DependentUpon>

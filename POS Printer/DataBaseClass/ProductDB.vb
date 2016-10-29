@@ -40,11 +40,8 @@ Public Class ProductDB
         ' Obtiene la tabla de productos
         Dim dt = New DataTable()
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
-        Dim Sql As String = "SELECT product_id,category_name,product_name,product_key,unit_name,product_visible " &
-            "FROM products " &
-            "JOIN categories ON products.category_id = categories.category_id " &
-            "JOIN units ON products.unit_id = units.unit_id " &
-            "WHERE products.account_id = @account AND product_key LIKE @product"
+        Dim Sql As String = "SELECT * FROM products_view " &
+            "WHERE account_id = @account AND product_key LIKE @product OR product_name LIKE @product"
 
         If CategoryVisible = True Then
             Sql = Sql & " AND category_visible = TRUE"
@@ -194,7 +191,7 @@ Public Class ProductDB
             Dim reader As MySqlDataReader = dbcommand.ExecuteReader(CommandBehavior.SingleRow)
 
             If reader.Read Then
-                result = reader("unit_name").ToString
+                result = reader("unit_short").ToString
             Else
                 result = Nothing
             End If

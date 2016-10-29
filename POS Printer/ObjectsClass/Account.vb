@@ -1,6 +1,6 @@
 ﻿Public Class Account
     Private varId As Integer
-    Private varAccount As String
+    Private varName As String
     Private varRfc As String
     Private varSlogan As String
     Private varAddress1 As String
@@ -16,12 +16,12 @@
             Me.varId = value
         End Set
     End Property
-    Public Property Account As String
+    Public Property Name As String
         Get
-            Return Me.varAccount
+            Return Me.varName
         End Get
         Set(value As String)
-            Me.varAccount = value
+            Me.varName = value
         End Set
     End Property
     Public Property Rfc As String

@@ -1,5 +1,4 @@
-﻿Imports MySql.Data.MySqlClient
-Imports System.IO.Ports
+﻿Imports System.IO.Ports
 Public Class Sale
     Public SaleId As Integer
     Private Sale As Invoice
@@ -49,10 +48,12 @@ Public Class Sale
                 .Columns(1).Visible = False
                 .Columns(3).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
                 .Columns(3).DefaultCellStyle.Format = String.Format("n", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))
-                .Columns(5).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-                .Columns(5).DefaultCellStyle.Format = String.Format("n", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))
-                .Columns(6).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-                .Columns(6).DefaultCellStyle.Format = String.Format("n", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))
+                .Columns(6).Visible = False
+                .Columns(7).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns(7).DefaultCellStyle.Format = String.Format("c", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))
+                .Columns(8).Visible = False
+                .Columns(9).Visible = False
+                .Columns(10).Visible = False
                 .AutoResizeColumns()
                 .CurrentCell = DataGridView1.Rows(0).Cells(2) ' Columna visible
             End With
@@ -80,27 +81,6 @@ Public Class Sale
         End Try
 
     End Sub
-    Public Function GetItems(sale_id As Integer) As MySqlDataReader
-        ' Retorna los productos de un ticket
-
-        ConnectDatabase()
-
-        Dim Sql As String = "SELECT * FROM items_view WHERE sale_id = " & sale_id
-        Dim dbcommand As New MySqlCommand(Sql, conn)
-        Dim reader As MySqlDataReader = dbcommand.ExecuteReader()
-        Try
-            If reader.HasRows Then
-
-            End If
-            'reader.Close()
-        Catch ex As Exception
-            Throw ex
-        Finally
-            DisconnectDatabase()
-        End Try
-
-        Return reader
-    End Function
     Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
         ' Invoca la ventana de productos
         Dim frmAdd As New ProductList
@@ -130,6 +110,10 @@ Public Class Sale
         End Try
     End Sub
     Private Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        Me.CheckOut()
+    End Sub
+
+    Private Sub CheckOut()
         Dim frmPay As New CheckOut
 
         frmPay.SaleId = SaleId
@@ -191,13 +175,20 @@ Public Class Sale
 
             frmAdd.TicketID = SaleId
             frmAdd.ProductString = TextBox1.Text
+
             If frmAdd.ShowDialog() = DialogResult.OK Then
+
                 FillDatagrid()
-                'GetTicket()
-                TextBox1.SelectAll()
+                'TextBox1.SelectAll()
+                TextBox1.Text = ""
+
             End If
         ElseIf e.KeyCode = 27 Then
             Me.Close()
         End If
+    End Sub
+
+    Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
+        Me.CheckOut()
     End Sub
 End Class

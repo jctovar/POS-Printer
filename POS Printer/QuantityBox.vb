@@ -4,6 +4,7 @@
     Private product As New Product
     Private price As New Price
     Private item As New Item
+    Private unit As String
     Private Sub Form9_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
             product = ProductDB.GetProduct(ProductId)
@@ -13,8 +14,10 @@
 
         Me.CheckItemData()
 
+        unit = ProductDB.GetUnitName(product.Unit).ToString
+
         Me.Text = String.Format("{0} - {1}", Application.ProductName, product.Name)
-        Label1.Text = String.Format("{0} ( {1} )", Label1.Text, ProductDB.GetUnitName(product.Unit).ToString)
+        Label1.Text = String.Format("{0} ( {1} )", Label1.Text, unit)
 
         Me.Calcula()
     End Sub
@@ -92,9 +95,12 @@
             Else
                 ' Calculo por medio de la formula de tara de peso
                 Label3.Visible = True
+                Label5.Visible = True
                 TextBox3.ReadOnly = False
                 TextBox3.TabStop = True
                 TextBox3.Visible = True
+                TextBox5.Visible = True
+                TextBox5.Text = price.Tare
 
                 ' Texbox1 = cantidad
                 ' Texbox3 = peso (Kg) 
@@ -118,11 +124,15 @@
             Tara = price.Tare * TextBox1.Text * TextBox2.Text
 
             item.Price = ((TextBox2.Text * TextBox3.Text) - Tara) / TextBox1.Text
-            item.Note = CDbl(TextBox3.Text).ToString("n") & " KG (-" & (Tara / TextBox2.Text) & "KG) * " & TextBox2.Text
+            item.Formula = CDbl(TextBox3.Text).ToString("n") & " KG (-" & (Tara / TextBox2.Text) & "KG) * " & TextBox2.Text
+            item.Note = ""
         Else
             item.Price = TextBox2.Text
+            item.Formula = CDbl(TextBox1.Text).ToString("n") & " " & unit & " * " & TextBox2.Text
             item.Note = ""
         End If
+
+        item.Tare = price.Tare
 
         Try
             If ItemDB.AddItem(item) = True Then
@@ -136,9 +146,18 @@
         item.Quantity = CDbl(TextBox1.Text)
 
         If TextBox3.ReadOnly = False Then
+            Dim Tara As Double
+
+            Tara = price.Tare * TextBox1.Text * TextBox2.Text
+
+            item.Price = ((TextBox2.Text * TextBox3.Text) - Tara) / TextBox1.Text
+            item.Formula = CDbl(TextBox3.Text).ToString("n") & " KG (-" & (Tara / TextBox2.Text) & "KG) * " & TextBox2.Text
         Else
             item.Price = TextBox2.Text
+            item.Formula = CDbl(TextBox1.Text).ToString("n") & " " & unit & " * " & TextBox2.Text
         End If
+
+        item.Tare = price.Tare
 
         Try
             If ItemDB.UpdateItem(item) = True Then

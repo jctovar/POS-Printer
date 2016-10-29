@@ -135,7 +135,7 @@ Public Class Main
         account = AccountDB.GetAccount(My.Settings.account.ToString)
 
         Globales.AccountId = account.Id
-        Globales.AccountName = account.Account
+        Globales.AccountName = account.Name
         Globales.AccountRfc = account.Rfc
         Globales.AccountSlogan = account.Slogan
         Globales.AccountAddres_1 = account.Address1
@@ -316,5 +316,22 @@ Public Class Main
             mySerialPort.Close()
         End Try
 
+    End Sub
+
+    Private Sub ExistenciasToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExistenciasToolStripMenuItem.Click
+        Dim frmStocks As New Catalogs
+        frmStocks.Search = "stocks"
+
+        If frmStocks.ShowDialog() = DialogResult.OK Then
+            'Me.ShowStatus()
+        End If
+    End Sub
+
+    Private Sub DatosDeLaCuentaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DatosDeLaCuentaToolStripMenuItem.Click
+        Dim frmAccount As New AccountBox
+
+        If frmAccount.ShowDialog() = DialogResult.OK Then
+            'Me.ShowStatus()
+        End If
     End Sub
 End Class

@@ -36,7 +36,7 @@ Partial Class ProductList
         'StatusStrip1
         '
         Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel1})
-        Me.StatusStrip1.Location = New System.Drawing.Point(0, 406)
+        Me.StatusStrip1.Location = New System.Drawing.Point(0, 462)
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.Size = New System.Drawing.Size(774, 35)
         Me.StatusStrip1.TabIndex = 3
@@ -80,14 +80,14 @@ Partial Class ProductList
         Me.DataGridView1.ReadOnly = True
         Me.DataGridView1.RowTemplate.Height = 24
         Me.DataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-        Me.DataGridView1.Size = New System.Drawing.Size(774, 406)
+        Me.DataGridView1.Size = New System.Drawing.Size(774, 462)
         Me.DataGridView1.TabIndex = 7
         '
         'ProductList
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(774, 441)
+        Me.ClientSize = New System.Drawing.Size(774, 497)
         Me.Controls.Add(Me.DataGridView1)
         Me.Controls.Add(Me.StatusStrip1)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog

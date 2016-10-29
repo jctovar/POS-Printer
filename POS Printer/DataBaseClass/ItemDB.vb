@@ -25,6 +25,43 @@ Public Class ItemDB
 
         Return dt
     End Function
+    Public Shared Function GetItem(SaleId As Integer, ProductId As Integer) As Item
+        Dim item As New Item
+        Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
+        Dim Sql = "SELECT * FROM products_has_sales WHERE sale_id=@sale AND product_id=@product"
+        Dim dbcommand As New MySqlCommand(Sql, Connection)
+
+        dbcommand.Parameters.AddWithValue("@sale", SaleId)
+        dbcommand.Parameters.AddWithValue("@product", ProductId)
+
+        Try
+            Connection.Open()
+
+            Dim reader As MySqlDataReader = dbcommand.ExecuteReader(CommandBehavior.SingleRow)
+
+            If reader.Read Then
+                With item
+                    .Sale = reader("sale_id")
+                    .Product = reader("product_id")
+                    .Quantity = reader("sale_quantity")
+                    .Price = reader("sale_price")
+                    .Tax = reader("sale_tax")
+                    .Formula = reader("sale_formula").ToString
+                    .Note = reader("sale_note").ToString
+                    .Tare = reader("sale_tare").ToString
+                End With
+            Else
+                item = Nothing
+            End If
+            reader.Close()
+        Catch ex As Exception
+            Throw ex
+        Finally
+            Connection.Close()
+        End Try
+
+        Return item
+    End Function
     Public Shared Function CheckItem(SaleId As Integer, ProductId As Integer) As Boolean
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql = "SELECT * FROM products_has_sales WHERE sale_id=@sale AND product_id=@product"
@@ -75,8 +112,8 @@ Public Class ItemDB
     Public Shared Function AddItem(item As Item) As Boolean
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "INSERT INTO products_has_sales " &
-            "(sale_id,product_id,sale_quantity,sale_price,sale_tax,sale_note) " &
-            "VALUES (@sale,@product,@quantity,@price,@tax,@note)"
+            "(sale_id,product_id,sale_quantity,sale_price,sale_tax,sale_formula,sale_note,sale_tare) " &
+            "VALUES (@sale,@product,@quantity,@price,@tax,@formula,@note,@tare)"
         Dim Result As Boolean
         Dim dbcommand As New MySqlCommand(Sql, Connection)
 
@@ -85,7 +122,9 @@ Public Class ItemDB
         dbcommand.Parameters.AddWithValue("@quantity", item.Quantity)
         dbcommand.Parameters.AddWithValue("@price", item.Price)
         dbcommand.Parameters.AddWithValue("@tax", item.Tax)
+        dbcommand.Parameters.AddWithValue("@formula", item.Formula)
         dbcommand.Parameters.AddWithValue("@note", item.Note)
+        dbcommand.Parameters.AddWithValue("@tare", item.Tare)
 
         Try
             Connection.Open()
@@ -104,7 +143,7 @@ Public Class ItemDB
     Public Shared Function UpdateItem(item As Item) As Boolean
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "UPDATE products_has_sales " &
-            "SET sale_quantity=@quantity, sale_price=@price, sale_tax=@tax, sale_note=@note " &
+            "SET sale_quantity=@quantity, sale_price=@price, sale_tax=@tax, sale_formula=@formula, sale_note=@note, sale_tare=@tare " &
             "WHERE sale_id=@sale AND product_id=@product"
         Dim dbcommand As New MySqlCommand(Sql, Connection)
 
@@ -113,7 +152,9 @@ Public Class ItemDB
         dbcommand.Parameters.AddWithValue("@quantity", item.Quantity)
         dbcommand.Parameters.AddWithValue("@price", item.Price)
         dbcommand.Parameters.AddWithValue("@tax", item.Tax)
+        dbcommand.Parameters.AddWithValue("@formula", item.Formula)
         dbcommand.Parameters.AddWithValue("@note", item.Note)
+        dbcommand.Parameters.AddWithValue("@tare", item.Tare)
 
         Try
             Connection.Open()
@@ -125,40 +166,5 @@ Public Class ItemDB
         Finally
             Connection.Close()
         End Try
-    End Function
-    Public Shared Function GetItem(SaleId As Integer, ProductId As Integer) As Item
-        Dim item As New Item
-        Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
-        Dim Sql = "SELECT * FROM products_has_sales WHERE sale_id=@sale AND product_id=@product"
-        Dim dbcommand As New MySqlCommand(Sql, Connection)
-
-        dbcommand.Parameters.AddWithValue("@sale", SaleId)
-        dbcommand.Parameters.AddWithValue("@product", ProductId)
-
-        Try
-            Connection.Open()
-
-            Dim reader As MySqlDataReader = dbcommand.ExecuteReader(CommandBehavior.SingleRow)
-
-            If reader.Read Then
-                With item
-                    .Sale = reader("sale_id")
-                    .Product = reader("product_id")
-                    .Quantity = reader("sale_quantity")
-                    .Price = reader("sale_price")
-                    .Tax = reader("sale_tax")
-                    .Note = reader("sale_note").ToString
-                End With
-            Else
-                item = Nothing
-            End If
-            reader.Close()
-        Catch ex As Exception
-            Throw ex
-        Finally
-            Connection.Close()
-        End Try
-
-        Return item
     End Function
 End Class
