@@ -1,10 +1,10 @@
 ﻿Imports System.ComponentModel
 Imports System.IO.Ports
-Public Class Main
+Public Class MainBox
     Dim ds As New DataSet
     WithEvents bsData As New BindingSource
     Private SaleId As Integer = 0
-    Private Sub Form1_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+    Private Sub MainBox_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.GetAccount()
         Me.CheckTerminal()
         Me.ShowStatus()
@@ -18,11 +18,14 @@ Public Class Main
             e.Cancel = True
         End If
     End Sub
-    Private Sub DataGridView1_KeyPress(sender As Object, e As KeyPressEventArgs) Handles DataGridView1.KeyPress
+    Private Sub DataGridView1_KeyPress(sender As Object, e As KeyPressEventArgs)
         If Asc(e.KeyChar) = 32 Then
             Me.EditSale()
         End If
     End Sub
+    ' ***********************************************************
+    ' Llamadas de las principales rutinas
+    ' ***********************************************************
     Private Sub ShowStatus()
         ' Muestra usuario y caja en la barra de estado
         ToolStripStatusLabel1.Text = "Caja: " & TerminalDB.GetTerminalName(My.Settings.terminal)
@@ -79,21 +82,6 @@ Public Class Main
             Me.Cursor = System.Windows.Forms.Cursors.Default
         End Try
     End Sub
-    Private Sub SalirToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SalirToolStripMenuItem.Click
-        Me.Close()
-    End Sub
-    Private Sub ConfiguraciónToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ConfiguraciónToolStripMenuItem.Click
-        Dim frmConfig As New Config
-
-        frmConfig.ShowDialog()
-    End Sub
-    Private Sub ImpresoraToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImpresoraToolStripMenuItem.Click
-        Dim frmPrinter As New Serial
-
-        frmPrinter.ShowDialog()
-
-        ShowStatus()
-    End Sub
     Private Sub Autentificacion()
         ' Valida datos del usuario
         Dim frmLogin As New Login
@@ -112,8 +100,8 @@ Public Class Main
             MisDatosToolStripMenuItem.Enabled = True
             TerminalesToolStripMenuItem.Enabled = True
 
-            ToolStripButton1.Enabled = True ' Customers button
-            ToolStripButton2.Enabled = True ' Products button
+            btnCustomers.Enabled = True ' Customers button
+            btnProducts.Enabled = True ' Products button
 
             FillDatagrid()
         End If
@@ -125,9 +113,6 @@ Public Class Main
         If frmNew.ShowDialog() Then
             FillDatagrid()
         End If
-    End Sub
-    Private Sub AutenticarToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AutenticarToolStripMenuItem.Click
-        Me.Autentificacion()
     End Sub
     Private Sub GetAccount()
         Dim account As New Account
@@ -145,10 +130,6 @@ Public Class Main
         Globales.AccountPhone = account.Phone
 
     End Sub
-    Private Sub btnNew_Click(sender As Object, e As EventArgs) Handles btnNew.Click
-        ' Invoca ventana para nueva venta
-        Me.NewTicket()
-    End Sub
     Private Sub EditSale()
         ' Edita una venta
         Dim frmEdit As New Sale
@@ -163,25 +144,6 @@ Public Class Main
             MsgBox("Selecione venta")
         End Try
     End Sub
-    Private Sub AcercaDeToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AcercaDeToolStripMenuItem.Click
-        Dim frmAbout As New About
-
-        frmAbout.ShowDialog()
-    End Sub
-    Private Sub btnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
-        Me.Autentificacion()
-    End Sub
-    Private Sub NuevaVentaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NuevaVentaToolStripMenuItem.Click
-        Me.NewTicket()
-    End Sub
-    Private Sub DefinirTerminalToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DefinirTerminalToolStripMenuItem.Click
-        ' Selecciona terminal
-        Dim frmTerminal As New SelectTerminal
-
-        If frmTerminal.ShowDialog() = DialogResult.OK Then
-            Me.ShowStatus()
-        End If
-    End Sub
     Private Sub CheckTerminal()
 
         If String.IsNullOrEmpty(TerminalDB.GetTerminalName(My.Settings.terminal)) Then
@@ -194,74 +156,68 @@ Public Class Main
         End If
 
     End Sub
-    Private Sub CancelarVentaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CancelarVentaToolStripMenuItem.Click
-
-    End Sub
-    Private Sub btnReport_Click(sender As Object, e As EventArgs) Handles btnReport.Click
-        Dim frmReport As New Form12
-
-        frmReport.ShowDialog()
-    End Sub
-    Private Sub DataGridView1_SelectionChanged(sender As Object, e As EventArgs) Handles DataGridView1.SelectionChanged
+    Private Sub DataGridView1_SelectionChanged(sender As Object, e As EventArgs)
         Try
             SaleId = DataGridView1(1, DataGridView1.CurrentRow.Index).Value
         Catch ex As Exception
 
         End Try
     End Sub
-    Private Sub RecargarListadoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles RecargarListadoToolStripMenuItem.Click
+    Private Sub RecargarListadoToolStripMenuItem_Click(sender As Object, e As EventArgs)
         Me.FillDatagrid()
     End Sub
-    Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellDoubleClick
+    Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs)
         Me.EditSale()
     End Sub
 
-    Private Sub ClientesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ClientesToolStripMenuItem.Click
-        ' Show customers windows
-        Dim frmCustomers As New Catalogs
-        frmCustomers.Search = "customers"
+    Private Sub ListadoDeVentasToolStripMenuItem_Click(sender As Object, e As EventArgs)
+        Dim frmSales As New SalesSearch
 
-        If frmCustomers.ShowDialog() = DialogResult.OK Then
+        frmSales.ShowDialog()
+    End Sub
+    Private Sub ExistenciasToolStripMenuItem_Click(sender As Object, e As EventArgs)
+        Dim frmStocks As New Catalogs
+        frmStocks.Search = "stocks"
+
+        If frmStocks.ShowDialog() = DialogResult.OK Then
             'Me.ShowStatus()
         End If
     End Sub
-    Private Sub ProductosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ProductosToolStripMenuItem.Click
-        ' Show products windows
-        Dim frmProducts As New Catalogs
-        frmProducts.Search = "products"
+    Private Sub DataGridView1_KeyDown(sender As Object, e As KeyEventArgs)
+        If e.KeyCode = 13 Then
+            Me.EditSale()
+        End If
+    End Sub
+    ' ***********************************************************
+    ' Llamadas de los menus
+    ' ***********************************************************
+    Private Sub ConfiguraciónToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles ConfiguraciónToolStripMenuItem.Click
+        Dim frmConfig As New Config
 
-        If frmProducts.ShowDialog() = DialogResult.OK Then
+        frmConfig.ShowDialog()
+    End Sub
+    Private Sub AutenticarToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles AutenticarToolStripMenuItem.Click
+        Me.Autentificacion()
+    End Sub
+    Private Sub AcercaDeToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles AcercaDeToolStripMenuItem.Click
+        Dim frmAbout As New About
+
+        frmAbout.ShowDialog()
+    End Sub
+    Private Sub NuevaVentaToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles NuevaVentaToolStripMenuItem.Click
+        Me.NewTicket()
+    End Sub
+    Private Sub SalirToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles SalirToolStripMenuItem.Click
+        Me.Close()
+    End Sub
+    Private Sub DatosDeLaCuentaToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles DatosDeLaCuentaToolStripMenuItem.Click
+        Dim frmAccount As New AccountBox
+
+        If frmAccount.ShowDialog() = DialogResult.OK Then
             'Me.ShowStatus()
         End If
     End Sub
-    Private Sub CuentasToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CuentasToolStripMenuItem.Click
-        ' Show profiles windows
-        Dim frmProfiles As New Catalogs
-        frmProfiles.Search = "profiles"
-
-        If frmProfiles.ShowDialog() = DialogResult.OK Then
-            'Me.ShowStatus()
-        End If
-    End Sub
-    Private Sub ProveedoresToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ProveedoresToolStripMenuItem.Click
-        ' Show profiles windows
-        Dim frmSuppliers As New Catalogs
-        frmSuppliers.Search = "suppliers"
-
-        If frmSuppliers.ShowDialog() = DialogResult.OK Then
-            'Me.ShowStatus()
-        End If
-    End Sub
-    Private Sub TerminalesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles TerminalesToolStripMenuItem.Click
-        ' Show profiles windows
-        Dim frmTerminals As New Catalogs
-        frmTerminals.Search = "terminals"
-
-        If frmTerminals.ShowDialog() = DialogResult.OK Then
-            'Me.ShowStatus()
-        End If
-    End Sub
-    Private Sub MisDatosToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MisDatosToolStripMenuItem.Click
+    Private Sub MisDatosToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles MisDatosToolStripMenuItem.Click
         ' Show profiles windows
         Dim frmProfile As New UserBox
         frmProfile.ProfileId = Globales.ProfileId
@@ -270,15 +226,43 @@ Public Class Main
             'Me.ShowStatus()
         End If
     End Sub
-    Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
-        Me.ClientesToolStripMenuItem.PerformClick()
-    End Sub
+    Private Sub ClientesToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles ClientesToolStripMenuItem.Click
+        ' Show customers windows
+        Dim frmCustomers As New Catalogs
+        frmCustomers.Search = "customers"
 
-    Private Sub ToolStripButton2_Click(sender As Object, e As EventArgs) Handles ToolStripButton2.Click
-        Me.ProductosToolStripMenuItem.PerformClick()
+        If frmCustomers.ShowDialog() = DialogResult.OK Then
+            'Me.ShowStatus()
+        End If
     End Sub
+    Private Sub ProveedoresToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles ProveedoresToolStripMenuItem.Click
+        ' Show profiles windows
+        Dim frmSuppliers As New Catalogs
+        frmSuppliers.Search = "suppliers"
 
-    Private Sub CategoríasToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CategoríasToolStripMenuItem.Click
+        If frmSuppliers.ShowDialog() = DialogResult.OK Then
+            'Me.ShowStatus()
+        End If
+    End Sub
+    Private Sub ProductosToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles ProductosToolStripMenuItem.Click
+        ' Show products windows
+        Dim frmProducts As New Catalogs
+        frmProducts.Search = "products"
+
+        If frmProducts.ShowDialog() = DialogResult.OK Then
+            'Me.ShowStatus()
+        End If
+    End Sub
+    Private Sub CuentasToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles CuentasToolStripMenuItem.Click
+        ' Show profiles windows
+        Dim frmProfiles As New Catalogs
+        frmProfiles.Search = "profiles"
+
+        If frmProfiles.ShowDialog() = DialogResult.OK Then
+            'Me.ShowStatus()
+        End If
+    End Sub
+    Private Sub CategoríasToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles CategoríasToolStripMenuItem.Click
         ' Show profiles windows
         Dim frmCategories As New Catalogs
         frmCategories.Search = "categories"
@@ -287,51 +271,72 @@ Public Class Main
             'Me.ShowStatus()
         End If
     End Sub
-    Private Sub Timer1_Tick(sender As Object, e As EventArgs) Handles Timer1.Tick
-        DataGridView1.Refresh()
+    Private Sub TerminalesToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles TerminalesToolStripMenuItem.Click
+        ' Show profiles windows
+        Dim frmTerminals As New Catalogs
+        frmTerminals.Search = "terminals"
+
+        If frmTerminals.ShowDialog() = DialogResult.OK Then
+            'Me.ShowStatus()
+        End If
     End Sub
+    Private Sub ImpresoraToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImpresoraToolStripMenuItem.Click
+        Dim frmPrinter As New Serial
 
-    Private Sub BusquedaDeVentaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles BusquedaDeVentaToolStripMenuItem.Click
-        Dim frmSearch As New IdSearchBox
+        frmPrinter.ShowDialog()
 
-        frmSearch.ShowDialog()
+        ShowStatus()
     End Sub
+    Private Sub DefinirTerminalToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles DefinirTerminalToolStripMenuItem.Click
+        ' Selecciona terminal
+        Dim frmTerminal As New SelectTerminal
 
-    Private Sub ListadoDeVentasToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ListadoDeVentasToolStripMenuItem.Click
-        Dim frmSales As New SalesSearch
-
-        frmSales.ShowDialog()
+        If frmTerminal.ShowDialog() = DialogResult.OK Then
+            Me.ShowStatus()
+        End If
     End Sub
-
-    Private Sub ImprimirVentaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImprimirVentaToolStripMenuItem.Click
+    Private Sub ImprimirVentaToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles ImprimirVentaToolStripMenuItem.Click
         Dim mySerialPort As New SerialPort
 
         Try
-            mySerialPort.PortName = "COM3"
-            mySerialPort.Open()
-            mySerialPort.Write(PrintSale.Print(DataGridView1(1, DataGridView1.CurrentRow.Index).Value))
+            With mySerialPort
+                .PortName = My.Settings.serial
+                .Open()
+                .Write(PrintSale.Print(DataGridView1(1, DataGridView1.CurrentRow.Index).Value))
+            End With
+
         Catch ex As Exception
             MessageBox.Show("Ocurrio un error; " & ex.ToString, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
         Finally
             mySerialPort.Close()
         End Try
+    End Sub
+    Private Sub BusquedaDeVentaToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles BusquedaDeVentaToolStripMenuItem.Click
+        Dim frmSearch As New IdSearchBox
 
+        frmSearch.ShowDialog()
+    End Sub
+    ' ***********************************************************
+    ' Llamadas de los botones
+    ' ***********************************************************
+    Private Sub btnLogin_Click_1(sender As Object, e As EventArgs) Handles btnLogin.Click
+        Me.Autentificacion()
+    End Sub
+    Private Sub btnNew_Click_1(sender As Object, e As EventArgs) Handles btnNew.Click
+        ' Invoca ventana para nueva venta
+        Me.NewTicket()
+    End Sub
+    Private Sub btnCustomers_Click(sender As Object, e As EventArgs) Handles btnCustomers.Click
+        Me.ClientesToolStripMenuItem.PerformClick()
+    End Sub
+    Private Sub btnReport_Click(sender As Object, e As EventArgs) Handles btnReport.Click
+        Dim frmReport As New Form12
+
+        frmReport.ShowDialog()
+    End Sub
+    Private Sub btnProducts_Click(sender As Object, e As EventArgs) Handles btnProducts.Click
+        Me.ProductosToolStripMenuItem.PerformClick()
     End Sub
 
-    Private Sub ExistenciasToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ExistenciasToolStripMenuItem.Click
-        Dim frmStocks As New Catalogs
-        frmStocks.Search = "stocks"
 
-        If frmStocks.ShowDialog() = DialogResult.OK Then
-            'Me.ShowStatus()
-        End If
-    End Sub
-
-    Private Sub DatosDeLaCuentaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles DatosDeLaCuentaToolStripMenuItem.Click
-        Dim frmAccount As New AccountBox
-
-        If frmAccount.ShowDialog() = DialogResult.OK Then
-            'Me.ShowStatus()
-        End If
-    End Sub
 End Class

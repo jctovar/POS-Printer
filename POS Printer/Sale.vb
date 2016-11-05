@@ -14,7 +14,6 @@ Public Class Sale
                     btnSave.Enabled = False
                     TextBox1.Enabled = False
                     DataGridView1.Enabled = False
-                    ToolStripButton1.Enabled = False
                     btnDelete.Enabled = False
                 End If
 
@@ -80,16 +79,6 @@ Public Class Sale
             mySerialPort.Close()
         End Try
 
-    End Sub
-    Private Sub ToolStripButton1_Click(sender As Object, e As EventArgs) Handles ToolStripButton1.Click
-        ' Invoca la ventana de productos
-        Dim frmAdd As New ProductList
-
-        frmAdd.TicketID = SaleId
-        If frmAdd.ShowDialog() = DialogResult.OK Then
-            FillDatagrid()
-            'GetTicket()
-        End If
     End Sub
     Private Sub btnDelete_Click(sender As Object, e As EventArgs) Handles btnDelete.Click
         Try
@@ -179,6 +168,8 @@ Public Class Sale
             If frmAdd.ShowDialog() = DialogResult.OK Then
 
                 FillDatagrid()
+                Sale = InvoiceDB.GetInvoice(SaleId)
+                TextBox7.Text = Sale.Total.ToString("n2")
                 'TextBox1.SelectAll()
                 TextBox1.Text = ""
 

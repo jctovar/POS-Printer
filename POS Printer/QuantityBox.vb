@@ -53,11 +53,17 @@
         TextBox3.SelectAll()
     End Sub
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles btnGuardar.Click
-        If ItemDB.CheckItem(SaleId, ProductId) = True Then
-            Me.UpdateItem()
+        If TextBox3.Text = 0 And TextBox3.Visible = True Then
+            TextBox3.Focus()
         Else
-            Me.AddItem()
+            If ItemDB.CheckItem(SaleId, ProductId) = True Then
+                Me.UpdateItem()
+            Else
+                Me.AddItem()
+            End If
         End If
+
+
     End Sub
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles btnCancelar.Click
         Me.Close()

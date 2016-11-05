@@ -23,6 +23,7 @@ Public Class ProductDB
                     .Tax = reader("tax_id")
                     .Category = reader("category_id")
                     .Visible = reader("product_visible")
+                    .Inventory = reader("product_inventory")
                 End With
             Else
                 product = Nothing
@@ -41,7 +42,7 @@ Public Class ProductDB
         Dim dt = New DataTable()
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "SELECT * FROM products_view " &
-            "WHERE account_id = @account AND product_key LIKE @product OR product_name LIKE @product"
+            "WHERE account_id = @account AND (product_key LIKE @product OR product_name LIKE @product)"
 
         If CategoryVisible = True Then
             Sql = Sql & " AND category_visible = TRUE"
@@ -70,7 +71,7 @@ Public Class ProductDB
     Public Shared Function UpdateProduct(product As Product) As Boolean
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "UPDATE products " &
-            "SET product_name=@name, product_description=@description, product_key=@key, unit_id=@unit, category_id=@category, product_visible=@visible, tax_id=@tax " &
+            "SET product_name=@name, product_description=@description, product_key=@key, unit_id=@unit, category_id=@category, product_visible=@visible, tax_id=@tax, product_inventory=@inventory " &
             "WHERE product_id=@id"
         Dim dbcommand As New MySqlCommand(Sql, Connection)
 
@@ -82,6 +83,7 @@ Public Class ProductDB
         dbcommand.Parameters.AddWithValue("@category", product.Category)
         dbcommand.Parameters.AddWithValue("@tax", product.Tax)
         dbcommand.Parameters.AddWithValue("@visible", product.Visible)
+        dbcommand.Parameters.AddWithValue("@inventory", product.Inventory)
 
         Try
             Connection.Open()
@@ -226,8 +228,8 @@ Public Class ProductDB
     Public Shared Function AddProduct(product As Product) As Boolean
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "INSERT INTO products " &
-            "(account_id,product_name,product_description,product_key,unit_id,category_id,product_visible,tax_id) " &
-            "VALUES (@account,@name,@description,@key,@unit,@category,@visible,@tax)"
+            "(account_id,product_name,product_description,product_key,unit_id,category_id,product_visible,tax_id,product_inventory) " &
+            "VALUES (@account,@name,@description,@key,@unit,@category,@visible,@tax,@inventory)"
         Dim dbcommand As New MySqlCommand(Sql, Connection)
 
         dbcommand.Parameters.AddWithValue("@account", product.Account)
@@ -238,6 +240,7 @@ Public Class ProductDB
         dbcommand.Parameters.AddWithValue("@category", product.Category)
         dbcommand.Parameters.AddWithValue("@tax", product.Tax)
         dbcommand.Parameters.AddWithValue("@visible", product.Visible)
+        dbcommand.Parameters.AddWithValue("@inventory", product.Inventory)
 
         Try
             Connection.Open()

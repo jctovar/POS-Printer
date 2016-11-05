@@ -5,7 +5,7 @@
     Public ProductString As String
     Private Sub Form7_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
-        Me.Text = String.Format("{0} - {1}", Application.ProductName, "Añadir producto al ticket " & TicketID)
+        Me.Text = String.Format("{0} - {1}", Application.ProductName, "Catalogo de productos")
 
         FillDatagrid()
     End Sub

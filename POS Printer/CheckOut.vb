@@ -54,6 +54,19 @@
         End If
     End Sub
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+        ' Inicia el proceso de pago
+        '
+        If TextBox2.Text = 0 Then
+            TextBox2.Focus()
+            Exit Sub
+        End If
+
+        If TextBox5.Text = "" Then
+            TextBox5.Focus()
+            Exit Sub
+        End If
+
+
         If CDbl(TextBox4.Text >= 0) Then
             If CDbl(TextBox2.Text) > 0 Then
                 With payment1
@@ -67,7 +80,7 @@
                         Console.WriteLine("ok")
                     End If
                 Catch ex As Exception
-
+                    Exit Sub
                 End Try
             End If
 

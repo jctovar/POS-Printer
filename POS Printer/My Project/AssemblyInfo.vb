@@ -8,10 +8,10 @@ Imports System.Runtime.InteropServices
 
 ' Revisar los valores de los atributos del ensamblado
 
-<Assembly: AssemblyTitle("POS Printer")>
-<Assembly: AssemblyDescription("Sistema de impresión POS")>
+<Assembly: AssemblyTitle("Albaco POS")>
+<Assembly: AssemblyDescription("Sistema de ventas POS")>
 <Assembly: AssemblyCompany("Cuatro Colibrí SA de CV")>
-<Assembly: AssemblyProduct("POS Printer")>
+<Assembly: AssemblyProduct("Albaco POS")>
 <Assembly: AssemblyCopyright("Copyright ©  2016 by Cuatro Colibri SA de CV")>
 <Assembly: AssemblyTrademark("Albaco")>
 

@@ -38,6 +38,8 @@
             ComboBox2.SelectedValue = product.Category
             ComboBox3.SelectedValue = product.Tax
             CheckBox1.Checked = product.Visible
+            CheckBox2.Checked = product.Inventory
+
         Catch ex As Exception
             MsgBox("Ocurrio un error! " & ex.Message.ToString)
         End Try
@@ -47,6 +49,7 @@
     End Sub
 
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
+
         With product
             .Name = TextBox1.Text.ToString
             .Description = TextBox6.Text
@@ -56,12 +59,13 @@
             .Category = ComboBox2.SelectedValue
             .Tax = ComboBox3.SelectedValue
             .Visible = CheckBox1.Checked
+            .Inventory = CheckBox2.Checked
         End With
 
         If MessageBox.Show("Quiere guardar los cambios?", Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) = DialogResult.Yes Then
             Try
                 If Add = True Then
-                    If ProductDB.addProduct(product) = True Then
+                    If ProductDB.AddProduct(product) = True Then
                         Me.DialogResult = DialogResult.OK
                     End If
                 Else

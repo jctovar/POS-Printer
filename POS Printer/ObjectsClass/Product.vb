@@ -8,6 +8,7 @@
     Private varUnit As Integer
     Private varTax As Double
     Private varVisible As Boolean
+    Private varInventory As Boolean
     Public Property Id As Integer
         Get
             Return Me.varId
@@ -78,6 +79,14 @@
         End Get
         Set(value As Boolean)
             Me.varVisible = value
+        End Set
+    End Property
+    Public Property Inventory As Boolean
+        Get
+            Return Me.varInventory
+        End Get
+        Set(value As Boolean)
+            Me.varInventory = value
         End Set
     End Property
 End Class

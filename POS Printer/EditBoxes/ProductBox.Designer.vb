@@ -33,6 +33,8 @@ Partial Class ProductBox
         Me.Button1 = New System.Windows.Forms.Button()
         Me.TabControl1 = New System.Windows.Forms.TabControl()
         Me.TabPage1 = New System.Windows.Forms.TabPage()
+        Me.Label4 = New System.Windows.Forms.Label()
+        Me.ComboBox3 = New System.Windows.Forms.ComboBox()
         Me.CheckBox1 = New System.Windows.Forms.CheckBox()
         Me.TextBox6 = New System.Windows.Forms.TextBox()
         Me.Label8 = New System.Windows.Forms.Label()
@@ -52,8 +54,7 @@ Partial Class ProductBox
         Me.ToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem2 = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripMenuItem3 = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ComboBox3 = New System.Windows.Forms.ComboBox()
-        Me.Label4 = New System.Windows.Forms.Label()
+        Me.CheckBox2 = New System.Windows.Forms.CheckBox()
         Me.TabControl1.SuspendLayout()
         Me.TabPage1.SuspendLayout()
         Me.TabPage2.SuspendLayout()
@@ -95,6 +96,7 @@ Partial Class ProductBox
         '
         'TabPage1
         '
+        Me.TabPage1.Controls.Add(Me.CheckBox2)
         Me.TabPage1.Controls.Add(Me.Label4)
         Me.TabPage1.Controls.Add(Me.ComboBox3)
         Me.TabPage1.Controls.Add(Me.CheckBox1)
@@ -115,6 +117,25 @@ Partial Class ProductBox
         Me.TabPage1.TabIndex = 0
         Me.TabPage1.Text = "Producto"
         Me.TabPage1.UseVisualStyleBackColor = True
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Location = New System.Drawing.Point(18, 351)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(50, 13)
+        Me.Label4.TabIndex = 33
+        Me.Label4.Text = "&Impuesto"
+        '
+        'ComboBox3
+        '
+        Me.ComboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.ComboBox3.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ComboBox3.FormattingEnabled = True
+        Me.ComboBox3.Location = New System.Drawing.Point(21, 367)
+        Me.ComboBox3.Name = "ComboBox3"
+        Me.ComboBox3.Size = New System.Drawing.Size(303, 28)
+        Me.ComboBox3.TabIndex = 32
         '
         'CheckBox1
         '
@@ -338,24 +359,16 @@ Partial Class ProductBox
         Me.ToolStripMenuItem3.Size = New System.Drawing.Size(153, 22)
         Me.ToolStripMenuItem3.Text = "&Eliminar precio"
         '
-        'ComboBox3
+        'CheckBox2
         '
-        Me.ComboBox3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ComboBox3.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.ComboBox3.FormattingEnabled = True
-        Me.ComboBox3.Location = New System.Drawing.Point(21, 367)
-        Me.ComboBox3.Name = "ComboBox3"
-        Me.ComboBox3.Size = New System.Drawing.Size(303, 28)
-        Me.ComboBox3.TabIndex = 32
-        '
-        'Label4
-        '
-        Me.Label4.AutoSize = True
-        Me.Label4.Location = New System.Drawing.Point(18, 351)
-        Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(50, 13)
-        Me.Label4.TabIndex = 33
-        Me.Label4.Text = "&Impuesto"
+        Me.CheckBox2.AutoSize = True
+        Me.CheckBox2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.CheckBox2.Location = New System.Drawing.Point(21, 424)
+        Me.CheckBox2.Name = "CheckBox2"
+        Me.CheckBox2.Size = New System.Drawing.Size(130, 17)
+        Me.CheckBox2.TabIndex = 34
+        Me.CheckBox2.Text = "Producto in&ventariado"
+        Me.CheckBox2.UseVisualStyleBackColor = True
         '
         'ProductBox
         '
@@ -409,4 +422,5 @@ Partial Class ProductBox
     Friend WithEvents ToolStripMenuItem3 As ToolStripMenuItem
     Friend WithEvents Label4 As Label
     Friend WithEvents ComboBox3 As ComboBox
+    Friend WithEvents CheckBox2 As CheckBox
 End Class
