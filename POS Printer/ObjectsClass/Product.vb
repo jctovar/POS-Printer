@@ -1,7 +1,7 @@
 ﻿Public Class Product
     Private varId As Integer
-    Private varAccountId As Integer
-    Private varCategoryId As Integer
+    Private varAccount As Integer
+    Private varCategory As Integer
     Private varName As String
     Private varDescription As String
     Private varKey As String
@@ -19,10 +19,10 @@
     End Property
     Public Property Account As Integer
         Get
-            Return Me.varAccountId
+            Return Me.varAccount
         End Get
         Set(value As Integer)
-            Me.varAccountId = value
+            Me.varAccount = value
         End Set
     End Property
     Public Property Name As String
@@ -67,10 +67,10 @@
     End Property
     Public Property Category As Integer
         Get
-            Return Me.varCategoryId
+            Return Me.varCategory
         End Get
         Set(value As Integer)
-            Me.varCategoryId = value
+            Me.varCategory = value
         End Set
     End Property
     Public Property Visible As Boolean

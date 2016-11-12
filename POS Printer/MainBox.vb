@@ -5,8 +5,8 @@ Public Class MainBox
     WithEvents bsData As New BindingSource
     Private SaleId As Integer = 0
     Private Sub MainBox_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        Me.GetAccount()
-        Me.CheckTerminal()
+        Me.Size = My.Settings.mainbox
+
         Me.ShowStatus()
         ' Inicia aplicacion
         Me.Text = String.Format("{0} - {1}", Application.ProductName, Globales.AccountName)
@@ -18,10 +18,8 @@ Public Class MainBox
             e.Cancel = True
         End If
     End Sub
-    Private Sub DataGridView1_KeyPress(sender As Object, e As KeyPressEventArgs)
-        If Asc(e.KeyChar) = 32 Then
-            Me.EditSale()
-        End If
+    Private Sub MainBox_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+        My.Settings.mainbox = Me.Size
     End Sub
     ' ***********************************************************
     ' Llamadas de las principales rutinas
@@ -114,22 +112,7 @@ Public Class MainBox
             FillDatagrid()
         End If
     End Sub
-    Private Sub GetAccount()
-        Dim account As New Account
 
-        account = AccountDB.GetAccount(My.Settings.account.ToString)
-
-        Globales.AccountId = account.Id
-        Globales.AccountName = account.Name
-        Globales.AccountRfc = account.Rfc
-        Globales.AccountSlogan = account.Slogan
-        Globales.AccountAddres_1 = account.Address1
-        Globales.AccountAddres_2 = account.Address2
-        Globales.AccountEmail = account.Email
-        Globales.AccountPostalCode = account.PostalCode
-        Globales.AccountPhone = account.Phone
-
-    End Sub
     Private Sub EditSale()
         ' Edita una venta
         Dim frmEdit As New Sale
@@ -144,32 +127,6 @@ Public Class MainBox
             MsgBox("Selecione venta")
         End Try
     End Sub
-    Private Sub CheckTerminal()
-
-        If String.IsNullOrEmpty(TerminalDB.GetTerminalName(My.Settings.terminal)) Then
-            ' Selecciona terminal
-            Dim frmTerminal As New SelectTerminal
-
-            If frmTerminal.ShowDialog() = DialogResult.OK Then
-                Me.ShowStatus()
-            End If
-        End If
-
-    End Sub
-    Private Sub DataGridView1_SelectionChanged(sender As Object, e As EventArgs)
-        Try
-            SaleId = DataGridView1(1, DataGridView1.CurrentRow.Index).Value
-        Catch ex As Exception
-
-        End Try
-    End Sub
-    Private Sub RecargarListadoToolStripMenuItem_Click(sender As Object, e As EventArgs)
-        Me.FillDatagrid()
-    End Sub
-    Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs)
-        Me.EditSale()
-    End Sub
-
     Private Sub ListadoDeVentasToolStripMenuItem_Click(sender As Object, e As EventArgs)
         Dim frmSales As New SalesSearch
 
@@ -181,11 +138,6 @@ Public Class MainBox
 
         If frmStocks.ShowDialog() = DialogResult.OK Then
             'Me.ShowStatus()
-        End If
-    End Sub
-    Private Sub DataGridView1_KeyDown(sender As Object, e As KeyEventArgs)
-        If e.KeyCode = 13 Then
-            Me.EditSale()
         End If
     End Sub
     ' ***********************************************************
@@ -316,6 +268,9 @@ Public Class MainBox
 
         frmSearch.ShowDialog()
     End Sub
+    Private Sub RecargarListadoToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles RecargarListadoToolStripMenuItem.Click
+        Me.FillDatagrid()
+    End Sub
     ' ***********************************************************
     ' Llamadas de los botones
     ' ***********************************************************
@@ -336,6 +291,24 @@ Public Class MainBox
     End Sub
     Private Sub btnProducts_Click(sender As Object, e As EventArgs) Handles btnProducts.Click
         Me.ProductosToolStripMenuItem.PerformClick()
+    End Sub
+    ' ***********************************************************
+    ' Llamadas del grid
+    ' ***********************************************************
+    Private Sub DataGridView1_SelectionChanged(sender As Object, e As EventArgs) Handles DataGridView1.SelectionChanged
+        Try
+            SaleId = DataGridView1(1, DataGridView1.CurrentRow.Index).Value
+        Catch ex As Exception
+
+        End Try
+    End Sub
+    Private Sub DataGridView1_KeyDown(sender As Object, e As KeyEventArgs) Handles DataGridView1.KeyDown
+        If e.KeyCode = 13 Or e.KeyCode = 32 Then
+            Me.EditSale()
+        End If
+    End Sub
+    Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellDoubleClick
+        Me.EditSale()
     End Sub
 
 

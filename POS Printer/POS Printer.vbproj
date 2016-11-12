@@ -6,11 +6,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{92C00F98-9866-4127-80F0-AC16F1F68620}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>POS_Printer.My.MyApplication</StartupObject>
+    <StartupObject>Sub Main</StartupObject>
     <RootNamespace>POS_Printer</RootNamespace>
     <AssemblyName>Albaco POS</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <MyType>WindowsForms</MyType>
+    <MyType>WindowsFormsWithCustomSubMain</MyType>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>true</IsWebBootstrapper>
@@ -32,7 +32,7 @@
     <SuiteName>Albaco</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.html</WebPage>
-    <ApplicationRevision>81</ApplicationRevision>
+    <ApplicationRevision>83</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -251,6 +251,7 @@
     <Compile Include="ObjectsClass\Product.vb" />
     <Compile Include="ObjectsClass\Profile.vb" />
     <Compile Include="ObjectsClass\Session.vb" />
+    <Compile Include="ObjectsClass\Stock.vb" />
     <Compile Include="ObjectsClass\Supplier.vb" />
     <Compile Include="ObjectsClass\Terminal.vb" />
     <Compile Include="MoreClasses\PrintSale.vb" />
@@ -398,7 +399,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>

@@ -21,7 +21,6 @@
             MsgBox("Ocurrio un error! " & ex.Message.ToString)
         End Try
     End Sub
-
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         With price
             .Id = PriceId
@@ -47,7 +46,6 @@
             End Try
         End If
     End Sub
-
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
         Me.Close()
     End Sub

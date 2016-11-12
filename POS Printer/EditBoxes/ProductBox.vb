@@ -26,8 +26,10 @@
         If Add = False Then
             Me.Edit()
             Me.GetPrices()
+            Me.GetStocks()
         End If
     End Sub
+
     Private Sub Edit()
         Try
             product = ProductDB.GetProduct(ProductId)
@@ -91,7 +93,7 @@
                 .DataSource = TableView
                 .Columns(0).Visible = False
                 .Columns(1).HeaderText = "Precio ($)"
-                .Columns(1).DefaultCellStyle.Format = String.Format("n", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))
+                .Columns(1).DefaultCellStyle.Format = String.Format("c", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))
                 .Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
                 .Columns(2).HeaderText = "Cantidad"
                 .Columns(2).DefaultCellStyle.Format = String.Format("n", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))
@@ -100,7 +102,7 @@
                 .Columns(3).DefaultCellStyle.Format = String.Format("n", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))
                 .Columns(3).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
                 .AutoResizeColumns()
-                .CurrentCell = DataGridView1.Rows(0).Cells(1) ' Columna visible
+                .CurrentCell = .Rows(0).Cells(1) ' Columna visible
             End With
 
         Catch ex As Exception
@@ -109,23 +111,40 @@
             Me.Cursor = System.Windows.Forms.Cursors.Default
         End Try
     End Sub
+    Private Sub GetStocks()
+        Dim TableView As New DataTable
 
-    Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellDoubleClick
-        Me.EditPrice()
+        Try
+            Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
+            TableView = StockDB.GetStocksByProduct(ProductId)
+
+            With DataGridView2
+                .RowTemplate.Height = 32
+                .AutoGenerateColumns = True
+                .DataSource = TableView
+                .Columns(0).Visible = False
+                .Columns(1).Visible = False
+                .Columns(2).HeaderText = "Cantidad"
+                .Columns(2).DefaultCellStyle.Format = String.Format("n", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))
+                .Columns(2).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns(3).HeaderText = "Unidad"
+                .Columns(4).HeaderText = "Precio ($)"
+                .Columns(4).DefaultCellStyle.Format = String.Format("c", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))
+                .Columns(4).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns(5).HeaderText = "Fecha"
+                .AutoResizeColumns()
+                .CurrentCell = .Rows(0).Cells(2) ' Columna visible
+            End With
+
+        Catch ex As Exception
+            MsgBox("Ocurrio un error! " & ex.Message.ToString)
+        Finally
+            Me.Cursor = System.Windows.Forms.Cursors.Default
+        End Try
     End Sub
-    Private Sub DataGridView1_MouseDown(sender As Object, e As MouseEventArgs) Handles DataGridView1.MouseDown
-        Dim rowClicked As DataGridView.HitTestInfo = DataGridView1.HitTest(e.X, e.Y)
-
-        If e.Button = MouseButtons.Right Then
-            mnuPrices.Show(MousePosition.X, MousePosition.Y)
-        End If
-    End Sub
-
-    Private Sub ToolStripMenuItem2_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem2.Click
-        Me.EditPrice()
-    End Sub
-
-    Private Sub EditPrice()
+    ' Buttons price
+    Private Sub Button4_Click(sender As Object, e As EventArgs) Handles Button4.Click
+        ' Edit price
         Dim frmPrice As New PriceBox
 
         frmPrice.ProductId = ProductId
@@ -134,12 +153,8 @@
             Me.GetPrices()
         End If
     End Sub
-
-    Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
-        Me.AddPrice()
-    End Sub
-
-    Private Sub AddPrice()
+    Private Sub Button3_Click(sender As Object, e As EventArgs) Handles Button3.Click
+        ' Add price
         Dim frmPrice As New PriceBox
 
         frmPrice.ProductId = ProductId
@@ -148,8 +163,8 @@
             Me.GetPrices()
         End If
     End Sub
-
-    Private Sub ToolStripMenuItem3_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem3.Click
+    Private Sub Button5_Click(sender As Object, e As EventArgs) Handles Button5.Click
+        ' Delete price
         Try
             If MessageBox.Show("Esta seguro de eliminar el precio?", Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) = DialogResult.Yes Then
                 If PriceDB.DeletePrice(DataGridView1(0, DataGridView1.CurrentRow.Index).Value) = True Then
@@ -159,5 +174,34 @@
         Catch ex As Exception
             MessageBox.Show("Ocurrio un error! " & ex.Message.ToString)
         End Try
+    End Sub
+    ' Buttons stocks
+    Private Sub Button7_Click(sender As Object, e As EventArgs) Handles Button7.Click
+        ' Edit stock
+        Dim frmStock As New StockBox
+
+        frmStock.StockId = DataGridView2(0, DataGridView2.CurrentRow.Index).Value
+        If frmStock.ShowDialog() = DialogResult.OK Then
+            Me.GetStocks()
+        End If
+    End Sub
+    Private Sub Button8_Click(sender As Object, e As EventArgs) Handles Button8.Click
+        ' Add stock
+        Dim frmStock As New StockBox
+
+        frmStock.StockId = DataGridView2(0, DataGridView2.CurrentRow.Index).Value
+        frmStock.Add = True
+        If frmStock.ShowDialog() = DialogResult.OK Then
+            Me.GetStocks()
+        End If
+    End Sub
+    Private Sub Button6_Click(sender As Object, e As EventArgs) Handles Button6.Click
+        ' Delete stock
+    End Sub
+    Private Sub DataGridView1_DoubleClick(sender As Object, e As EventArgs) Handles DataGridView1.DoubleClick
+        Me.Button4.PerformClick()
+    End Sub
+    Private Sub DataGridView2_DoubleClick(sender As Object, e As EventArgs) Handles DataGridView2.DoubleClick
+        Me.Button7.PerformClick()
     End Sub
 End Class
