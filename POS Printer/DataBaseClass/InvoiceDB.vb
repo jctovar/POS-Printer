@@ -1,13 +1,14 @@
 ﻿Imports MySql.Data.MySqlClient
 Public Class InvoiceDB
-    Public Shared Function GetAllInvoices(AccountId As Integer) As DataTable
+    Public Shared Function GetAllInvoices(AccountId As Integer, StoreId As Integer) As DataTable
         ' Se usa en Main para obtener el listado de ventas
         Dim dt = New DataTable()
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
-        Dim Sql = "SELECT * FROM sales_view WHERE account_id = @account"
+        Dim Sql = "SELECT * FROM sales_view WHERE account_id = @account AND store_id= @store"
 
         Dim dbcommand As New MySqlCommand(Sql, Connection)
         dbcommand.Parameters.AddWithValue("@account", AccountId)
+        dbcommand.Parameters.AddWithValue("@store", StoreId)
 
         Try
             Connection.Open()
@@ -85,10 +86,10 @@ Public Class InvoiceDB
 
         Return invoice
     End Function
-    Public Shared Function AddNewSale(AccountId As Integer, ProfileId As Integer, TerminalId As Integer, CustomerId As Integer) As Integer
+    Public Shared Function AddNewSale(AccountId As Integer, ProfileId As Integer, TerminalId As Integer, CustomerId As Integer, StoreId As Integer) As Integer
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim SaleId As Integer = 0
-        Dim sql = "INSERT INTO sales (account_id,customer_id,profile_id,terminal_id) VALUES (@account,@customer,@profile,@terminal)"
+        Dim sql = "INSERT INTO sales (account_id,customer_id,profile_id,terminal_id,store_id) VALUES (@account,@customer,@profile,@terminal,@store)"
 
         Dim dbcommand As New MySqlCommand(sql, Connection)
 
@@ -96,6 +97,7 @@ Public Class InvoiceDB
         dbcommand.Parameters.AddWithValue("@customer", CustomerId)
         dbcommand.Parameters.AddWithValue("@profile", ProfileId)
         dbcommand.Parameters.AddWithValue("@terminal", TerminalId)
+        dbcommand.Parameters.AddWithValue("@store", StoreId)
 
         Try
             Connection.Open()
@@ -112,7 +114,6 @@ Public Class InvoiceDB
 
         Return SaleId
     End Function
-
     Public Shared Function UpdateInvoice(invoice As Invoice) As Boolean
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "UPDATE sales " &
@@ -139,7 +140,6 @@ Public Class InvoiceDB
         End Try
 
     End Function
-
     Public Shared Function GetSaleType() As DataTable
         ' Se usa en Main para obtener el listado de ventas
         Dim dt = New DataTable()

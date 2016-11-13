@@ -1,5 +1,71 @@
 ﻿Imports MySql.Data.MySqlClient
 Public Class ProductDB
+    Public Shared Function GetProductsList(AccountId As Integer, ProductString As String, CategoryVisible As Boolean) As DataTable
+        ' Obtiene la tabla de productos
+        Dim dt = New DataTable()
+        Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
+        Dim Sql As String = "SELECT " &
+                                "`products`.`product_id` AS `product_id`, " &
+                                "`products`.`account_id` AS `account_id`, " &
+                                "`categories`.`category_name` AS `category_name`, " &
+                                "`products`.`product_name` AS `product_name`, " &
+                                "`products`.`product_key` AS `product_key`, " &
+                                "((SELECT " &
+                                        "SUM(`stocks`.`stock_quantity`) As `stock_quantity`" &
+                                    "FROM " &
+                                        "`stocks` " &
+                                    "WHERE " &
+                                        "`stocks`.`store_id` = @store AND " &
+                                        "(`stocks`.`product_id` = `products`.`product_id`)) - (SELECT " &
+                                        "SUM(`products_has_sales`.`sale_quantity`) AS `stock_quantity` " &
+                                    "FROM " &
+                                        "`products_has_sales` INNER JOIN `sales` ON `products_has_sales`.`sale_id` = `sales`.`sale_id` " &
+                                    "WHERE " &
+                                        "(`products_has_sales`.`product_id` = `products`.`product_id` AND `sales`.`store_id` = @store AND `sales`.`status_id` = 1))) AS `stock_quantity`, " &
+                                "`units`.`unit_short` AS `unit_short`, " &
+                                "(SELECT " &
+                                        "(`prices`.`price_value` * ((`taxes`.`tax_value` / 100) + 1)) " &
+                                    "FROM " &
+                                        "`prices` " &
+                                    "WHERE " &
+                                        "((`prices`.`product_id` = `products`.`product_id`) " &
+                                            "AND (`prices`.`price_quantity` = 1)) " &
+                                    "LIMIT 1) AS `product_price`, " &
+                                "`products`.`product_visible` AS `product_visible`, " &
+                                "`categories`.`category_visible` AS `category_visible` " &
+                            "FROM " &
+                                "(((`products` " &
+                                "JOIN `categories` ON ((`products`.`category_id` = `categories`.`category_id`))) " &
+                                "Join `units` On ((`products`.`unit_id` = `units`.`unit_id`))) " &
+                                "JOIN `taxes` ON ((`products`.`tax_id` = `taxes`.`tax_id`))) " &
+                            "WHERE `products`.account_id = @account AND (product_key LIKE @product OR product_name LIKE @product) " &
+                            "ORDER BY `categories`.`category_name` , `products`.`product_name`"
+
+        If CategoryVisible = True Then
+            Sql = Sql & " AND category_visible = TRUE"
+        End If
+        Dim dbcommand = New MySqlCommand(Sql, Connection)
+
+        dbcommand.Parameters.AddWithValue("@account", AccountId)
+        dbcommand.Parameters.AddWithValue("@store", My.Settings.store)
+        dbcommand.Parameters.AddWithValue("@product", ProductString & "%")
+
+        Try
+            Connection.Open()
+
+            Dim reader As MySqlDataReader = dbcommand.ExecuteReader()
+            If reader.HasRows Then
+                dt.Load(reader)
+            End If
+            reader.Close()
+        Catch ex As Exception
+            Throw ex
+        Finally
+            Connection.Close()
+        End Try
+
+        Return dt
+    End Function
     Public Shared Function GetProduct(productID As Integer) As Product
         Dim product As New Product
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
@@ -37,37 +103,6 @@ Public Class ProductDB
 
         Return product
     End Function
-    Public Shared Function GetProductsList(AccountId As Integer, ProductString As String, CategoryVisible As Boolean) As DataTable
-        ' Obtiene la tabla de productos
-        Dim dt = New DataTable()
-        Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
-        Dim Sql As String = "SELECT * FROM products_view " &
-            "WHERE account_id = @account AND (product_key LIKE @product OR product_name LIKE @product)"
-
-        If CategoryVisible = True Then
-            Sql = Sql & " AND category_visible = TRUE"
-        End If
-        Dim dbcommand = New MySqlCommand(Sql, Connection)
-
-        dbcommand.Parameters.AddWithValue("@account", AccountId)
-        dbcommand.Parameters.AddWithValue("@product", ProductString & "%")
-
-        Try
-            Connection.Open()
-
-            Dim reader As MySqlDataReader = dbcommand.ExecuteReader()
-            If reader.HasRows Then
-                dt.Load(reader)
-            End If
-            reader.Close()
-        Catch ex As Exception
-            Throw ex
-        Finally
-            Connection.Close()
-        End Try
-
-        Return dt
-    End Function
     Public Shared Function UpdateProduct(product As Product) As Boolean
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "UPDATE products " &
@@ -77,7 +112,7 @@ Public Class ProductDB
 
         dbcommand.Parameters.AddWithValue("@id", product.Id)
         dbcommand.Parameters.AddWithValue("@name", product.Name)
-        dbcommand.Parameters.AddWithValue("@description", product.description)
+        dbcommand.Parameters.AddWithValue("@description", product.Description)
         dbcommand.Parameters.AddWithValue("@key", product.Key)
         dbcommand.Parameters.AddWithValue("@unit", product.Unit)
         dbcommand.Parameters.AddWithValue("@category", product.Category)

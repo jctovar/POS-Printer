@@ -6,13 +6,14 @@
 
         GetAccount()
         CheckTerminal()
+        CheckStore()
 
         frmSplash.ShowDialog()
 
         Try
             Application.Run(MainBox)
         Catch ex As Exception
-
+            MessageBox.Show("Ocurrio un error; " & ex.ToString, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
 
         My.Settings.Save()
@@ -40,6 +41,18 @@
             Dim frmTerminal As New SelectTerminal
 
             If frmTerminal.ShowDialog() = DialogResult.OK Then
+
+            End If
+        End If
+
+    End Sub
+    Private Sub CheckStore()
+
+        If String.IsNullOrEmpty(StoreDB.GetStoreName(My.Settings.store)) Then
+            ' Selecciona terminal
+            Dim frmStore As New SelectStore
+
+            If frmStore.ShowDialog() = DialogResult.OK Then
 
             End If
         End If

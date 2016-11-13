@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class SelectTerminal
+Partial Class SelectStore
     Inherits System.Windows.Forms.Form
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
@@ -37,7 +37,7 @@ Partial Class SelectTerminal
         Me.GroupBox1.Location = New System.Drawing.Point(12, 12)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(258, 316)
-        Me.GroupBox1.TabIndex = 11
+        Me.GroupBox1.TabIndex = 14
         Me.GroupBox1.TabStop = False
         '
         'ListBox1
@@ -65,7 +65,7 @@ Partial Class SelectTerminal
         Me.Button2.Location = New System.Drawing.Point(276, 57)
         Me.Button2.Name = "Button2"
         Me.Button2.Size = New System.Drawing.Size(86, 34)
-        Me.Button2.TabIndex = 10
+        Me.Button2.TabIndex = 13
         Me.Button2.Text = "Cancelar"
         Me.Button2.UseVisualStyleBackColor = True
         '
@@ -74,11 +74,11 @@ Partial Class SelectTerminal
         Me.Button1.Location = New System.Drawing.Point(276, 17)
         Me.Button1.Name = "Button1"
         Me.Button1.Size = New System.Drawing.Size(86, 34)
-        Me.Button1.TabIndex = 9
+        Me.Button1.TabIndex = 12
         Me.Button1.Text = "Guardar"
         Me.Button1.UseVisualStyleBackColor = True
         '
-        'SelectTerminal
+        'SelectStore
         '
         Me.AcceptButton = Me.Button1
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -91,11 +91,9 @@ Partial Class SelectTerminal
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
         Me.MaximizeBox = False
         Me.MinimizeBox = False
-        Me.Name = "SelectTerminal"
-        Me.ShowIcon = False
-        Me.ShowInTaskbar = False
+        Me.Name = "SelectStore"
         Me.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen
-        Me.Text = "SelectTerminal"
+        Me.Text = "SelectStore"
         Me.GroupBox1.ResumeLayout(False)
         Me.GroupBox1.PerformLayout()
         Me.ResumeLayout(False)
@@ -103,8 +101,8 @@ Partial Class SelectTerminal
     End Sub
 
     Friend WithEvents GroupBox1 As GroupBox
+    Friend WithEvents ListBox1 As ListBox
     Friend WithEvents Label1 As Label
     Friend WithEvents Button2 As Button
     Friend WithEvents Button1 As Button
-    Friend WithEvents ListBox1 As ListBox
 End Class

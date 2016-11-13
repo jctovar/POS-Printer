@@ -1,12 +1,12 @@
 ﻿Imports MySql.Data.MySqlClient
-Public Class TerminalDB
-    Public Shared Function GetTerminalName(terminalId As Integer) As String
+Public Class StoreDB
+    Public Shared Function GetStoreName(StoreId As Integer) As String
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Terminal As String
-        Dim Sql As String = "SELECT * FROM terminals WHERE terminal_id = @terminal"
+        Dim Sql As String = "SELECT * FROM stores WHERE store_id = @store"
         Dim dbcommand As New MySqlCommand(Sql, Connection)
 
-        dbcommand.Parameters.AddWithValue("@terminal", terminalId)
+        dbcommand.Parameters.AddWithValue("@store", StoreId)
 
         Try
             Connection.Open()
@@ -14,7 +14,7 @@ Public Class TerminalDB
             Dim reader As MySqlDataReader = dbcommand.ExecuteReader(CommandBehavior.SingleRow)
 
             If reader.Read Then
-                Terminal = reader("terminal_name").ToString
+                Terminal = reader("store_name").ToString
             Else
                 Terminal = Nothing
             End If
@@ -28,44 +28,12 @@ Public Class TerminalDB
         Return Terminal
 
     End Function
-    Public Shared Function GetTerminal(TerminalId As Integer) As Terminal
-        Dim terminal As New Terminal
-        Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
-        Dim Sql As String = "SELECT * FROM terminals WHERE terminal_id = @id"
-        Dim dbcommand As New MySqlCommand(Sql, Connection)
-
-        dbcommand.Parameters.AddWithValue("@id", TerminalId)
-
-        Try
-            Connection.Open()
-
-            Dim reader As MySqlDataReader = dbcommand.ExecuteReader(CommandBehavior.SingleRow)
-
-            If reader.Read Then
-                With terminal
-                    .Id = reader("terminal_id").ToString
-                    .Name = reader("terminal_name").ToString
-                    .Description = reader("terminal_description").ToString
-                    '.Visible = reader("terminal_visible").ToString
-                End With
-            Else
-                terminal = Nothing
-            End If
-            reader.Close()
-        Catch ex As Exception
-            Throw ex
-        Finally
-            Connection.Close()
-        End Try
-
-        Return Terminal
-    End Function
-    Public Shared Function GetTerminalsList(AccountId As Integer) As DataTable
+    Public Shared Function GetStoresList(AccountId As Integer) As DataTable
         ' Obtiene la tabla de productos
         Dim dt = New DataTable()
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
-        Dim Sql As String = "SELECT terminal_id,terminal_name,terminal_description " &
-            "FROM terminals WHERE account_id = @account ORDER BY terminal_name"
+        Dim Sql As String = "SELECT store_id,store_name " &
+            "FROM stores WHERE account_id = @account ORDER BY store_name"
 
         Dim dbcommand = New MySqlCommand(Sql, Connection)
 
@@ -87,7 +55,7 @@ Public Class TerminalDB
 
         Return dt
     End Function
-    Public Shared Function UpdateTerminal(terminal As Terminal) As Boolean
+    Public Shared Function UpdateStore(terminal As Terminal) As Boolean
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "UPDATE terminals " &
             "SET terminal_name=@name, terminal_description=@description " &
@@ -110,7 +78,7 @@ Public Class TerminalDB
             Connection.Close()
         End Try
     End Function
-    Public Shared Function DeleteTerminal(Id As Integer) As Boolean
+    Public Shared Function DeleteStore(Id As Integer) As Boolean
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "DELETE FROM terminals " &
             "WHERE terminal_id=@id"
@@ -129,7 +97,7 @@ Public Class TerminalDB
             Connection.Close()
         End Try
     End Function
-    Public Shared Function AddTerminal(terminal As Terminal) As Boolean
+    Public Shared Function AddStore(terminal As Terminal) As Boolean
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "INSERT INTO terminals " &
             "(account_id,terminal_name,terminal_description) " &

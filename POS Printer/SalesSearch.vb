@@ -23,11 +23,10 @@
 
         FillDatagrid()
     End Sub
-
     Private Sub FillDatagrid()
         Dim TableView As New DataTable
 
-        bsData.DataSource = InvoiceDB.GetAllInvoices(Globales.AccountId)
+        bsData.DataSource = InvoiceDB.GetAllInvoices(Globales.AccountId, My.Settings.store)
 
         Try
             Me.Cursor = System.Windows.Forms.Cursors.WaitCursor

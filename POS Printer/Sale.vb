@@ -117,7 +117,6 @@ Public Class Sale
             Me.DialogResult = DialogResult.OK
         End If
     End Sub
-
     Private Sub DataGridView1_KeyPress(sender As Object, e As KeyPressEventArgs) Handles DataGridView1.KeyPress
         ' Añade un nuevo producto
         If (Asc(e.KeyChar) = 32) Then
@@ -137,7 +136,6 @@ Public Class Sale
     Private Sub DataGridView1_DoubleClick(sender As Object, e As EventArgs) Handles DataGridView1.DoubleClick
         Me.ChangeQty()
     End Sub
-
     Private Sub ChangeQty()
         Dim frmQuantity As New QuantityBox
 
@@ -157,7 +155,7 @@ Public Class Sale
 
         If e.KeyCode = 13 Or e.KeyCode = 40 Then
             If SaleId = 0 Then
-                SaleId = InvoiceDB.AddNewSale(Globales.AccountId, Globales.ProfileId, 1, 1)
+                SaleId = InvoiceDB.AddNewSale(Globales.AccountId, Globales.ProfileId, My.Settings.terminal, 1, My.Settings.store)
             End If
             ' Invoca la ventana de productos
             Dim frmAdd As New ProductList
@@ -178,7 +176,6 @@ Public Class Sale
             Me.Close()
         End If
     End Sub
-
     Private Sub ToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles ToolStripMenuItem1.Click
         Me.CheckOut()
     End Sub

@@ -40,11 +40,11 @@ Public Class MainBox
     Private Sub FillDatagrid()
         Dim TableView As New DataTable
 
-        bsData.DataSource = InvoiceDB.GetAllInvoices(Globales.AccountId)
-        bsData.Filter = "username = '" & Globales.ProfileUsername & "'"
-
         Try
             Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
+
+            bsData.DataSource = InvoiceDB.GetAllInvoices(Globales.AccountId, My.Settings.store)
+            bsData.Filter = "username = '" & Globales.ProfileUsername & "'"
 
             With DataGridView1
                 .RowTemplate.Height = 32
@@ -57,17 +57,18 @@ Public Class MainBox
                 .Columns(2).Visible = False
                 .Columns(3).Visible = False
                 .Columns(4).Visible = False
-                .Columns(5).HeaderText = "Fecha"
-                .Columns(6).HeaderText = "Cliente"
-                .Columns(7).Visible = False
+                .Columns(5).Visible = False
+                .Columns(6).HeaderText = "Fecha"
+                .Columns(7).HeaderText = "Cliente"
                 .Columns(8).Visible = False
-                .Columns(9).HeaderText = "Importe"
-                .Columns(9).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-                .Columns(9).DefaultCellStyle.Format = String.Format("c", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))
-                .Columns(10).HeaderText = "Pago"
+                .Columns(9).Visible = False
+                .Columns(10).HeaderText = "Importe"
                 .Columns(10).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
                 .Columns(10).DefaultCellStyle.Format = String.Format("c", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))
-                .Columns(11).HeaderText = "Estado"
+                .Columns(11).HeaderText = "Pago"
+                .Columns(11).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns(11).DefaultCellStyle.Format = String.Format("c", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))
+                .Columns(12).HeaderText = "Estado"
                 .AutoResizeColumns()
                 .CurrentCell = DataGridView1.Rows(0).Cells(1) ' Columna visible
             End With
@@ -223,6 +224,15 @@ Public Class MainBox
             'Me.ShowStatus()
         End If
     End Sub
+    Private Sub AlmacenesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AlmacenesToolStripMenuItem.Click
+        ' Show stores windows
+        Dim frmStores As New Catalogs
+        frmStores.Search = "stores"
+
+        If frmStores.ShowDialog() = DialogResult.OK Then
+            'Me.ShowStatus()
+        End If
+    End Sub
     Private Sub TerminalesToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles TerminalesToolStripMenuItem.Click
         ' Show profiles windows
         Dim frmTerminals As New Catalogs
@@ -245,6 +255,14 @@ Public Class MainBox
 
         If frmTerminal.ShowDialog() = DialogResult.OK Then
             Me.ShowStatus()
+        End If
+    End Sub
+    Private Sub SeleccionarAlmacenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SeleccionarAlmacenToolStripMenuItem.Click
+        ' Selecciona store
+        Dim frmStore As New SelectStore
+
+        If frmStore.ShowDialog() = DialogResult.OK Then
+            Me.FillDatagrid()
         End If
     End Sub
     Private Sub ImprimirVentaToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles ImprimirVentaToolStripMenuItem.Click
@@ -310,6 +328,4 @@ Public Class MainBox
     Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellDoubleClick
         Me.EditSale()
     End Sub
-
-
 End Class

@@ -116,7 +116,7 @@
 
         Try
             Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
-            TableView = StockDB.GetStocksByProduct(ProductId)
+            TableView = StockDB.GetStocksByProduct(ProductId, My.Settings.store)
 
             With DataGridView2
                 .RowTemplate.Height = 32
@@ -180,6 +180,7 @@
         ' Edit stock
         Dim frmStock As New StockBox
 
+        frmStock.ProductId = ProductId
         frmStock.StockId = DataGridView2(0, DataGridView2.CurrentRow.Index).Value
         If frmStock.ShowDialog() = DialogResult.OK Then
             Me.GetStocks()
@@ -189,7 +190,7 @@
         ' Add stock
         Dim frmStock As New StockBox
 
-        frmStock.StockId = DataGridView2(0, DataGridView2.CurrentRow.Index).Value
+        frmStock.ProductId = ProductId
         frmStock.Add = True
         If frmStock.ShowDialog() = DialogResult.OK Then
             Me.GetStocks()

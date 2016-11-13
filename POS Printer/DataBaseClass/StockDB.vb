@@ -27,18 +27,19 @@ Public Class StockDB
 
         Return dt
     End Function
-    Public Shared Function GetStocksByProduct(ProductId As Integer) As DataTable
+    Public Shared Function GetStocksByProduct(ProductId As Integer, StoreId As Integer) As DataTable
         ' Obtiene la tabla de existencias
         Dim dt = New DataTable()
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "SELECT stock_id,stocks.product_id,stock_quantity,unit_name,stock_price,stock_date FROM stocks " &
             "INNER JOIN products ON stocks.product_id=products.product_id " &
             "INNER JOIN units ON products.unit_id=units.unit_id " &
-            "WHERE stocks.product_id = @product ORDER BY stock_date DESC"
+            "WHERE stocks.product_id = @product AND stocks.store_id = @store ORDER BY stock_date DESC"
 
         Dim dbcommand = New MySqlCommand(Sql, Connection)
 
         dbcommand.Parameters.AddWithValue("@product", ProductId)
+        dbcommand.Parameters.AddWithValue("@store", StoreId)
 
         Try
             Connection.Open()

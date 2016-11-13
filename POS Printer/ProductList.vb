@@ -4,10 +4,14 @@
     Public TicketID As Integer
     Public ProductString As String
     Private Sub Form7_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        Me.Size = My.Settings.productslist
 
         Me.Text = String.Format("{0} - {1}", Application.ProductName, "Catalogo de productos")
 
         FillDatagrid()
+    End Sub
+    Private Sub ProductList_Closed(sender As Object, e As EventArgs) Handles Me.Closed
+        My.Settings.productslist = Me.Size
     End Sub
     Public Sub FillDatagrid()
 
@@ -27,12 +31,15 @@
                 .Columns(2).HeaderText = "Categoría"
                 .Columns(3).HeaderText = "Producto"
                 .Columns(4).HeaderText = "Clave"
-                .Columns(5).HeaderText = "Unidad"
-                .Columns(6).HeaderText = "Precio"
-                .Columns(6).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-                .Columns(6).DefaultCellStyle.Format = String.Format("c", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))
-                .Columns(7).Visible = False
+                .Columns(5).HeaderText = "Existencia"
+                .Columns(5).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns(5).DefaultCellStyle.Format = String.Format("n", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))
+                .Columns(6).HeaderText = "Unidad"
+                .Columns(7).HeaderText = "Precio"
+                .Columns(7).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns(7).DefaultCellStyle.Format = String.Format("c", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))
                 .Columns(8).Visible = False
+                .Columns(9).Visible = False
                 .CurrentCell = DataGridView1.Rows(0).Cells(3) ' Columna visible
             End With
 

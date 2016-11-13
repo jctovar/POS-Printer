@@ -1,5 +1,6 @@
 ﻿Public Class StockBox
     Public StockId As Integer
+    Public ProductId As Integer
     Public Add As Boolean
     Private stock As New Stock
     Private Sub StockBox_Load(sender As Object, e As EventArgs) Handles MyBase.Load
@@ -14,7 +15,6 @@
         If Add = False Then
             Me.Edit()
         End If
-
 
     End Sub
     Private Sub Edit()
@@ -32,7 +32,9 @@
         With stock
             .Id = StockId
             .Account = Globales.AccountId
+            .Store = My.Settings.store
             .Supplier = ComboBox1.SelectedValue
+            .Product = ProductId
             .Price = TextBox1.Text.ToString
             .Quantity = TextBox2.Text.ToString
             .StockDate = DateTimePicker1.Text

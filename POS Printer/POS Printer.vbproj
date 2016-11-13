@@ -32,7 +32,7 @@
     <SuiteName>Albaco</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.html</WebPage>
-    <ApplicationRevision>83</ApplicationRevision>
+    <ApplicationRevision>85</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -129,6 +129,12 @@
     <Compile Include="ConfigBoxes\AccountBox.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ConfigBoxes\SelectStore.Designer.vb">
+      <DependentUpon>SelectStore.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ConfigBoxes\SelectStore.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="DataBaseClass\AccountDB.vb" />
     <Compile Include="DataBaseClass\CategoryDB.vb" />
     <Compile Include="DataBaseClass\CustomerDB.vb" />
@@ -138,6 +144,7 @@
     <Compile Include="DataBaseClass\ProfileDB.vb" />
     <Compile Include="DataBaseClass\SessionDB.vb" />
     <Compile Include="DataBaseClass\StockDB.vb" />
+    <Compile Include="DataBaseClass\StoreDB.vb" />
     <Compile Include="DataBaseClass\SupplierDB.vb" />
     <Compile Include="Catalogs.Designer.vb">
       <DependentUpon>Catalogs.vb</DependentUpon>
@@ -252,6 +259,7 @@
     <Compile Include="ObjectsClass\Profile.vb" />
     <Compile Include="ObjectsClass\Session.vb" />
     <Compile Include="ObjectsClass\Stock.vb" />
+    <Compile Include="ObjectsClass\Store.vb" />
     <Compile Include="ObjectsClass\Supplier.vb" />
     <Compile Include="ObjectsClass\Terminal.vb" />
     <Compile Include="MoreClasses\PrintSale.vb" />
@@ -327,6 +335,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ConfigBoxes\AccountBox.resx">
       <DependentUpon>AccountBox.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConfigBoxes\SelectStore.resx">
+      <DependentUpon>SelectStore.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditBoxes\CategoryBox.resx">
       <DependentUpon>CategoryBox.vb</DependentUpon>

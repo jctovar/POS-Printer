@@ -173,6 +173,30 @@ Namespace My
                 Me("mainbox") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("860, 580")>  _
+        Public Property productslist() As Global.System.Drawing.Size
+            Get
+                Return CType(Me("productslist"),Global.System.Drawing.Size)
+            End Get
+            Set
+                Me("productslist") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property store() As Integer
+            Get
+                Return CType(Me("store"),Integer)
+            End Get
+            Set
+                Me("store") = value
+            End Set
+        End Property
     End Class
 End Namespace
 
