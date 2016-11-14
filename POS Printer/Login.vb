@@ -1,5 +1,6 @@
-﻿Imports MySql.Data.MySqlClient
-Public Class Login
+﻿Public Class Login
+    Private profile As New Profile
+    Private session As New Session
     Private Sub Form6_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Text = String.Format("{0} - {1}", Application.ProductName, "Autentificación")
 
@@ -10,46 +11,50 @@ Public Class Login
         'TextBox1.Height = 26
     End Sub
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        If GetAuthentication() = True Then
+        If GetAuthentication(TextBox1.Text, TextBox2.Text) = True Then
             My.Settings.profile = TextBox1.Text
+
+            GetSession()
             Me.DialogResult = DialogResult.OK
+        Else
+            MessageBox.Show("Datos de autentificación invalidos!", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
         End If
     End Sub
-    Private Function GetAuthentication() As Boolean
-        Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
-        Dim Sql As String = "SELECT * FROM profiles WHERE profile_username = @username AND profile_password = @password AND profile_enable = 1"
-        Dim dbcommand As New MySqlCommand(Sql, Connection)
+    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
+        Me.Close()
+    End Sub
+    Private Function GetAuthentication(Username As String, Password As String) As Boolean
         Dim result As Boolean
 
-        dbcommand.Parameters.AddWithValue("@username", TextBox1.Text)
-        dbcommand.Parameters.AddWithValue("@password", TextBox2.Text)
-
         Try
-            Connection.Open()
+            profile = ProfileDB.Authentication(Username, Password)
 
-            Dim reader As MySqlDataReader = dbcommand.ExecuteReader(CommandBehavior.SingleRow)
+            Globales.ProfileId = profile.Id
+            Globales.ProfileUsername = profile.Username
+            Globales.ProfileName = profile.Name
+            Globales.RoleId = profile.Role
 
-            If reader.Read Then
-                Globales.ProfileId = reader("profile_id").ToString
-                Globales.ProfileUsername = reader("profile_username").ToString
-                Globales.ProfileName = reader("profile_name").ToString
-                Globales.RoleId = reader("role_id").ToString
-
-                result = True
-            Else
-                ' Datos invalidos.
-                MessageBox.Show("Datos de autentificación invalidos!", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
-            End If
-
+            result = True
         Catch ex As Exception
-            Throw ex
-        Finally
-            Connection.Close()
+            result = False
         End Try
 
         Return result
     End Function
-    Private Sub Button2_Click(sender As Object, e As EventArgs) Handles Button2.Click
-        Me.Close()
+    Private Sub GetSession()
+        session = SessionDB.GetLastSession(Globales.ProfileId)
+
+        If IsNothing(session) Then
+            Dim session As New Session
+
+            With session
+                .Profile = Globales.ProfileId
+            End With
+
+            SessionDB.AddSession(session)
+        Else
+            Globales.SessionId = session.Id
+        End If
+
     End Sub
 End Class

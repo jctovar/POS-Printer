@@ -23,6 +23,8 @@ Partial Class CheckOut
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.GroupBox1 = New System.Windows.Forms.GroupBox()
+        Me.TextBox5 = New System.Windows.Forms.TextBox()
+        Me.Label6 = New System.Windows.Forms.Label()
         Me.TextBox3 = New System.Windows.Forms.TextBox()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.TextBox4 = New System.Windows.Forms.TextBox()
@@ -36,8 +38,6 @@ Partial Class CheckOut
         Me.GroupBox2 = New System.Windows.Forms.GroupBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.ComboBox1 = New System.Windows.Forms.ComboBox()
-        Me.TextBox5 = New System.Windows.Forms.TextBox()
-        Me.Label6 = New System.Windows.Forms.Label()
         Me.GroupBox1.SuspendLayout()
         Me.GroupBox2.SuspendLayout()
         Me.SuspendLayout()
@@ -47,18 +47,38 @@ Partial Class CheckOut
         Me.GroupBox1.Controls.Add(Me.TextBox5)
         Me.GroupBox1.Controls.Add(Me.Label6)
         Me.GroupBox1.Controls.Add(Me.TextBox3)
-        Me.GroupBox1.Controls.Add(Me.Label3)
         Me.GroupBox1.Controls.Add(Me.TextBox4)
         Me.GroupBox1.Controls.Add(Me.Label4)
         Me.GroupBox1.Controls.Add(Me.TextBox2)
-        Me.GroupBox1.Controls.Add(Me.Label2)
         Me.GroupBox1.Controls.Add(Me.TextBox1)
         Me.GroupBox1.Controls.Add(Me.Label1)
+        Me.GroupBox1.Controls.Add(Me.Label2)
+        Me.GroupBox1.Controls.Add(Me.Label3)
         Me.GroupBox1.Location = New System.Drawing.Point(12, 130)
         Me.GroupBox1.Name = "GroupBox1"
         Me.GroupBox1.Size = New System.Drawing.Size(358, 298)
         Me.GroupBox1.TabIndex = 3
         Me.GroupBox1.TabStop = False
+        '
+        'TextBox5
+        '
+        Me.TextBox5.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
+        Me.TextBox5.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TextBox5.Location = New System.Drawing.Point(18, 222)
+        Me.TextBox5.MaxLength = 250
+        Me.TextBox5.Multiline = True
+        Me.TextBox5.Name = "TextBox5"
+        Me.TextBox5.Size = New System.Drawing.Size(303, 51)
+        Me.TextBox5.TabIndex = 10
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Location = New System.Drawing.Point(15, 206)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(60, 13)
+        Me.Label6.TabIndex = 9
+        Me.Label6.Text = "Comentario"
         '
         'TextBox3
         '
@@ -183,26 +203,6 @@ Partial Class CheckOut
         Me.ComboBox1.Name = "ComboBox1"
         Me.ComboBox1.Size = New System.Drawing.Size(303, 28)
         Me.ComboBox1.TabIndex = 2
-        '
-        'TextBox5
-        '
-        Me.TextBox5.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
-        Me.TextBox5.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox5.Location = New System.Drawing.Point(18, 222)
-        Me.TextBox5.MaxLength = 250
-        Me.TextBox5.Multiline = True
-        Me.TextBox5.Name = "TextBox5"
-        Me.TextBox5.Size = New System.Drawing.Size(303, 51)
-        Me.TextBox5.TabIndex = 10
-        '
-        'Label6
-        '
-        Me.Label6.AutoSize = True
-        Me.Label6.Location = New System.Drawing.Point(15, 206)
-        Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(60, 13)
-        Me.Label6.TabIndex = 9
-        Me.Label6.Text = "Comentario"
         '
         'CheckOut
         '

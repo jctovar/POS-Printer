@@ -28,8 +28,41 @@ Public Class StoreDB
         Return Terminal
 
     End Function
+    Public Shared Function GetStore(StoreId As Integer) As Store
+        Dim store As New Store
+        Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
+        Dim Sql As String = "SELECT * FROM stores WHERE store_id = @id"
+        Dim dbcommand As New MySqlCommand(Sql, Connection)
+
+        dbcommand.Parameters.AddWithValue("@id", StoreId)
+
+        Try
+            Connection.Open()
+
+            Dim reader As MySqlDataReader = dbcommand.ExecuteReader(CommandBehavior.SingleRow)
+
+            If reader.Read Then
+                With store
+                    .Id = reader("store_id")
+                    .Account = reader("account_id")
+                    .Name = reader("store_name").ToString
+                    .Address = reader("store_address").ToString
+                    .Phone = reader("store_phone").ToString
+                End With
+            Else
+                store = Nothing
+            End If
+            reader.Close()
+        Catch ex As Exception
+            Throw ex
+        Finally
+            Connection.Close()
+        End Try
+
+        Return store
+    End Function
     Public Shared Function GetStoresList(AccountId As Integer) As DataTable
-        ' Obtiene la tabla de productos
+        ' Obtiene la tabla de almacenes
         Dim dt = New DataTable()
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "SELECT store_id,store_name " &
@@ -55,17 +88,18 @@ Public Class StoreDB
 
         Return dt
     End Function
-    Public Shared Function UpdateStore(terminal As Terminal) As Boolean
+    Public Shared Function UpdateStore(store As Store) As Boolean
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
-        Dim Sql As String = "UPDATE terminals " &
-            "SET terminal_name=@name, terminal_description=@description " &
-            "WHERE terminal_id=@id"
+        Dim Sql As String = "UPDATE stores " &
+            "SET store_name=@name, store_address=@address, store_phone=@phone " &
+            "WHERE store_id=@id"
         Dim dbcommand As New MySqlCommand(Sql, Connection)
 
-        dbcommand.Parameters.AddWithValue("@id", terminal.Id)
-        dbcommand.Parameters.AddWithValue("@name", terminal.Name)
-        dbcommand.Parameters.AddWithValue("@description", terminal.Description)
-        dbcommand.Parameters.AddWithValue("@visible", terminal.Visible)
+        dbcommand.Parameters.AddWithValue("@id", store.Id)
+        dbcommand.Parameters.AddWithValue("@account", store.Account)
+        dbcommand.Parameters.AddWithValue("@name", store.Name)
+        dbcommand.Parameters.AddWithValue("@address", store.Address)
+        dbcommand.Parameters.AddWithValue("@phone", store.Phone)
 
         Try
             Connection.Open()
@@ -80,8 +114,8 @@ Public Class StoreDB
     End Function
     Public Shared Function DeleteStore(Id As Integer) As Boolean
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
-        Dim Sql As String = "DELETE FROM terminals " &
-            "WHERE terminal_id=@id"
+        Dim Sql As String = "DELETE FROM stores " &
+            "WHERE store_id=@id"
         Dim dbcommand As New MySqlCommand(Sql, Connection)
 
         dbcommand.Parameters.AddWithValue("@id", Id)
@@ -97,16 +131,18 @@ Public Class StoreDB
             Connection.Close()
         End Try
     End Function
-    Public Shared Function AddStore(terminal As Terminal) As Boolean
+    Public Shared Function AddStore(store As Store) As Boolean
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
-        Dim Sql As String = "INSERT INTO terminals " &
-            "(account_id,terminal_name,terminal_description) " &
-            "VALUES (@account,@name,@description)"
+        Dim Sql As String = "INSERT INTO stores " &
+            "(account_id,store_name,store_address,store_phone) " &
+            "VALUES (@account,@name,@address,@phone)"
         Dim dbcommand As New MySqlCommand(Sql, Connection)
 
-        dbcommand.Parameters.AddWithValue("@account", terminal.Account)
-        dbcommand.Parameters.AddWithValue("@name", terminal.Name)
-        dbcommand.Parameters.AddWithValue("@description", terminal.Description)
+        dbcommand.Parameters.AddWithValue("@id", store.Id)
+        dbcommand.Parameters.AddWithValue("@account", store.Account)
+        dbcommand.Parameters.AddWithValue("@name", store.Name)
+        dbcommand.Parameters.AddWithValue("@address", store.Address)
+        dbcommand.Parameters.AddWithValue("@phone", store.Phone)
 
         Try
             Connection.Open()

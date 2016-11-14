@@ -50,7 +50,7 @@ Partial Class TerminalBox
         '
         Me.CheckBox1.AutoSize = True
         Me.CheckBox1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.CheckBox1.Location = New System.Drawing.Point(17, 207)
+        Me.CheckBox1.Location = New System.Drawing.Point(17, 188)
         Me.CheckBox1.Name = "CheckBox1"
         Me.CheckBox1.Size = New System.Drawing.Size(56, 17)
         Me.CheckBox1.TabIndex = 5
@@ -61,7 +61,7 @@ Partial Class TerminalBox
         '
         Me.TextBox2.CharacterCasing = System.Windows.Forms.CharacterCasing.Upper
         Me.TextBox2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.TextBox2.Location = New System.Drawing.Point(17, 96)
+        Me.TextBox2.Location = New System.Drawing.Point(17, 88)
         Me.TextBox2.MaxLength = 45
         Me.TextBox2.Multiline = True
         Me.TextBox2.Name = "TextBox2"
@@ -71,7 +71,7 @@ Partial Class TerminalBox
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(14, 80)
+        Me.Label2.Location = New System.Drawing.Point(14, 72)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(63, 13)
         Me.Label2.TabIndex = 3

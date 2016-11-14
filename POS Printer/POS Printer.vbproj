@@ -32,7 +32,7 @@
     <SuiteName>Albaco</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.html</WebPage>
-    <ApplicationRevision>85</ApplicationRevision>
+    <ApplicationRevision>86</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -180,6 +180,12 @@
       <DependentUpon>StockBox.vb</DependentUpon>
     </Compile>
     <Compile Include="EditBoxes\StockBox.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditBoxes\StoreBox.Designer.vb">
+      <DependentUpon>StoreBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="EditBoxes\StoreBox.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="EditBoxes\SupplierBox.Designer.vb">
@@ -353,6 +359,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EditBoxes\StockBox.resx">
       <DependentUpon>StockBox.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditBoxes\StoreBox.resx">
+      <DependentUpon>StoreBox.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditBoxes\SupplierBox.resx">
       <DependentUpon>SupplierBox.vb</DependentUpon>

@@ -2,8 +2,10 @@
     Private varId As Integer
     Private varAccountId As Integer
     Private varCustomerId As Integer
-    Private varTerminalId As Integer
-    Private varProfileId As Integer
+    Private varTerminal As Integer
+    Private varProfile As Integer
+    Private varSession As Integer
+    Private varStore As Integer
     Private varStatus As Integer
     Private varNote As String
     Private varTimestamp As String
@@ -36,18 +38,34 @@
     End Property
     Public Property Profile As Integer
         Get
-            Return Me.varProfileId
+            Return Me.varProfile
         End Get
         Set(value As Integer)
-            Me.varProfileId = value
+            Me.varProfile = value
+        End Set
+    End Property
+    Public Property Session As Integer
+        Get
+            Return Me.varSession
+        End Get
+        Set(value As Integer)
+            Me.varSession = value
+        End Set
+    End Property
+    Public Property Store As Integer
+        Get
+            Return Me.varStore
+        End Get
+        Set(value As Integer)
+            Me.varStore = value
         End Set
     End Property
     Public Property Terminal As Integer
         Get
-            Return Me.varTerminalId
+            Return Me.varTerminal
         End Get
         Set(value As Integer)
-            Me.varTerminalId = value
+            Me.varTerminal = value
         End Set
     End Property
     Public Property Status As Integer

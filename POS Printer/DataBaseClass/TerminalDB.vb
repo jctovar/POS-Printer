@@ -43,7 +43,8 @@ Public Class TerminalDB
 
             If reader.Read Then
                 With terminal
-                    .Id = reader("terminal_id").ToString
+                    .Id = reader("terminal_id")
+                    .Account = reader("account_id")
                     .Name = reader("terminal_name").ToString
                     .Description = reader("terminal_description").ToString
                     '.Visible = reader("terminal_visible").ToString
@@ -61,7 +62,7 @@ Public Class TerminalDB
         Return Terminal
     End Function
     Public Shared Function GetTerminalsList(AccountId As Integer) As DataTable
-        ' Obtiene la tabla de productos
+        ' Obtiene la tabla de terminales
         Dim dt = New DataTable()
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "SELECT terminal_id,terminal_name,terminal_description " &

@@ -36,7 +36,9 @@
     End Sub
     Private Sub CheckTerminal()
 
-        If String.IsNullOrEmpty(TerminalDB.GetTerminalName(My.Settings.terminal)) Then
+        Globales.TerminalName = TerminalDB.GetTerminalName(My.Settings.terminal)
+
+        If String.IsNullOrEmpty(Globales.TerminalName) Then
             ' Selecciona terminal
             Dim frmTerminal As New SelectTerminal
 
@@ -48,7 +50,9 @@
     End Sub
     Private Sub CheckStore()
 
-        If String.IsNullOrEmpty(StoreDB.GetStoreName(My.Settings.store)) Then
+        Globales.StoreName = StoreDB.GetStoreName(My.Settings.store)
+
+        If String.IsNullOrEmpty(Globales.StoreName) Then
             ' Selecciona terminal
             Dim frmStore As New SelectStore
 

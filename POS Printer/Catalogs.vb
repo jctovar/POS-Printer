@@ -20,6 +20,8 @@
                 Title = "terminales"
             Case "stocks"
                 Title = "existencias"
+            Case "stores"
+                Title = "almacenes"
         End Select
 
         Me.Text = String.Format("{0} - {1}", Application.ProductName, "Catalogo de " & title)
@@ -42,6 +44,8 @@
                 bsData.DataSource = TerminalDB.GetTerminalsList(Globales.AccountId)
             Case "stocks"
                 bsData.DataSource = StockDB.GetStocksList(Globales.AccountId)
+            Case "stores"
+                bsData.DataSource = StoreDB.GetStoresList(Globales.AccountId)
         End Select
 
         Try
@@ -133,6 +137,13 @@
                 If frmStock.ShowDialog() = DialogResult.OK Then
                     Me.FillDatagrid("")
                 End If
+            Case "stores"
+                Dim frmStore As New StoreBox
+
+                frmStore.StoreId = DataGridView1(0, DataGridView1.CurrentRow.Index).Value
+                If frmStore.ShowDialog() = DialogResult.OK Then
+                    Me.FillDatagrid("")
+                End If
         End Select
     End Sub
     Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellDoubleClick
@@ -210,7 +221,7 @@
                             Me.FillDatagrid("")
                         End If
                     Case "profiles"
-                        If ProfileDB.DeleteItem(DataGridView1(0, DataGridView1.CurrentRow.Index).Value) = True Then
+                        If ProfileDB.DeleteProfile(DataGridView1(0, DataGridView1.CurrentRow.Index).Value) = True Then
                             Me.FillDatagrid("")
                         End If
                     Case "suppliers"
@@ -226,7 +237,7 @@
                             Me.FillDatagrid("")
                         End If
                     Case "stocks"
-                        If TerminalDB.DeleteTerminal(DataGridView1(0, DataGridView1.CurrentRow.Index).Value) = True Then
+                        If StockDB.DeleteStock(DataGridView1(0, DataGridView1.CurrentRow.Index).Value) = True Then
                             Me.FillDatagrid("")
                         End If
                 End Select

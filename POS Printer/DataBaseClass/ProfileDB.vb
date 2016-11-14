@@ -28,6 +28,43 @@ Public Class ProfileDB
 
         Return dt
     End Function
+    Public Shared Function Authentication(Username As String, Password As String) As Profile
+        Dim profile As New Profile
+        Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
+        Dim Sql As String = "SELECT * FROM profiles WHERE profile_username = @username AND profile_password = @password AND profile_enable = 1"
+        Dim dbcommand As New MySqlCommand(Sql, Connection)
+
+        dbcommand.Parameters.AddWithValue("@username", Username)
+        dbcommand.Parameters.AddWithValue("@password", Password)
+
+        Try
+            Connection.Open()
+
+            Dim reader As MySqlDataReader = dbcommand.ExecuteReader(CommandBehavior.SingleRow)
+
+            If reader.Read Then
+                With profile
+                    .Id = reader("profile_id").ToString
+                    .Name = reader("profile_name").ToString
+                    .Username = reader("profile_username").ToString
+                    .Phone = reader("profile_phone").ToString
+                    .Email = reader("profile_email").ToString
+                    .Password = reader("profile_password").ToString
+                    .Role = reader("role_id").ToString
+                    .Enable = reader("profile_enable").ToString
+                End With
+            Else
+                profile = Nothing
+            End If
+            reader.Close()
+        Catch ex As Exception
+            Throw ex
+        Finally
+            Connection.Close()
+        End Try
+
+        Return profile
+    End Function
     Public Shared Function GetProfile(ProfileID As Integer) As Profile
         Dim profile As New Profile
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
@@ -118,7 +155,7 @@ Public Class ProfileDB
 
         Return dt
     End Function
-    Public Shared Function DeleteItem(Id As Integer) As Boolean
+    Public Shared Function DeleteProfile(Id As Integer) As Boolean
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "DELETE FROM profiles " &
             "WHERE profile_id=@id"

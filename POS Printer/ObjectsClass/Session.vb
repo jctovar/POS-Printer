@@ -2,7 +2,8 @@
     Private varId As Integer
     Private varProfileId As Integer
     Private varStatus As Integer
-    Private varTimestamp As String
+    Private varStart As Date
+    Private varEnd As Date
     Public Property Id As Integer
         Get
             Return Me.varId
@@ -27,12 +28,20 @@
             Me.varStatus = value
         End Set
     End Property
-    Public Property Timestamp As String
+    Public Property StartDate As Date
         Get
-            Return varTimestamp
+            Return varStart
         End Get
-        Set(value As String)
-            Me.varTimestamp = value
+        Set(value As Date)
+            Me.varStart = value
+        End Set
+    End Property
+    Public Property EndDate As Date
+        Get
+            Return varEnd
+        End Get
+        Set(value As Date)
+            Me.varEnd = value
         End Set
     End Property
 End Class

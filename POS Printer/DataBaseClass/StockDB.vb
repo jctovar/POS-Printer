@@ -147,4 +147,23 @@ Public Class StockDB
             Connection.Close()
         End Try
     End Function
+    Public Shared Function DeleteStock(Id As Integer) As Boolean
+        Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
+        Dim Sql As String = "DELETE FROM stocks " &
+            "WHERE stock_id=@id"
+        Dim dbcommand As New MySqlCommand(Sql, Connection)
+
+        dbcommand.Parameters.AddWithValue("@id", Id)
+
+        Try
+            Connection.Open()
+
+            dbcommand.ExecuteNonQuery()
+            Return True
+        Catch ex As Exception
+            Throw ex
+        Finally
+            Connection.Close()
+        End Try
+    End Function
 End Class

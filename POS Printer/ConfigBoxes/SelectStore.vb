@@ -15,6 +15,7 @@
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         ' Guarda la terminal en la configuración
         My.Settings.store = ListBox1.SelectedValue
+        Globales.StoreName = ListBox1.Text
 
         Me.DialogResult = DialogResult.OK
     End Sub

@@ -9,7 +9,7 @@ Public Class MainBox
 
         Me.ShowStatus()
         ' Inicia aplicacion
-        Me.Text = String.Format("{0} - {1}", Application.ProductName, Globales.AccountName)
+
 
     End Sub
     Private Sub Form1_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
@@ -25,8 +25,10 @@ Public Class MainBox
     ' Llamadas de las principales rutinas
     ' ***********************************************************
     Private Sub ShowStatus()
+
+        Me.Text = String.Format("{0} - {1} [{2}]", Application.ProductName, Globales.AccountName, Globales.StoreName)
         ' Muestra usuario y caja en la barra de estado
-        ToolStripStatusLabel1.Text = "Caja: " & TerminalDB.GetTerminalName(My.Settings.terminal)
+        ToolStripStatusLabel1.Text = "Caja: " & Globales.TerminalName
 
         If Globales.ProfileId = False Then
             ToolStripStatusLabel4.Text = "Usuario: No autentificado"
@@ -98,6 +100,7 @@ Public Class MainBox
             CategoríasToolStripMenuItem.Enabled = True
             MisDatosToolStripMenuItem.Enabled = True
             TerminalesToolStripMenuItem.Enabled = True
+            AlmacenesToolStripMenuItem.Enabled = True
 
             btnCustomers.Enabled = True ' Customers button
             btnProducts.Enabled = True ' Products button
@@ -262,6 +265,7 @@ Public Class MainBox
         Dim frmStore As New SelectStore
 
         If frmStore.ShowDialog() = DialogResult.OK Then
+            Me.ShowStatus()
             Me.FillDatagrid()
         End If
     End Sub

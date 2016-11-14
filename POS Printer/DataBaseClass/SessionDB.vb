@@ -5,7 +5,7 @@ Public Class SessionDB
         Dim dt = New DataTable()
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "SELECT * " &
-            "FROM sessions WHERE profile_id = @profile ORDER BY session_timestamp"
+            "FROM sessions WHERE profile_id = @profile ORDER BY session_start"
 
         Dim dbcommand = New MySqlCommand(Sql, Connection)
 
@@ -27,6 +27,39 @@ Public Class SessionDB
 
         Return dt
     End Function
+    Public Shared Function GetLastSession(ProfileId As Integer) As Session
+        Dim session As New Session
+        Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
+        Dim Sql As String = "SELECT * FROM sessions WHERE profile_id = @id ORDER BY session_start DESC LIMIT 1"
+        Dim dbcommand As New MySqlCommand(Sql, Connection)
+
+        dbcommand.Parameters.AddWithValue("@id", ProfileId)
+
+        Try
+            Connection.Open()
+
+            Dim reader As MySqlDataReader = dbcommand.ExecuteReader(CommandBehavior.SingleRow)
+
+            If reader.Read Then
+                With session
+                    .Id = reader("session_id")
+                    .Profile = reader("profile_id")
+                    .Status = reader("session_action")
+                    .StartDate = reader("session_start")
+                    .EndDate = reader("session_end")
+                End With
+            Else
+                session = Nothing
+            End If
+            reader.Close()
+        Catch ex As Exception
+            Throw ex
+        Finally
+            Connection.Close()
+        End Try
+
+        Return session
+    End Function
     Public Shared Function GetSession(SessionId As Integer) As Session
         Dim session As New Session
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
@@ -44,8 +77,9 @@ Public Class SessionDB
                 With session
                     .Id = reader("session_id")
                     .Profile = reader("profile_id")
-                    .Status = reader("session_action").ToString
-                    .Timestamp = reader("session_timestamp").ToString
+                    .Status = reader("session_action")
+                    .StartDate = reader("session_start")
+                    .EndDate = reader("session_end")
                 End With
             Else
                 session = Nothing
@@ -69,7 +103,8 @@ Public Class SessionDB
         dbcommand.Parameters.AddWithValue("@id", session.Id)
         dbcommand.Parameters.AddWithValue("@profile", session.Profile)
         dbcommand.Parameters.AddWithValue("@status", session.Status)
-        dbcommand.Parameters.AddWithValue("@timestamp", session.Timestamp)
+        dbcommand.Parameters.AddWithValue("@start", session.StartDate)
+        dbcommand.Parameters.AddWithValue("@end", session.EndDate)
 
         Try
             Connection.Open()
@@ -85,14 +120,15 @@ Public Class SessionDB
     Public Shared Function AddSession(session As Session) As Boolean
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "INSERT INTO sessions " &
-            "(account_id,terminal_name,terminal_description) " &
-            "VALUES (@account,@name,@description)"
+            "(profile_id) " &
+            "VALUES (@profile)"
         Dim dbcommand As New MySqlCommand(Sql, Connection)
 
         dbcommand.Parameters.AddWithValue("@id", session.Id)
         dbcommand.Parameters.AddWithValue("@profile", session.Profile)
         dbcommand.Parameters.AddWithValue("@status", session.Status)
-        dbcommand.Parameters.AddWithValue("@timestamp", session.Timestamp)
+        dbcommand.Parameters.AddWithValue("@start", session.StartDate)
+        dbcommand.Parameters.AddWithValue("@end", session.EndDate)
 
         Try
             Connection.Open()

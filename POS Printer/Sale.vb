@@ -1,7 +1,7 @@
 ﻿Imports System.IO.Ports
 Public Class Sale
     Public SaleId As Integer
-    Private Sale As Invoice
+    Private Sale As New Invoice
     Private Sub Form5_Load(sender As Object, e As EventArgs) Handles MyBase.Load
 
         ' Evalua si es un nuevo ticket
@@ -151,11 +151,19 @@ Public Class Sale
         End If
     End Sub
     Private Sub TextBox1_KeyDown(sender As Object, e As KeyEventArgs) Handles TextBox1.KeyDown
-        'Console.WriteLine(e.KeyCode)
 
         If e.KeyCode = 13 Or e.KeyCode = 40 Then
             If SaleId = 0 Then
-                SaleId = InvoiceDB.AddNewSale(Globales.AccountId, Globales.ProfileId, My.Settings.terminal, 1, My.Settings.store)
+                With Sale
+                    .Account = Globales.AccountId
+                    .Profile = Globales.ProfileId
+                    .Terminal = My.Settings.terminal
+                    .Store = My.Settings.store
+                    .Session = Globales.SessionId
+                    .Customer = 1
+                End With
+
+                SaleId = InvoiceDB.AddNewSale(Sale)
             End If
             ' Invoca la ventana de productos
             Dim frmAdd As New ProductList

@@ -86,18 +86,19 @@ Public Class InvoiceDB
 
         Return invoice
     End Function
-    Public Shared Function AddNewSale(AccountId As Integer, ProfileId As Integer, TerminalId As Integer, CustomerId As Integer, StoreId As Integer) As Integer
+    Public Shared Function AddNewSale(sale As Invoice) As Integer
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim SaleId As Integer = 0
-        Dim sql = "INSERT INTO sales (account_id,customer_id,profile_id,terminal_id,store_id) VALUES (@account,@customer,@profile,@terminal,@store)"
+        Dim sql = "INSERT INTO sales (account_id,customer_id,profile_id,terminal_id,store_id,session_id) VALUES (@account,@customer,@profile,@terminal,@store,@session)"
 
         Dim dbcommand As New MySqlCommand(sql, Connection)
 
-        dbcommand.Parameters.AddWithValue("@account", AccountId)
-        dbcommand.Parameters.AddWithValue("@customer", CustomerId)
-        dbcommand.Parameters.AddWithValue("@profile", ProfileId)
-        dbcommand.Parameters.AddWithValue("@terminal", TerminalId)
-        dbcommand.Parameters.AddWithValue("@store", StoreId)
+        dbcommand.Parameters.AddWithValue("@account", sale.Account)
+        dbcommand.Parameters.AddWithValue("@customer", sale.Customer)
+        dbcommand.Parameters.AddWithValue("@profile", sale.Profile)
+        dbcommand.Parameters.AddWithValue("@terminal", sale.Terminal)
+        dbcommand.Parameters.AddWithValue("@store", sale.Store)
+        dbcommand.Parameters.AddWithValue("@session", sale.Session)
 
         Try
             Connection.Open()

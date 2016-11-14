@@ -15,5 +15,8 @@
     Public ProfileUsername As String
     Public ProfileName As String
     Public RoleId As Integer
-    ' Variables
+    Public SessionId As Integer
+    ' Variables generales
+    Public TerminalName As String
+    Public StoreName As String
 End Module
