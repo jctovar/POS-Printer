@@ -32,7 +32,7 @@
     <SuiteName>Albaco</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.html</WebPage>
-    <ApplicationRevision>86</ApplicationRevision>
+    <ApplicationRevision>87</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -219,6 +219,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainModule.vb" />
+    <Compile Include="MoreClasses\ExportExcel.vb" />
     <Compile Include="NoteBox.Designer.vb">
       <DependentUpon>NoteBox.vb</DependentUpon>
     </Compile>

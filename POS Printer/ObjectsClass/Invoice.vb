@@ -2,7 +2,6 @@
     Private varId As Integer
     Private varAccountId As Integer
     Private varCustomerId As Integer
-    Private varTerminal As Integer
     Private varProfile As Integer
     Private varSession As Integer
     Private varStore As Integer
@@ -58,14 +57,6 @@
         End Get
         Set(value As Integer)
             Me.varStore = value
-        End Set
-    End Property
-    Public Property Terminal As Integer
-        Get
-            Return Me.varTerminal
-        End Get
-        Set(value As Integer)
-            Me.varTerminal = value
         End Set
     End Property
     Public Property Status As Integer

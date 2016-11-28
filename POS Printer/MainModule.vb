@@ -5,7 +5,7 @@
         Application.EnableVisualStyles()
 
         GetAccount()
-        CheckTerminal()
+        ' CheckTerminal()
         CheckStore()
 
         frmSplash.ShowDialog()

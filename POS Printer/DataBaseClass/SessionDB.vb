@@ -30,7 +30,7 @@ Public Class SessionDB
     Public Shared Function GetLastSession(ProfileId As Integer) As Session
         Dim session As New Session
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
-        Dim Sql As String = "SELECT * FROM sessions WHERE profile_id = @id ORDER BY session_start DESC LIMIT 1"
+        Dim Sql As String = "SELECT * FROM sessions WHERE profile_id = @id ORDER BY session_timestamp DESC LIMIT 1"
         Dim dbcommand As New MySqlCommand(Sql, Connection)
 
         dbcommand.Parameters.AddWithValue("@id", ProfileId)
@@ -45,8 +45,7 @@ Public Class SessionDB
                     .Id = reader("session_id")
                     .Profile = reader("profile_id")
                     .Status = reader("session_action")
-                    .StartDate = reader("session_start")
-                    .EndDate = reader("session_end")
+                    .Timestamp = reader("session_timestamp")
                 End With
             Else
                 session = Nothing
@@ -78,8 +77,7 @@ Public Class SessionDB
                     .Id = reader("session_id")
                     .Profile = reader("profile_id")
                     .Status = reader("session_action")
-                    .StartDate = reader("session_start")
-                    .EndDate = reader("session_end")
+                    .Timestamp = reader("session_timestamp")
                 End With
             Else
                 session = Nothing
@@ -103,8 +101,7 @@ Public Class SessionDB
         dbcommand.Parameters.AddWithValue("@id", session.Id)
         dbcommand.Parameters.AddWithValue("@profile", session.Profile)
         dbcommand.Parameters.AddWithValue("@status", session.Status)
-        dbcommand.Parameters.AddWithValue("@start", session.StartDate)
-        dbcommand.Parameters.AddWithValue("@end", session.EndDate)
+        dbcommand.Parameters.AddWithValue("@timestamp", session.Timestamp)
 
         Try
             Connection.Open()
@@ -127,8 +124,7 @@ Public Class SessionDB
         dbcommand.Parameters.AddWithValue("@id", session.Id)
         dbcommand.Parameters.AddWithValue("@profile", session.Profile)
         dbcommand.Parameters.AddWithValue("@status", session.Status)
-        dbcommand.Parameters.AddWithValue("@start", session.StartDate)
-        dbcommand.Parameters.AddWithValue("@end", session.EndDate)
+        dbcommand.Parameters.AddWithValue("@timestamp", session.Timestamp)
 
         Try
             Connection.Open()

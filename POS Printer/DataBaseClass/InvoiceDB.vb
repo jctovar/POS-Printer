@@ -29,7 +29,7 @@ Public Class InvoiceDB
     Public Shared Function GetInvoice(InvoiceId As Integer) As Invoice
         Dim invoice As New Invoice
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
-        Dim Sql As String = "SELECT t1.sale_id,t1.account_id,t1.customer_id,t1.profile_id,t1.terminal_id,t1.status_id,t1.sale_note,t1.sale_timestamp," &
+        Dim Sql As String = "SELECT t1.sale_id,t1.account_id,t1.customer_id,t1.profile_id,t1.status_id,t1.sale_note,t1.sale_timestamp," &
             "SUM(t2.sale_price * t2.sale_quantity) AS sale_subtotal, " &
             "SUM((t2.sale_price * t2.sale_quantity) * (t2.sale_tax / 100)) AS sale_tax, " &
             "SUM((t2.sale_price * t2.sale_quantity) + ((t2.sale_price * t2.sale_quantity) * (t2.sale_tax / 100))) AS sale_total " &
@@ -52,7 +52,6 @@ Public Class InvoiceDB
                     .Account = reader("account_id")
                     .Customer = reader("customer_id")
                     .Profile = reader("profile_id")
-                    .Terminal = reader("terminal_id")
                     .Status = reader("status_id")
                     .Note = reader("sale_note").ToString
                     .Timestamp = reader("sale_timestamp")
@@ -89,14 +88,13 @@ Public Class InvoiceDB
     Public Shared Function AddNewSale(sale As Invoice) As Integer
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim SaleId As Integer = 0
-        Dim sql = "INSERT INTO sales (account_id,customer_id,profile_id,terminal_id,store_id,session_id) VALUES (@account,@customer,@profile,@terminal,@store,@session)"
+        Dim sql = "INSERT INTO sales (account_id,customer_id,profile_id,store_id,session_id) VALUES (@account,@customer,@profile,@store,@session)"
 
         Dim dbcommand As New MySqlCommand(sql, Connection)
 
         dbcommand.Parameters.AddWithValue("@account", sale.Account)
         dbcommand.Parameters.AddWithValue("@customer", sale.Customer)
         dbcommand.Parameters.AddWithValue("@profile", sale.Profile)
-        dbcommand.Parameters.AddWithValue("@terminal", sale.Terminal)
         dbcommand.Parameters.AddWithValue("@store", sale.Store)
         dbcommand.Parameters.AddWithValue("@session", sale.Session)
 
@@ -125,7 +123,6 @@ Public Class InvoiceDB
         dbcommand.Parameters.AddWithValue("@id", invoice.Id)
         dbcommand.Parameters.AddWithValue("@customer", invoice.Customer)
         dbcommand.Parameters.AddWithValue("@profile", invoice.Profile)
-        dbcommand.Parameters.AddWithValue("@terminal", invoice.Terminal)
         dbcommand.Parameters.AddWithValue("@status", invoice.Status)
         dbcommand.Parameters.AddWithValue("@note", invoice.Note)
 
