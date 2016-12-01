@@ -6,7 +6,7 @@
 
         GetAccount()
         ' CheckTerminal()
-        CheckStore()
+        ' CheckStore()
 
         frmSplash.ShowDialog()
 
@@ -32,34 +32,6 @@
         Globales.AccountEmail = account.Email
         Globales.AccountPostalCode = account.PostalCode
         Globales.AccountPhone = account.Phone
-
-    End Sub
-    Private Sub CheckTerminal()
-
-        Globales.TerminalName = TerminalDB.GetTerminalName(My.Settings.terminal)
-
-        If String.IsNullOrEmpty(Globales.TerminalName) Then
-            ' Selecciona terminal
-            Dim frmTerminal As New SelectTerminal
-
-            If frmTerminal.ShowDialog() = DialogResult.OK Then
-
-            End If
-        End If
-
-    End Sub
-    Private Sub CheckStore()
-
-        Globales.StoreName = StoreDB.GetStoreName(My.Settings.store)
-
-        If String.IsNullOrEmpty(Globales.StoreName) Then
-            ' Selecciona terminal
-            Dim frmStore As New SelectStore
-
-            If frmStore.ShowDialog() = DialogResult.OK Then
-
-            End If
-        End If
 
     End Sub
 End Module

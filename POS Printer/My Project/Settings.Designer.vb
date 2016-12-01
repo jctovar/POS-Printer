@@ -152,18 +152,6 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
-        Public Property terminal() As Integer
-            Get
-                Return CType(Me("terminal"),Integer)
-            End Get
-            Set
-                Me("terminal") = value
-            End Set
-        End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("839, 583")>  _
         Public Property mainbox() As Global.System.Drawing.Size
             Get

@@ -8,10 +8,10 @@
         ToolStripStatusLabel1.Text = String.Format("Se encontraron {0} registros", 0)
 
         With Me.ComboBox1
-            .DisplayMember = "terminal_name"
-            .ValueMember = "terminal_id"
-            .DataSource = TerminalDB.GetTerminalsList(Globales.AccountId)
-            .SelectedValue = My.Settings.terminal
+            .DisplayMember = "store_name"
+            .ValueMember = "store_id"
+            .DataSource = StoreDB.GetStoresList(Globales.AccountId)
+            .SelectedValue = My.Settings.store
         End With
 
         With Me.ComboBox2

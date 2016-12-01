@@ -129,12 +129,6 @@
     <Compile Include="ConfigBoxes\AccountBox.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ConfigBoxes\SelectStore.Designer.vb">
-      <DependentUpon>SelectStore.vb</DependentUpon>
-    </Compile>
-    <Compile Include="ConfigBoxes\SelectStore.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="DataBaseClass\AccountDB.vb" />
     <Compile Include="DataBaseClass\CategoryDB.vb" />
     <Compile Include="DataBaseClass\CustomerDB.vb" />
@@ -229,12 +223,6 @@
     <Compile Include="ObjectsClass\Account.vb" />
     <Compile Include="ObjectsClass\Item.vb" />
     <Compile Include="ObjectsClass\Payment.vb" />
-    <Compile Include="ConfigBoxes\SelectTerminal.Designer.vb">
-      <DependentUpon>SelectTerminal.vb</DependentUpon>
-    </Compile>
-    <Compile Include="ConfigBoxes\SelectTerminal.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Form12.Designer.vb">
       <DependentUpon>Form12.vb</DependentUpon>
     </Compile>
@@ -343,9 +331,6 @@
     <EmbeddedResource Include="ConfigBoxes\AccountBox.resx">
       <DependentUpon>AccountBox.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ConfigBoxes\SelectStore.resx">
-      <DependentUpon>SelectStore.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="EditBoxes\CategoryBox.resx">
       <DependentUpon>CategoryBox.vb</DependentUpon>
     </EmbeddedResource>
@@ -375,9 +360,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="IdSearchBox.resx">
       <DependentUpon>IdSearchBox.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="ConfigBoxes\SelectTerminal.resx">
-      <DependentUpon>SelectTerminal.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form12.resx">
       <DependentUpon>Form12.vb</DependentUpon>

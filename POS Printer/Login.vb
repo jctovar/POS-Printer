@@ -9,6 +9,12 @@
 
         'TextBox1.AutoSize = False
         'TextBox1.Height = 26
+        With Me.ComboBox1
+            .DisplayMember = "store_name"
+            .ValueMember = "store_id"
+            .DataSource = StoreDB.GetStoresList(Globales.AccountId)
+            .SelectedValue = My.Settings.store
+        End With
     End Sub
     Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
         If GetAuthentication(TextBox1.Text, TextBox2.Text) = True Then
@@ -33,6 +39,8 @@
             Globales.ProfileUsername = profile.Username
             Globales.ProfileName = profile.Name
             Globales.RoleId = profile.Role
+            My.Settings.store = ComboBox1.SelectedValue
+            Globales.StoreName = StoreDB.GetStoreName(My.Settings.store)
 
             result = True
         Catch ex As Exception

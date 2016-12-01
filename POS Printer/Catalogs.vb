@@ -27,6 +27,7 @@
         Me.Text = String.Format("{0} - {1}", Application.ProductName, "Catalogo de " & title)
 
         Me.FillDatagrid("")
+
     End Sub
     Public Sub FillDatagrid(ProductString As String)
         Select Case Search
@@ -247,5 +248,25 @@
             End Try
 
         End If
+    End Sub
+
+    Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
+        SaveFileDialog1.Filter = "Libro de Excel|*.xlsx"
+        SaveFileDialog1.DefaultExt = "*.xlsx"
+        SaveFileDialog1.Title = "Guardar libro de excel como"
+        SaveFileDialog1.FileName = "hola2.xlsx"
+
+        If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+            ' If the file name is not an empty string open it for saving.
+            If SaveFileDialog1.FileName <> "" Then
+                ExportExcel.btnWriteToExcel_Click(SaveFileDialog1.FileName)
+
+            End If
+        End If
+
+
+
+        ' Manda el grid a excel
+
     End Sub
 End Class

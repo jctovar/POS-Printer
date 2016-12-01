@@ -22,32 +22,49 @@ Partial Class Form12
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form12))
-        Me.PrintPreviewDialog1 = New System.Windows.Forms.PrintPreviewDialog()
-        Me.PrintDocument1 = New System.Drawing.Printing.PrintDocument()
+        Me.DateTimePicker1 = New System.Windows.Forms.DateTimePicker()
+        Me.DateTimePicker2 = New System.Windows.Forms.DateTimePicker()
+        Me.Button1 = New System.Windows.Forms.Button()
         Me.SuspendLayout()
         '
-        'PrintPreviewDialog1
+        'DateTimePicker1
         '
-        Me.PrintPreviewDialog1.AutoScrollMargin = New System.Drawing.Size(0, 0)
-        Me.PrintPreviewDialog1.AutoScrollMinSize = New System.Drawing.Size(0, 0)
-        Me.PrintPreviewDialog1.ClientSize = New System.Drawing.Size(400, 300)
-        Me.PrintPreviewDialog1.Enabled = True
-        Me.PrintPreviewDialog1.Icon = CType(resources.GetObject("PrintPreviewDialog1.Icon"), System.Drawing.Icon)
-        Me.PrintPreviewDialog1.Name = "PrintPreviewDialog1"
-        Me.PrintPreviewDialog1.Visible = False
+        Me.DateTimePicker1.Location = New System.Drawing.Point(100, 32)
+        Me.DateTimePicker1.Name = "DateTimePicker1"
+        Me.DateTimePicker1.Size = New System.Drawing.Size(200, 20)
+        Me.DateTimePicker1.TabIndex = 0
+        '
+        'DateTimePicker2
+        '
+        Me.DateTimePicker2.Location = New System.Drawing.Point(100, 79)
+        Me.DateTimePicker2.Name = "DateTimePicker2"
+        Me.DateTimePicker2.Size = New System.Drawing.Size(200, 20)
+        Me.DateTimePicker2.TabIndex = 1
+        '
+        'Button1
+        '
+        Me.Button1.Location = New System.Drawing.Point(350, 51)
+        Me.Button1.Name = "Button1"
+        Me.Button1.Size = New System.Drawing.Size(75, 23)
+        Me.Button1.TabIndex = 2
+        Me.Button1.Text = "Button1"
+        Me.Button1.UseVisualStyleBackColor = True
         '
         'Form12
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(516, 293)
+        Me.Controls.Add(Me.Button1)
+        Me.Controls.Add(Me.DateTimePicker2)
+        Me.Controls.Add(Me.DateTimePicker1)
         Me.Name = "Form12"
         Me.Text = "Form12"
         Me.ResumeLayout(False)
 
     End Sub
 
-    Friend WithEvents PrintPreviewDialog1 As PrintPreviewDialog
-    Friend WithEvents PrintDocument1 As Printing.PrintDocument
+    Friend WithEvents DateTimePicker1 As DateTimePicker
+    Friend WithEvents DateTimePicker2 As DateTimePicker
+    Friend WithEvents Button1 As Button
 End Class

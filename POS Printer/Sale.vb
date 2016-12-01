@@ -157,7 +157,6 @@ Public Class Sale
                 With Sale
                     .Account = Globales.AccountId
                     .Profile = Globales.ProfileId
-                    .Terminal = My.Settings.terminal
                     .Store = My.Settings.store
                     .Session = Globales.SessionId
                     .Customer = 1

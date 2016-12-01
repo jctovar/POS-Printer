@@ -59,7 +59,6 @@ Public Class MainBox
                 .Columns(2).Visible = False
                 .Columns(3).Visible = False
                 .Columns(4).Visible = False
-
                 .Columns(5).HeaderText = "Fecha"
                 .Columns(6).HeaderText = "Cliente"
                 .Columns(7).Visible = False
@@ -99,7 +98,6 @@ Public Class MainBox
             ProveedoresToolStripMenuItem.Enabled = True
             CategoríasToolStripMenuItem.Enabled = True
             MisDatosToolStripMenuItem.Enabled = True
-            TerminalesToolStripMenuItem.Enabled = True
             AlmacenesToolStripMenuItem.Enabled = True
 
             btnCustomers.Enabled = True ' Customers button
@@ -116,7 +114,6 @@ Public Class MainBox
             FillDatagrid()
         End If
     End Sub
-
     Private Sub EditSale()
         ' Edita una venta
         Dim frmEdit As New Sale
@@ -236,38 +233,12 @@ Public Class MainBox
             'Me.ShowStatus()
         End If
     End Sub
-    Private Sub TerminalesToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles TerminalesToolStripMenuItem.Click
-        ' Show profiles windows
-        Dim frmTerminals As New Catalogs
-        frmTerminals.Search = "terminals"
-
-        If frmTerminals.ShowDialog() = DialogResult.OK Then
-            'Me.ShowStatus()
-        End If
-    End Sub
     Private Sub ImpresoraToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImpresoraToolStripMenuItem.Click
         Dim frmPrinter As New Serial
 
         frmPrinter.ShowDialog()
 
         ShowStatus()
-    End Sub
-    Private Sub DefinirTerminalToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles DefinirTerminalToolStripMenuItem.Click
-        ' Selecciona terminal
-        Dim frmTerminal As New SelectTerminal
-
-        If frmTerminal.ShowDialog() = DialogResult.OK Then
-            Me.ShowStatus()
-        End If
-    End Sub
-    Private Sub SeleccionarAlmacenToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SeleccionarAlmacenToolStripMenuItem.Click
-        ' Selecciona store
-        Dim frmStore As New SelectStore
-
-        If frmStore.ShowDialog() = DialogResult.OK Then
-            Me.ShowStatus()
-            Me.FillDatagrid()
-        End If
     End Sub
     Private Sub ImprimirVentaToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles ImprimirVentaToolStripMenuItem.Click
         Dim mySerialPort As New SerialPort
@@ -331,9 +302,5 @@ Public Class MainBox
     End Sub
     Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellDoubleClick
         Me.EditSale()
-    End Sub
-    Private Sub ExistenciasToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles ExistenciasToolStripMenuItem.Click
-        ExportExcel.btnWriteToExcel_Click()
-
     End Sub
 End Class

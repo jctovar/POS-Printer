@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class MainBox
     Inherits System.Windows.Forms.Form
 
     'Form reemplaza a Dispose para limpiar la lista de componentes.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class MainBox
     'NOTA: el Diseñador de Windows Forms necesita el siguiente procedimiento
     'Se puede modificar usando el Diseñador de Windows Forms.  
     'No lo modifique con el editor de código.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -47,8 +47,6 @@ Partial Class MainBox
         Me.DatosDeLaCuentaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator2 = New System.Windows.Forms.ToolStripSeparator()
         Me.ConfiguraciónToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.SeleccionarAlmacenToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.DefinirTerminalToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ImpresoraToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator1 = New System.Windows.Forms.ToolStripSeparator()
         Me.SalirToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -69,10 +67,8 @@ Partial Class MainBox
         Me.CuentasToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CategoríasToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AlmacenesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.TerminalesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator9 = New System.Windows.Forms.ToolStripSeparator()
         Me.SesionesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ExistenciasToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AyudaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AcercaDeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -229,7 +225,7 @@ Partial Class MainBox
         '
         'ArchivoToolStripMenuItem
         '
-        Me.ArchivoToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AutenticarToolStripMenuItem, Me.ToolStripSeparator6, Me.MisDatosToolStripMenuItem, Me.DatosDeLaCuentaToolStripMenuItem, Me.ToolStripSeparator2, Me.ConfiguraciónToolStripMenuItem, Me.SeleccionarAlmacenToolStripMenuItem, Me.DefinirTerminalToolStripMenuItem, Me.ImpresoraToolStripMenuItem, Me.ToolStripSeparator1, Me.SalirToolStripMenuItem})
+        Me.ArchivoToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.AutenticarToolStripMenuItem, Me.ToolStripSeparator6, Me.MisDatosToolStripMenuItem, Me.DatosDeLaCuentaToolStripMenuItem, Me.ToolStripSeparator2, Me.ConfiguraciónToolStripMenuItem, Me.ImpresoraToolStripMenuItem, Me.ToolStripSeparator1, Me.SalirToolStripMenuItem})
         Me.ArchivoToolStripMenuItem.Name = "ArchivoToolStripMenuItem"
         Me.ArchivoToolStripMenuItem.Size = New System.Drawing.Size(60, 20)
         Me.ArchivoToolStripMenuItem.Text = "&Archivo"
@@ -238,66 +234,54 @@ Partial Class MainBox
         '
         Me.AutenticarToolStripMenuItem.Name = "AutenticarToolStripMenuItem"
         Me.AutenticarToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1
-        Me.AutenticarToolStripMenuItem.Size = New System.Drawing.Size(182, 22)
+        Me.AutenticarToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.AutenticarToolStripMenuItem.Text = "&Iniciar sesión"
         '
         'ToolStripSeparator6
         '
         Me.ToolStripSeparator6.Name = "ToolStripSeparator6"
-        Me.ToolStripSeparator6.Size = New System.Drawing.Size(179, 6)
+        Me.ToolStripSeparator6.Size = New System.Drawing.Size(168, 6)
         '
         'MisDatosToolStripMenuItem
         '
         Me.MisDatosToolStripMenuItem.Enabled = False
         Me.MisDatosToolStripMenuItem.Name = "MisDatosToolStripMenuItem"
-        Me.MisDatosToolStripMenuItem.Size = New System.Drawing.Size(182, 22)
+        Me.MisDatosToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.MisDatosToolStripMenuItem.Text = "&Mis datos"
         '
         'DatosDeLaCuentaToolStripMenuItem
         '
         Me.DatosDeLaCuentaToolStripMenuItem.Name = "DatosDeLaCuentaToolStripMenuItem"
-        Me.DatosDeLaCuentaToolStripMenuItem.Size = New System.Drawing.Size(182, 22)
+        Me.DatosDeLaCuentaToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.DatosDeLaCuentaToolStripMenuItem.Text = "&Datos de la cuenta"
         '
         'ToolStripSeparator2
         '
         Me.ToolStripSeparator2.Name = "ToolStripSeparator2"
-        Me.ToolStripSeparator2.Size = New System.Drawing.Size(179, 6)
+        Me.ToolStripSeparator2.Size = New System.Drawing.Size(168, 6)
         '
         'ConfiguraciónToolStripMenuItem
         '
         Me.ConfiguraciónToolStripMenuItem.Name = "ConfiguraciónToolStripMenuItem"
-        Me.ConfiguraciónToolStripMenuItem.Size = New System.Drawing.Size(182, 22)
+        Me.ConfiguraciónToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.ConfiguraciónToolStripMenuItem.Text = "&Configuración"
-        '
-        'SeleccionarAlmacenToolStripMenuItem
-        '
-        Me.SeleccionarAlmacenToolStripMenuItem.Name = "SeleccionarAlmacenToolStripMenuItem"
-        Me.SeleccionarAlmacenToolStripMenuItem.Size = New System.Drawing.Size(182, 22)
-        Me.SeleccionarAlmacenToolStripMenuItem.Text = "Seleccionar &almacen"
-        '
-        'DefinirTerminalToolStripMenuItem
-        '
-        Me.DefinirTerminalToolStripMenuItem.Name = "DefinirTerminalToolStripMenuItem"
-        Me.DefinirTerminalToolStripMenuItem.Size = New System.Drawing.Size(182, 22)
-        Me.DefinirTerminalToolStripMenuItem.Text = "Seleccionar &terminal"
         '
         'ImpresoraToolStripMenuItem
         '
         Me.ImpresoraToolStripMenuItem.Name = "ImpresoraToolStripMenuItem"
-        Me.ImpresoraToolStripMenuItem.Size = New System.Drawing.Size(182, 22)
+        Me.ImpresoraToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.ImpresoraToolStripMenuItem.Text = "Im&presora..."
         '
         'ToolStripSeparator1
         '
         Me.ToolStripSeparator1.Name = "ToolStripSeparator1"
-        Me.ToolStripSeparator1.Size = New System.Drawing.Size(179, 6)
+        Me.ToolStripSeparator1.Size = New System.Drawing.Size(168, 6)
         '
         'SalirToolStripMenuItem
         '
         Me.SalirToolStripMenuItem.Name = "SalirToolStripMenuItem"
         Me.SalirToolStripMenuItem.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.F4), System.Windows.Forms.Keys)
-        Me.SalirToolStripMenuItem.Size = New System.Drawing.Size(182, 22)
+        Me.SalirToolStripMenuItem.Size = New System.Drawing.Size(171, 22)
         Me.SalirToolStripMenuItem.Text = "&Salir"
         '
         'VentasToolStripMenuItem
@@ -361,7 +345,7 @@ Partial Class MainBox
         '
         'CatalogosToolStripMenuItem
         '
-        Me.CatalogosToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ClientesToolStripMenuItem, Me.ProveedoresToolStripMenuItem, Me.ProductosToolStripMenuItem, Me.ToolStripSeparator8, Me.CuentasToolStripMenuItem, Me.CategoríasToolStripMenuItem, Me.AlmacenesToolStripMenuItem, Me.TerminalesToolStripMenuItem, Me.ToolStripSeparator9, Me.SesionesToolStripMenuItem, Me.ExistenciasToolStripMenuItem})
+        Me.CatalogosToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ClientesToolStripMenuItem, Me.ProveedoresToolStripMenuItem, Me.ProductosToolStripMenuItem, Me.ToolStripSeparator8, Me.CuentasToolStripMenuItem, Me.CategoríasToolStripMenuItem, Me.AlmacenesToolStripMenuItem, Me.ToolStripSeparator9, Me.SesionesToolStripMenuItem})
         Me.CatalogosToolStripMenuItem.Name = "CatalogosToolStripMenuItem"
         Me.CatalogosToolStripMenuItem.Size = New System.Drawing.Size(72, 20)
         Me.CatalogosToolStripMenuItem.Text = "&Catalogos"
@@ -416,13 +400,6 @@ Partial Class MainBox
         Me.AlmacenesToolStripMenuItem.Size = New System.Drawing.Size(158, 22)
         Me.AlmacenesToolStripMenuItem.Text = "&Almacenes"
         '
-        'TerminalesToolStripMenuItem
-        '
-        Me.TerminalesToolStripMenuItem.Enabled = False
-        Me.TerminalesToolStripMenuItem.Name = "TerminalesToolStripMenuItem"
-        Me.TerminalesToolStripMenuItem.Size = New System.Drawing.Size(158, 22)
-        Me.TerminalesToolStripMenuItem.Text = "&Terminales"
-        '
         'ToolStripSeparator9
         '
         Me.ToolStripSeparator9.Name = "ToolStripSeparator9"
@@ -430,15 +407,10 @@ Partial Class MainBox
         '
         'SesionesToolStripMenuItem
         '
+        Me.SesionesToolStripMenuItem.Enabled = False
         Me.SesionesToolStripMenuItem.Name = "SesionesToolStripMenuItem"
         Me.SesionesToolStripMenuItem.Size = New System.Drawing.Size(158, 22)
         Me.SesionesToolStripMenuItem.Text = "&Sesiones"
-        '
-        'ExistenciasToolStripMenuItem
-        '
-        Me.ExistenciasToolStripMenuItem.Name = "ExistenciasToolStripMenuItem"
-        Me.ExistenciasToolStripMenuItem.Size = New System.Drawing.Size(158, 22)
-        Me.ExistenciasToolStripMenuItem.Text = "&Existencias"
         '
         'AyudaToolStripMenuItem
         '
@@ -499,7 +471,6 @@ Partial Class MainBox
     Friend WithEvents DatosDeLaCuentaToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator2 As ToolStripSeparator
     Friend WithEvents ConfiguraciónToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents DefinirTerminalToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ImpresoraToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator1 As ToolStripSeparator
     Friend WithEvents SalirToolStripMenuItem As ToolStripMenuItem
@@ -519,12 +490,9 @@ Partial Class MainBox
     Friend WithEvents ToolStripSeparator8 As ToolStripSeparator
     Friend WithEvents CuentasToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents CategoríasToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents TerminalesToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator9 As ToolStripSeparator
     Friend WithEvents SesionesToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents ExistenciasToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents AyudaToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents AcercaDeToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents SeleccionarAlmacenToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents AlmacenesToolStripMenuItem As ToolStripMenuItem
 End Class
