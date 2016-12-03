@@ -1,4 +1,5 @@
-﻿Public Class Catalogs
+﻿Imports System.Globalization
+Public Class Catalogs
     Public Search As String
     Dim ds As New DataSet
     WithEvents bsData As New BindingSource
@@ -7,7 +8,7 @@
 
         Select Case Search
             Case "products"
-                title = "productos"
+                Title = "productos"
             Case "customers"
                 Title = "clientes"
             Case "profiles"
@@ -24,7 +25,7 @@
                 Title = "almacenes"
         End Select
 
-        Me.Text = String.Format("{0} - {1}", Application.ProductName, "Catalogo de " & title)
+        Me.Text = String.Format("{0} - {1}", Application.ProductName, "Catalogo de " & Title)
 
         Me.FillDatagrid("")
 
@@ -251,22 +252,20 @@
     End Sub
 
     Private Sub ToolStripButton3_Click(sender As Object, e As EventArgs) Handles ToolStripButton3.Click
+        Dim Name As String = System.DateTime.Now.ToString("yyyy-MM-dd")
+
         SaveFileDialog1.Filter = "Libro de Excel|*.xlsx"
         SaveFileDialog1.DefaultExt = "*.xlsx"
         SaveFileDialog1.Title = "Guardar libro de excel como"
-        SaveFileDialog1.FileName = "hola2.xlsx"
+        SaveFileDialog1.FileName = Globales.StoreName & "_" & Name
 
         If SaveFileDialog1.ShowDialog = DialogResult.OK Then
             ' If the file name is not an empty string open it for saving.
             If SaveFileDialog1.FileName <> "" Then
-                ExportExcel.btnWriteToExcel_Click(SaveFileDialog1.FileName)
+                ExportExcel.Inventario(SaveFileDialog1.FileName)
 
             End If
         End If
-
-
-
-        ' Manda el grid a excel
 
     End Sub
 End Class

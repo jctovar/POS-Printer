@@ -26,6 +26,60 @@ Public Class InvoiceDB
 
         Return dt
     End Function
+    Public Shared Function GetInvoicesFromSession(SessionId As Integer) As DataTable
+        ' Se usa en Main para obtener el listado de ventas
+        Dim dt = New DataTable()
+        Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
+        Dim Sql = "SELECT * FROM sales_view WHERE session_id = @session"
+
+        Dim dbcommand As New MySqlCommand(Sql, Connection)
+        dbcommand.Parameters.AddWithValue("@session", SessionId)
+
+        Try
+            Connection.Open()
+
+            Dim reader As MySqlDataReader = dbcommand.ExecuteReader()
+            If reader.HasRows Then
+                dt.Load(reader)
+            End If
+            reader.Close()
+        Catch ex As Exception
+            Throw ex
+        Finally
+            Connection.Close()
+        End Try
+
+        Return dt
+    End Function
+    Public Shared Function GetTotalFromSession(SessionId As Integer) As Double
+        ' Se usa en Main para obtener el listado de ventas
+        Dim Total As Double
+        Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
+        Dim Sql = "SELECT SUM(sale_total) as session_total FROM albaco.sales_view where session_id = @session AND status='Pagada';"
+
+        Dim dbcommand As New MySqlCommand(Sql, Connection)
+        dbcommand.Parameters.AddWithValue("@session", SessionId)
+
+        Try
+            Connection.Open()
+
+            Dim reader As MySqlDataReader = dbcommand.ExecuteReader(CommandBehavior.SingleRow)
+
+            If reader.Read Then
+                Total = reader("session_total").ToString
+            Else
+                Total = Nothing
+            End If
+            reader.Close()
+        Catch ex As Exception
+            Throw ex
+        Finally
+            Connection.Close()
+        End Try
+
+        Return Total
+
+    End Function
     Public Shared Function GetInvoice(InvoiceId As Integer) As Invoice
         Dim invoice As New Invoice
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection

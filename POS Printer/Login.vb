@@ -50,7 +50,7 @@
         Return result
     End Function
     Private Sub GetSession()
-        session = SessionDB.GetLastSession(Globales.ProfileId)
+        session = SessionDB.GetLastSession(Globales.ProfileId, ComboBox1.SelectedValue)
 
         If IsNothing(session) Then
             Dim session As New Session

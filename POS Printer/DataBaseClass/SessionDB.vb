@@ -27,13 +27,14 @@ Public Class SessionDB
 
         Return dt
     End Function
-    Public Shared Function GetLastSession(ProfileId As Integer) As Session
+    Public Shared Function GetLastSession(ProfileId As Integer, StoreId As Integer) As Session
         Dim session As New Session
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
-        Dim Sql As String = "SELECT * FROM sessions WHERE profile_id = @id ORDER BY session_timestamp DESC LIMIT 1"
+        Dim Sql As String = "SELECT * FROM sessions WHERE profile_id = @profile AND store_id = @store ORDER BY session_timestamp DESC LIMIT 1"
         Dim dbcommand As New MySqlCommand(Sql, Connection)
 
-        dbcommand.Parameters.AddWithValue("@id", ProfileId)
+        dbcommand.Parameters.AddWithValue("@profile", ProfileId)
+        dbcommand.Parameters.AddWithValue("@store", StoreId)
 
         Try
             Connection.Open()
@@ -44,7 +45,8 @@ Public Class SessionDB
                 With session
                     .Id = reader("session_id")
                     .Profile = reader("profile_id")
-                    .Status = reader("session_action")
+                    .Store = reader("store_id")
+                    .Status = reader("session_status")
                     .Timestamp = reader("session_timestamp")
                 End With
             Else

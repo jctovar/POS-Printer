@@ -77,16 +77,23 @@
     <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>167DC6922D01195403F0537BC905AD58BC6608DF</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>D80B06AF509BAF882BDDD758E2B6E94803A941D9</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>POS Printer_ClaveTemporal.pfx</ManifestKeyFile>
+    <ManifestKeyFile>POS Printer_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EPPlus, Version=4.1.0.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
@@ -223,10 +230,10 @@
     <Compile Include="ObjectsClass\Account.vb" />
     <Compile Include="ObjectsClass\Item.vb" />
     <Compile Include="ObjectsClass\Payment.vb" />
-    <Compile Include="Form12.Designer.vb">
-      <DependentUpon>Form12.vb</DependentUpon>
+    <Compile Include="ReportSales.Designer.vb">
+      <DependentUpon>ReportSales.vb</DependentUpon>
     </Compile>
-    <Compile Include="Form12.vb">
+    <Compile Include="ReportSales.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="CheckOut.Designer.vb">
@@ -262,6 +269,12 @@
       <DependentUpon>SalesSearch.vb</DependentUpon>
     </Compile>
     <Compile Include="SalesSearch.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SessionInfo.Designer.vb">
+      <DependentUpon>SessionInfo.vb</DependentUpon>
+    </Compile>
+    <Compile Include="SessionInfo.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Splash.Designer.vb">
@@ -361,8 +374,8 @@
     <EmbeddedResource Include="IdSearchBox.resx">
       <DependentUpon>IdSearchBox.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form12.resx">
-      <DependentUpon>Form12.vb</DependentUpon>
+    <EmbeddedResource Include="ReportSales.resx">
+      <DependentUpon>ReportSales.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CheckOut.resx">
       <DependentUpon>CheckOut.vb</DependentUpon>
@@ -381,6 +394,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SalesSearch.resx">
       <DependentUpon>SalesSearch.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SessionInfo.resx">
+      <DependentUpon>SessionInfo.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Splash.resx">
       <DependentUpon>Splash.vb</DependentUpon>
@@ -434,7 +450,6 @@
   <ItemGroup>
     <Content Include="favicon.ico" />
     <None Include="packages.config" />
-    <None Include="POS Printer_ClaveTemporal.pfx" />
     <None Include="Resources\albaco.png" />
   </ItemGroup>
   <ItemGroup />

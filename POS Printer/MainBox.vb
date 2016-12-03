@@ -45,13 +45,15 @@ Public Class MainBox
         Try
             Me.Cursor = System.Windows.Forms.Cursors.WaitCursor
 
-            bsData.DataSource = InvoiceDB.GetAllInvoices(Globales.AccountId, My.Settings.store)
-            bsData.Filter = "username = '" & Globales.ProfileUsername & "'"
+            'bsData.DataSource = InvoiceDB.GetInvoicesFromSession(Globales.SessionId)
+            'bsData.Filter = "username = '" & Globales.ProfileUsername & "'"
+            TableView = InvoiceDB.GetInvoicesFromSession(Globales.SessionId)
 
             With DataGridView1
                 .RowTemplate.Height = 32
                 .AutoGenerateColumns = True
-                .DataSource = bsData
+                ' .DataSource = bsData
+                .DataSource = TableView
                 .Columns(0).Visible = False
                 .Columns(1).HeaderText = "Folio"
                 .Columns(1).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
@@ -59,17 +61,18 @@ Public Class MainBox
                 .Columns(2).Visible = False
                 .Columns(3).Visible = False
                 .Columns(4).Visible = False
-                .Columns(5).HeaderText = "Fecha"
-                .Columns(6).HeaderText = "Cliente"
-                .Columns(7).Visible = False
+                .Columns(5).Visible = False
+                .Columns(6).HeaderText = "Fecha"
+                .Columns(7).HeaderText = "Cliente"
                 .Columns(8).Visible = False
-                .Columns(9).HeaderText = "Importe"
-                .Columns(9).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
-                .Columns(9).DefaultCellStyle.Format = String.Format("c", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))
-                .Columns(10).HeaderText = "Pago"
+                .Columns(9).Visible = False
+                .Columns(10).HeaderText = "Importe"
                 .Columns(10).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
                 .Columns(10).DefaultCellStyle.Format = String.Format("c", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))
-                .Columns(11).HeaderText = "Estado"
+                .Columns(11).HeaderText = "Pago"
+                .Columns(11).DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight
+                .Columns(11).DefaultCellStyle.Format = String.Format("c", System.Globalization.CultureInfo.CreateSpecificCulture("es-MX"))
+                .Columns(12).HeaderText = "Estado"
                 .AutoResizeColumns()
                 .CurrentCell = DataGridView1.Rows(0).Cells(1) ' Columna visible
             End With
@@ -278,12 +281,17 @@ Public Class MainBox
         Me.ClientesToolStripMenuItem.PerformClick()
     End Sub
     Private Sub btnReport_Click(sender As Object, e As EventArgs) Handles btnReport.Click
-        Dim frmReport As New Form12
+        Dim frmReport As New ReportSales
 
         frmReport.ShowDialog()
     End Sub
     Private Sub btnProducts_Click(sender As Object, e As EventArgs) Handles btnProducts.Click
         Me.ProductosToolStripMenuItem.PerformClick()
+    End Sub
+    Private Sub InformaciónDeLaSesiónToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles InformaciónDeLaSesiónToolStripMenuItem.Click
+        Dim frmInfo As New SessionInfo
+
+        frmInfo.ShowDialog()
     End Sub
     ' ***********************************************************
     ' Llamadas del grid
@@ -303,4 +311,6 @@ Public Class MainBox
     Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellDoubleClick
         Me.EditSale()
     End Sub
+
+
 End Class

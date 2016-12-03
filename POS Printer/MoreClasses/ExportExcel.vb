@@ -1,7 +1,7 @@
 ﻿Imports OfficeOpenXml 'is the namespace from the EPPlus dll  
 Imports System.IO
 Public Class ExportExcel
-    Public Shared Function btnWriteToExcel_Click(Filename As String) As Boolean
+    Public Shared Function Inventario(Filename As String) As Boolean
         Dim TableView As New DataTable
         'Fill in the correct path and filename  
         Using newFile = New FileStream(Filename, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite)
@@ -29,11 +29,15 @@ Public Class ExportExcel
                 ws.Cells("A1:F1").Style.Fill.PatternType = OfficeOpenXml.Style.ExcelFillStyle.Solid
                 ws.Cells("A1:F1").Style.Fill.BackgroundColor.SetColor(Color.DarkSlateBlue)
 
+                Try
+                    package.Save()
 
+                    System.Diagnostics.Process.Start(Filename)
 
-                'Here you can do some formatting like making the first column a number column, autosize the cells, ....  
+                Catch ex As Exception
+                    MessageBox.Show("Ocurrio un error; " & ex.ToString, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
+                End Try
 
-                package.Save()
             End Using
         End Using
 
