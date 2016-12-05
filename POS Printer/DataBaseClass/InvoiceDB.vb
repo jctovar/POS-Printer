@@ -80,6 +80,46 @@ Public Class InvoiceDB
         Return Total
 
     End Function
+    Public Shared Function GetReportFromSession(SessionId As Integer) As DataTable
+        ' Se usa en Main para obtener el listado de ventas
+        Dim dt = New DataTable()
+        Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
+        Dim Sql = "SELECT 
+                        t1.sale_id,
+                        t3.sale_timestamp,
+                        t2.product_name,
+                        t1.sale_quantity,
+                        t1.sale_price,
+                        t1.sale_tax,
+                        (t1.sale_quantity * t1.sale_price * CONCAT('1.', t1.sale_tax)) AS sale_total
+                    FROM
+                        products_has_sales t1
+                            INNER JOIN
+                        products t2 ON t1.product_id = t2.product_id
+                            INNER JOIN
+                        sales t3 ON t1.sale_id = t3.sale_id
+                    WHERE
+                        t3.status_id = 1 AND t3.session_id = @session"
+
+        Dim dbcommand As New MySqlCommand(Sql, Connection)
+        dbcommand.Parameters.AddWithValue("@session", SessionId)
+
+        Try
+            Connection.Open()
+
+            Dim reader As MySqlDataReader = dbcommand.ExecuteReader()
+            If reader.HasRows Then
+                dt.Load(reader)
+            End If
+            reader.Close()
+        Catch ex As Exception
+            Throw ex
+        Finally
+            Connection.Close()
+        End Try
+
+        Return dt
+    End Function
     Public Shared Function GetInvoice(InvoiceId As Integer) As Invoice
         Dim invoice As New Invoice
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection

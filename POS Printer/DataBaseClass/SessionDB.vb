@@ -1,7 +1,7 @@
 ﻿Imports MySql.Data.MySqlClient
 Public Class SessionDB
     Public Shared Function GetSessionsList(ProfileId As Integer) As DataTable
-        ' Obtiene la tabla de productos
+        ' Obtiene la tabla de sesiones
         Dim dt = New DataTable()
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "SELECT * " &
@@ -78,6 +78,7 @@ Public Class SessionDB
                 With session
                     .Id = reader("session_id")
                     .Profile = reader("profile_id")
+                    .Store = reader("store_id")
                     .Status = reader("session_action")
                     .Timestamp = reader("session_timestamp")
                 End With
@@ -96,12 +97,13 @@ Public Class SessionDB
     Public Shared Function UpdateSession(session As Session) As Boolean
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "UPDATE sessions " &
-            "SET terminal_name=@name, terminal_description=@description " &
-            "WHERE terminal_id=@id"
+            "SET profile_id=@profile, store_id=@store, session_status=@status " &
+            "WHERE session_id=@id"
         Dim dbcommand As New MySqlCommand(Sql, Connection)
 
         dbcommand.Parameters.AddWithValue("@id", session.Id)
         dbcommand.Parameters.AddWithValue("@profile", session.Profile)
+        dbcommand.Parameters.AddWithValue("@store", session.Store)
         dbcommand.Parameters.AddWithValue("@status", session.Status)
         dbcommand.Parameters.AddWithValue("@timestamp", session.Timestamp)
 
@@ -119,12 +121,13 @@ Public Class SessionDB
     Public Shared Function AddSession(session As Session) As Boolean
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "INSERT INTO sessions " &
-            "(profile_id) " &
-            "VALUES (@profile)"
+            "(profile_id, store_id) " &
+            "VALUES (@profile, @store)"
         Dim dbcommand As New MySqlCommand(Sql, Connection)
 
         dbcommand.Parameters.AddWithValue("@id", session.Id)
         dbcommand.Parameters.AddWithValue("@profile", session.Profile)
+        dbcommand.Parameters.AddWithValue("@store", session.Store)
         dbcommand.Parameters.AddWithValue("@status", session.Status)
         dbcommand.Parameters.AddWithValue("@timestamp", session.Timestamp)
 

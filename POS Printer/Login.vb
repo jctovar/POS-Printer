@@ -57,9 +57,14 @@
 
             With session
                 .Profile = Globales.ProfileId
+                .Store = ComboBox1.SelectedValue
             End With
+            Try
+                SessionDB.AddSession(session)
+            Catch ex As Exception
+                MessageBox.Show("Ocurrio un error; " & ex.ToString, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
+            End Try
 
-            SessionDB.AddSession(session)
         Else
             Globales.SessionId = session.Id
         End If

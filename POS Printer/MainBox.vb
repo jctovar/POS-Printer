@@ -78,6 +78,7 @@ Public Class MainBox
             End With
 
             ToolStripStatusLabel3.Text = String.Format("Se encontraron {0} registros", TableView.Rows.Count)
+            ToolStripStatusLabel1.Text = InvoiceDB.GetTotalFromSession(Globales.SessionId).ToString("c")
 
         Catch ex As Exception
             ToolStripStatusLabel3.Text = String.Format("Se encontraron {0} registros", TableView.Rows.Count)
@@ -108,6 +109,27 @@ Public Class MainBox
 
             FillDatagrid()
         End If
+    End Sub
+    Private Sub CheckSession()
+        If Globales.SessionId Then
+            If MessageBox.Show("Esta seguro de cerrar la sesion?", Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) = DialogResult.Yes Then
+                ' Closing session.
+                Me.CloseSession()
+            Else
+                Me.Autentificacion()
+            End If
+        Else
+            Me.Autentificacion()
+        End If
+    End Sub
+    Private Sub CloseSession()
+        Dim session As New Session
+
+        session = SessionDB.GetSession(Globales.SessionId)
+
+        session.Status = True
+
+        SessionDB.UpdateSession(session)
     End Sub
     Private Sub NewTicket()
         ' Invoca ventana para nueva venta
@@ -153,7 +175,7 @@ Public Class MainBox
         frmConfig.ShowDialog()
     End Sub
     Private Sub AutenticarToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles AutenticarToolStripMenuItem.Click
-        Me.Autentificacion()
+        Me.CheckSession()
     End Sub
     Private Sub AcercaDeToolStripMenuItem_Click_1(sender As Object, e As EventArgs) Handles AcercaDeToolStripMenuItem.Click
         Dim frmAbout As New About
@@ -271,7 +293,7 @@ Public Class MainBox
     ' Llamadas de los botones
     ' ***********************************************************
     Private Sub btnLogin_Click_1(sender As Object, e As EventArgs) Handles btnLogin.Click
-        Me.Autentificacion()
+        Me.CheckSession()
     End Sub
     Private Sub btnNew_Click_1(sender As Object, e As EventArgs) Handles btnNew.Click
         ' Invoca ventana para nueva venta
@@ -281,9 +303,24 @@ Public Class MainBox
         Me.ClientesToolStripMenuItem.PerformClick()
     End Sub
     Private Sub btnReport_Click(sender As Object, e As EventArgs) Handles btnReport.Click
-        Dim frmReport As New ReportSales
+        'Dim frmReport As New ReportSales
 
-        frmReport.ShowDialog()
+        'frmReport.ShowDialog()
+        Dim Name As String = System.DateTime.Now.ToString("yyyy-MM-dd")
+
+        SaveFileDialog1.Filter = "Libro de Excel|*.xlsx"
+        SaveFileDialog1.DefaultExt = "*.xlsx"
+        SaveFileDialog1.Title = "Guardar libro de excel como"
+        SaveFileDialog1.FileName = "CORTE_" & Globales.StoreName & "_" & Name
+
+        If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+            ' If the file name is not an empty string open it for saving.
+            If SaveFileDialog1.FileName <> "" Then
+                ExportExcel.Corte(SaveFileDialog1.FileName)
+
+            End If
+        End If
+
     End Sub
     Private Sub btnProducts_Click(sender As Object, e As EventArgs) Handles btnProducts.Click
         Me.ProductosToolStripMenuItem.PerformClick()

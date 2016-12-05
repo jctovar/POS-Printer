@@ -257,7 +257,7 @@ Public Class Catalogs
         SaveFileDialog1.Filter = "Libro de Excel|*.xlsx"
         SaveFileDialog1.DefaultExt = "*.xlsx"
         SaveFileDialog1.Title = "Guardar libro de excel como"
-        SaveFileDialog1.FileName = Globales.StoreName & "_" & Name
+        SaveFileDialog1.FileName = "INVENTARIO_" & Globales.StoreName & "_" & Name
 
         If SaveFileDialog1.ShowDialog = DialogResult.OK Then
             ' If the file name is not an empty string open it for saving.

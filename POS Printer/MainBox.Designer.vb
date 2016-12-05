@@ -39,6 +39,7 @@ Partial Class MainBox
         Me.StatusStrip1 = New System.Windows.Forms.StatusStrip()
         Me.ToolStripStatusLabel3 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.ToolStripStatusLabel4 = New System.Windows.Forms.ToolStripStatusLabel()
+        Me.ToolStripStatusLabel1 = New System.Windows.Forms.ToolStripStatusLabel()
         Me.MenuStrip1 = New System.Windows.Forms.MenuStrip()
         Me.ArchivoToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AutenticarToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
@@ -70,9 +71,10 @@ Partial Class MainBox
         Me.ToolStripSeparator9 = New System.Windows.Forms.ToolStripSeparator()
         Me.SesionesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.AyudaToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.AcercaDeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.InformaciónDeLaSesiónToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToolStripSeparator11 = New System.Windows.Forms.ToolStripSeparator()
+        Me.AcercaDeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ToolStrip1.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
@@ -193,7 +195,7 @@ Partial Class MainBox
         '
         'StatusStrip1
         '
-        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel3, Me.ToolStripStatusLabel4})
+        Me.StatusStrip1.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripStatusLabel3, Me.ToolStripStatusLabel4, Me.ToolStripStatusLabel1})
         Me.StatusStrip1.Location = New System.Drawing.Point(0, 403)
         Me.StatusStrip1.Name = "StatusStrip1"
         Me.StatusStrip1.Size = New System.Drawing.Size(699, 35)
@@ -215,6 +217,13 @@ Partial Class MainBox
         Me.ToolStripStatusLabel4.Name = "ToolStripStatusLabel4"
         Me.ToolStripStatusLabel4.Size = New System.Drawing.Size(306, 30)
         Me.ToolStripStatusLabel4.Text = "USUARIO: NO AUTENTIFICADO"
+        '
+        'ToolStripStatusLabel1
+        '
+        Me.ToolStripStatusLabel1.Font = New System.Drawing.Font("Segoe UI", 15.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.ToolStripStatusLabel1.Name = "ToolStripStatusLabel1"
+        Me.ToolStripStatusLabel1.Size = New System.Drawing.Size(117, 30)
+        Me.ToolStripStatusLabel1.Text = "Total: $0.00"
         '
         'MenuStrip1
         '
@@ -421,12 +430,6 @@ Partial Class MainBox
         Me.AyudaToolStripMenuItem.Size = New System.Drawing.Size(53, 20)
         Me.AyudaToolStripMenuItem.Text = "Ay&uda"
         '
-        'AcercaDeToolStripMenuItem
-        '
-        Me.AcercaDeToolStripMenuItem.Name = "AcercaDeToolStripMenuItem"
-        Me.AcercaDeToolStripMenuItem.Size = New System.Drawing.Size(203, 22)
-        Me.AcercaDeToolStripMenuItem.Text = "&Acerca de..."
-        '
         'InformaciónDeLaSesiónToolStripMenuItem
         '
         Me.InformaciónDeLaSesiónToolStripMenuItem.Name = "InformaciónDeLaSesiónToolStripMenuItem"
@@ -437,6 +440,12 @@ Partial Class MainBox
         '
         Me.ToolStripSeparator11.Name = "ToolStripSeparator11"
         Me.ToolStripSeparator11.Size = New System.Drawing.Size(200, 6)
+        '
+        'AcercaDeToolStripMenuItem
+        '
+        Me.AcercaDeToolStripMenuItem.Name = "AcercaDeToolStripMenuItem"
+        Me.AcercaDeToolStripMenuItem.Size = New System.Drawing.Size(203, 22)
+        Me.AcercaDeToolStripMenuItem.Text = "&Acerca de..."
         '
         'MainBox
         '
@@ -510,4 +519,6 @@ Partial Class MainBox
     Friend WithEvents AlmacenesToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents InformaciónDeLaSesiónToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToolStripSeparator11 As ToolStripSeparator
+    Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
+    Friend WithEvents SaveFileDialog1 As SaveFileDialog
 End Class

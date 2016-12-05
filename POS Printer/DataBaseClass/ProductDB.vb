@@ -4,42 +4,42 @@ Public Class ProductDB
         ' Obtiene la tabla de productos
         Dim dt = New DataTable()
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
-        Dim Sql As String = "SELECT " &
-                                "`products`.`product_id` AS `product_id`, " &
-                                "`products`.`account_id` AS `account_id`, " &
-                                "`categories`.`category_name` AS `category_name`, " &
-                                "`products`.`product_name` AS `product_name`, " &
-                                "`products`.`product_key` AS `product_key`, " &
-                                "((SELECT " &
-                                        "SUM(`stocks`.`stock_quantity`) As `stock_quantity`" &
-                                    "FROM " &
-                                        "`stocks` " &
-                                    "WHERE " &
-                                        "`stocks`.`store_id` = @store AND " &
-                                        "(`stocks`.`product_id` = `products`.`product_id`)) - (SELECT " &
-                                        "SUM(`products_has_sales`.`sale_quantity`) AS `stock_quantity` " &
-                                    "FROM " &
-                                        "`products_has_sales` INNER JOIN `sales` ON `products_has_sales`.`sale_id` = `sales`.`sale_id` " &
-                                    "WHERE " &
-                                        "(`products_has_sales`.`product_id` = `products`.`product_id` AND `sales`.`store_id` = @store AND `sales`.`status_id` = 1))) AS `stock_quantity`, " &
-                                "`units`.`unit_short` AS `unit_short`, " &
-                                "(SELECT " &
-                                        "(`prices`.`price_value` * ((`taxes`.`tax_value` / 100) + 1)) " &
-                                    "FROM " &
-                                        "`prices` " &
-                                    "WHERE " &
-                                        "((`prices`.`product_id` = `products`.`product_id`) " &
-                                            "AND (`prices`.`price_quantity` = 1)) " &
-                                    "LIMIT 1) AS `product_price`, " &
-                                "`products`.`product_visible` AS `product_visible`, " &
-                                "`categories`.`category_visible` AS `category_visible` " &
-                            "FROM " &
-                                "(((`products` " &
-                                "JOIN `categories` ON ((`products`.`category_id` = `categories`.`category_id`))) " &
-                                "Join `units` On ((`products`.`unit_id` = `units`.`unit_id`))) " &
-                                "JOIN `taxes` ON ((`products`.`tax_id` = `taxes`.`tax_id`))) " &
-                            "WHERE `products`.account_id = @account AND (product_key LIKE @product OR product_name LIKE @product) " &
-                            "ORDER BY `categories`.`category_name` , `products`.`product_name`"
+        Dim Sql As String = " SELECT  
+                                `products`.`product_id` AS `product_id`,  
+                                `products`.`account_id` AS `account_id`,  
+                                `categories`.`category_name` AS `category_name`,  
+                                `products`.`product_name` AS `product_name`,  
+                                `products`.`product_key` AS `product_key`,  
+                                ((SELECT  
+                                        SUM(`stocks`.`stock_quantity`) As `stock_quantity` 
+                                    FROM  
+                                        `stocks`  
+                                    WHERE  
+                                        `stocks`.`store_id` = @store AND  
+                                        (`stocks`.`product_id` = `products`.`product_id`)) - (SELECT  
+                                        SUM(`products_has_sales`.`sale_quantity`) AS `stock_quantity`  
+                                    FROM  
+                                        `products_has_sales` INNER JOIN `sales` ON `products_has_sales`.`sale_id` = `sales`.`sale_id`  
+                                    WHERE  
+                                        (`products_has_sales`.`product_id` = `products`.`product_id` AND `sales`.`store_id` = @store AND `sales`.`status_id` = 1))) AS `stock_quantity`,  
+                                `units`.`unit_short` AS `unit_short`,  
+                                (SELECT  
+                                        (`prices`.`price_value` * ((`taxes`.`tax_value` / 100) + 1))  
+                                    FROM  
+                                        `prices`  
+                                    WHERE  
+                                        ((`prices`.`product_id` = `products`.`product_id`)  
+                                            AND (`prices`.`price_quantity` = 1))  
+                                    LIMIT 1) AS `product_price`,  
+                                `products`.`product_visible` AS `product_visible`,  
+                                `categories`.`category_visible` AS `category_visible`  
+                            FROM  
+                                (((`products`  
+                                JOIN `categories` ON ((`products`.`category_id` = `categories`.`category_id`)))  
+                                Join `units` On ((`products`.`unit_id` = `units`.`unit_id`)))  
+                                JOIN `taxes` ON ((`products`.`tax_id` = `taxes`.`tax_id`)))  
+                            WHERE `products`.account_id = @account AND (product_key LIKE @product OR product_name LIKE @product)  
+                            ORDER BY `categories`.`category_name` , `products`.`product_name`"
 
         If CategoryVisible = True Then
             Sql = Sql & " AND category_visible = TRUE"

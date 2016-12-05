@@ -32,7 +32,7 @@
     <SuiteName>Albaco</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.html</WebPage>
-    <ApplicationRevision>87</ApplicationRevision>
+    <ApplicationRevision>93</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -77,7 +77,7 @@
     <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>D80B06AF509BAF882BDDD758E2B6E94803A941D9</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>F3F58092672323208DAAAC067BB92828F8E4D0D1</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
     <ManifestKeyFile>POS Printer_TemporaryKey.pfx</ManifestKeyFile>
@@ -450,6 +450,7 @@
   <ItemGroup>
     <Content Include="favicon.ico" />
     <None Include="packages.config" />
+    <None Include="POS Printer_TemporaryKey.pfx" />
     <None Include="Resources\albaco.png" />
   </ItemGroup>
   <ItemGroup />
