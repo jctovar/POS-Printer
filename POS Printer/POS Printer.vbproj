@@ -77,10 +77,10 @@
     <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>F3F58092672323208DAAAC067BB92828F8E4D0D1</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>B306B89124E777AC91388C21CCD9A3FCA5C7BB2F</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>POS Printer_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>POS Printer_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -450,6 +450,7 @@
   <ItemGroup>
     <Content Include="favicon.ico" />
     <None Include="packages.config" />
+    <None Include="POS Printer_1_TemporaryKey.pfx" />
     <None Include="POS Printer_TemporaryKey.pfx" />
     <None Include="Resources\albaco.png" />
   </ItemGroup>
