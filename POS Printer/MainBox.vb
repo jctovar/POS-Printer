@@ -130,6 +130,9 @@ Public Class MainBox
         session.Status = True
 
         SessionDB.UpdateSession(session)
+
+        CheckSession()
+
     End Sub
     Private Sub NewTicket()
         ' Invoca ventana para nueva venta

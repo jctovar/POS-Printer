@@ -60,7 +60,7 @@
                 .Store = ComboBox1.SelectedValue
             End With
             Try
-                SessionDB.AddSession(session)
+                Globales.SessionId = SessionDB.AddSession(session)
             Catch ex As Exception
                 MessageBox.Show("Ocurrio un error; " & ex.ToString, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
             End Try

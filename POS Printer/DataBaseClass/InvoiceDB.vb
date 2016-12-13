@@ -181,8 +181,8 @@ Public Class InvoiceDB
     End Function
     Public Shared Function AddNewSale(sale As Invoice) As Integer
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
-        Dim SaleId As Integer = 0
-        Dim sql = "INSERT INTO sales (account_id,customer_id,profile_id,store_id,session_id) VALUES (@account,@customer,@profile,@store,@session)"
+        Dim Id As Integer = 0
+        Dim Sql = "INSERT INTO sales (account_id,customer_id,profile_id,store_id,session_id) VALUES (@account,@customer,@profile,@store,@session)"
 
         Dim dbcommand As New MySqlCommand(sql, Connection)
 
@@ -194,18 +194,15 @@ Public Class InvoiceDB
 
         Try
             Connection.Open()
-
-            dbcommand.Connection = Connection
-            dbcommand.CommandText = sql
             dbcommand.ExecuteNonQuery()
-            SaleId = dbcommand.LastInsertedId
+            Id = dbcommand.LastInsertedId
         Catch ex As Exception
             Throw ex
         Finally
             Connection.Close()
         End Try
 
-        Return SaleId
+        Return Id
     End Function
     Public Shared Function UpdateInvoice(invoice As Invoice) As Boolean
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection

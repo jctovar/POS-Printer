@@ -30,7 +30,7 @@ Public Class SessionDB
     Public Shared Function GetLastSession(ProfileId As Integer, StoreId As Integer) As Session
         Dim session As New Session
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
-        Dim Sql As String = "SELECT * FROM sessions WHERE profile_id = @profile AND store_id = @store ORDER BY session_timestamp DESC LIMIT 1"
+        Dim Sql As String = "SELECT * FROM sessions WHERE profile_id = @profile AND store_id = @store AND session_status = 0 ORDER BY session_timestamp DESC LIMIT 1"
         Dim dbcommand As New MySqlCommand(Sql, Connection)
 
         dbcommand.Parameters.AddWithValue("@profile", ProfileId)
@@ -79,7 +79,7 @@ Public Class SessionDB
                     .Id = reader("session_id")
                     .Profile = reader("profile_id")
                     .Store = reader("store_id")
-                    .Status = reader("session_action")
+                    .Status = reader("session_status")
                     .Timestamp = reader("session_timestamp")
                 End With
             Else
@@ -97,8 +97,8 @@ Public Class SessionDB
     Public Shared Function UpdateSession(session As Session) As Boolean
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
         Dim Sql As String = "UPDATE sessions " &
-            "SET profile_id=@profile, store_id=@store, session_status=@status " &
-            "WHERE session_id=@id"
+            "SET session_status = @status " &
+            "WHERE session_id = @id"
         Dim dbcommand As New MySqlCommand(Sql, Connection)
 
         dbcommand.Parameters.AddWithValue("@id", session.Id)
@@ -118,8 +118,9 @@ Public Class SessionDB
             Connection.Close()
         End Try
     End Function
-    Public Shared Function AddSession(session As Session) As Boolean
+    Public Shared Function AddSession(session As Session) As Integer
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
+        Dim Id As Integer = 0
         Dim Sql As String = "INSERT INTO sessions " &
             "(profile_id, store_id) " &
             "VALUES (@profile, @store)"
@@ -133,13 +134,14 @@ Public Class SessionDB
 
         Try
             Connection.Open()
-
             dbcommand.ExecuteNonQuery()
-            Return True
+            Id = dbcommand.LastInsertedId
         Catch ex As Exception
             Throw ex
         Finally
             Connection.Close()
         End Try
+
+        Return Id
     End Function
 End Class
