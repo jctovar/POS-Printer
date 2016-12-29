@@ -23,6 +23,8 @@ Public Class Catalogs
                 Title = "existencias"
             Case "stores"
                 Title = "almacenes"
+            Case "sessions"
+                Title = "sesiones"
         End Select
 
         Me.Text = String.Format("{0} - {1}", Application.ProductName, "Catalogo de " & Title)
@@ -48,6 +50,8 @@ Public Class Catalogs
                 bsData.DataSource = StockDB.GetStocksList(Globales.AccountId)
             Case "stores"
                 bsData.DataSource = StoreDB.GetStoresList(Globales.AccountId)
+            Case "sessions"
+                bsData.DataSource = SessionDB.GetSessionsList(Globales.AccountId)
         End Select
 
         Try
@@ -144,6 +148,13 @@ Public Class Catalogs
 
                 frmStore.StoreId = DataGridView1(0, DataGridView1.CurrentRow.Index).Value
                 If frmStore.ShowDialog() = DialogResult.OK Then
+                    Me.FillDatagrid("")
+                End If
+            Case "sessions"
+                Dim frmSession As New StoreBox
+
+                frmSession.StoreId = DataGridView1(0, DataGridView1.CurrentRow.Index).Value
+                If frmSession.ShowDialog() = DialogResult.OK Then
                     Me.FillDatagrid("")
                 End If
         End Select

@@ -23,6 +23,7 @@ Public Class ExportExcel
                 ws.Column(1).AutoFit()
                 ws.Column(2).AutoFit()
                 ws.Column(4).Style.Numberformat.Format = "0.00"
+                ws.Column(6).AutoFit()
                 ws.Column(6).Style.Numberformat.Format = "$ ###,###,##0.00"
                 With ws.Cells("A1:F1").Style
                     .Font.Color.SetColor(Color.White)
@@ -67,10 +68,14 @@ Public Class ExportExcel
                 ws.Cells("F1").Value = "Impuesto"
                 ws.Cells("G1").Value = "Subtotal"
                 ws.Column(2).AutoFit()
+                ws.Column(2).Style.Numberformat.Format = "yyyy-mm-dd"
                 ws.Column(3).AutoFit()
                 ws.Column(4).Style.Numberformat.Format = "0.00"
+                ws.Column(5).AutoFit()
                 ws.Column(5).Style.Numberformat.Format = "$ ###,###,##0.00"
+                ws.Column(6).AutoFit()
                 ws.Column(6).Style.Numberformat.Format = "$ ###,###,##0.00"
+                ws.Column(7).AutoFit()
                 ws.Column(7).Style.Numberformat.Format = "$ ###,###,##0.00"
                 With ws.Cells("A1:G1").Style
                     .Font.Color.SetColor(Color.White)
@@ -79,10 +84,12 @@ Public Class ExportExcel
                     .Fill.BackgroundColor.SetColor(Color.DarkSlateBlue)
                 End With
 
+                For t = 2 To endrow
+                    ws.Cells("G" & t).Formula = String.Format("=(D{0}*E{0}*(1+(F{0}/100)))", t)
+                Next
+
                 ws.Cells("G" & endrow + 1).Formula = String.Format("SUM(G2:G{0})", endrow)
                 ws.Cells("G" & endrow + 1).Style.Font.Bold = True
-
-                'MsgBox(TableView.Rows.Count)
 
                 Try
                     package.Save()

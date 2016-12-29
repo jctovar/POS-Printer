@@ -10,7 +10,6 @@ Public Class MainBox
         Me.ShowStatus()
         ' Inicia aplicacion
 
-
     End Sub
     Private Sub Form1_Closing(sender As Object, e As CancelEventArgs) Handles Me.Closing
         If MessageBox.Show("Esta seguro de querer salir?", Application.ProductName, MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2) = DialogResult.No Then
@@ -103,7 +102,7 @@ Public Class MainBox
             CategoríasToolStripMenuItem.Enabled = True
             MisDatosToolStripMenuItem.Enabled = True
             AlmacenesToolStripMenuItem.Enabled = True
-
+            SesionesToolStripMenuItem.Enabled = True
             btnCustomers.Enabled = True ' Customers button
             btnProducts.Enabled = True ' Products button
 
@@ -261,6 +260,15 @@ Public Class MainBox
             'Me.ShowStatus()
         End If
     End Sub
+    Private Sub SesionesToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles SesionesToolStripMenuItem.Click
+        ' Show sessions windows
+        Dim frmSessions As New Catalogs
+        frmSessions.Search = "sessions"
+
+        If frmSessions.ShowDialog() = DialogResult.OK Then
+            'Me.ShowStatus()
+        End If
+    End Sub
     Private Sub ImpresoraToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ImpresoraToolStripMenuItem.Click
         Dim frmPrinter As New Serial
 
@@ -351,6 +359,4 @@ Public Class MainBox
     Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellDoubleClick
         Me.EditSale()
     End Sub
-
-
 End Class

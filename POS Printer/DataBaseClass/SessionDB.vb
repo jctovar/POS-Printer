@@ -4,8 +4,28 @@ Public Class SessionDB
         ' Obtiene la tabla de sesiones
         Dim dt = New DataTable()
         Dim Connection As MySqlConnection = MySqlDataBase.GetConnection
-        Dim Sql As String = "SELECT * " &
-            "FROM sessions WHERE profile_id = @profile ORDER BY session_start"
+        Dim Sql As String = "SELECT 
+                                    sessions.session_id,
+                                    profile_username,
+                                    store_name,
+                                    session_status,
+                                    (SELECT 
+                                            SUM(sale_total) AS session_total
+                                        FROM
+                                            albaco.sales_view
+                                        WHERE
+                                            session_id = sessions.session_id
+                                                AND status = 'Pagada') AS total,
+                                    session_timestamp
+                                FROM
+                                    albaco.sessions
+                                        INNER JOIN
+                                    profiles ON sessions.profile_id = profiles.profile_id
+                                        INNER JOIN
+                                    stores ON sessions.store_id = stores.store_id
+                                WHERE
+                                    profiles.account_id = @profile
+                                ORDER BY session_timestamp DESC;"
 
         Dim dbcommand = New MySqlCommand(Sql, Connection)
 

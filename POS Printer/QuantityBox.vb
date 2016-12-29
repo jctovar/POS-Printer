@@ -42,7 +42,17 @@
     Private Sub TextBox3_TextChanged(sender As Object, e As EventArgs) Handles TextBox3.TextChanged
         Me.Calcula()
     End Sub
+    Private Sub TextBox6_TextChanged(sender As Object, e As EventArgs) Handles TextBox6.TextChanged
+        Me.Calcula()
+    End Sub
     Private Sub TextBox3_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox3.KeyPress
+        If Asc(e.KeyChar) <> 8 Then
+            If e.Handled = (Char.IsDigit(e.KeyChar) Or e.KeyChar = ".") Then
+                e.Handled = True
+            End If
+        End If
+    End Sub
+    Private Sub TextBox6_KeyPress(sender As Object, e As KeyPressEventArgs) Handles TextBox6.KeyPress
         If Asc(e.KeyChar) <> 8 Then
             If e.Handled = (Char.IsDigit(e.KeyChar) Or e.KeyChar = ".") Then
                 e.Handled = True
@@ -62,8 +72,6 @@
                 Me.AddItem()
             End If
         End If
-
-
     End Sub
     Private Sub Button2_Click(sender As Object, e As EventArgs) Handles btnCancelar.Click
         Me.Close()
@@ -102,16 +110,23 @@
                 ' Calculo por medio de la formula de tara de peso
                 Label3.Visible = True
                 Label5.Visible = True
+                Label6.Visible = True
                 TextBox3.ReadOnly = False
                 TextBox3.TabStop = True
                 TextBox3.Visible = True
                 TextBox5.Visible = True
                 TextBox5.Text = price.Tare
+                TextBox6.Visible = True
 
-                ' Texbox1 = cantidad
+                ' Texbox1 = cantidad (pza)
                 ' Texbox3 = peso (Kg) 
+                ' Texbox6 = tarima (Kg)
+                ' Texbox4 = total ($)
 
-                TextBox4.Text = ((TextBox3.Text * price.Price) - (price.Tare * TextBox1.Text * price.Price)).ToString("c")
+                Console.WriteLine(price.Tare)
+                Console.WriteLine(TextBox6.Text)
+                'Console.WriteLine(TextBox6.Text)
+                TextBox4.Text = ((TextBox3.Text * price.Price) - (price.Tare * TextBox1.Text * price.Price) - (TextBox6.Text * price.Price)).ToString("c")
             End If
 
             TextBox2.Text = price.Price.ToString("c")
@@ -127,7 +142,7 @@
         If TextBox3.ReadOnly = False Then
             Dim Tara As Double
 
-            Tara = price.Tare * TextBox1.Text * TextBox2.Text
+            Tara = ((price.Tare * TextBox1.Text) + TextBox6.Text) * TextBox2.Text
 
             item.Price = ((TextBox2.Text * TextBox3.Text) - Tara) / TextBox1.Text
             item.Formula = CDbl(TextBox3.Text).ToString("n") & " KG (-" & (Tara / TextBox2.Text) & "KG) * " & TextBox2.Text
@@ -173,4 +188,6 @@
             MessageBox.Show("Ocurrio un error actualizando producto; " & ex.Message, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
+
+
 End Class
