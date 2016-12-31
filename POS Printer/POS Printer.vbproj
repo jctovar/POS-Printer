@@ -32,7 +32,7 @@
     <SuiteName>Albaco</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>index.html</WebPage>
-    <ApplicationRevision>99</ApplicationRevision>
+    <ApplicationRevision>100</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -147,10 +147,16 @@
     <Compile Include="DataBaseClass\StockDB.vb" />
     <Compile Include="DataBaseClass\StoreDB.vb" />
     <Compile Include="DataBaseClass\SupplierDB.vb" />
-    <Compile Include="Catalogs.Designer.vb">
+    <Compile Include="Catalogs\Catalogs.Designer.vb">
       <DependentUpon>Catalogs.vb</DependentUpon>
     </Compile>
-    <Compile Include="Catalogs.vb">
+    <Compile Include="Catalogs\Catalogs.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EditBoxes\CancelBox.Designer.vb">
+      <DependentUpon>CancelBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="EditBoxes\CancelBox.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="EditBoxes\CategoryBox.Designer.vb">
@@ -338,11 +344,14 @@
     <Compile Include="DataBaseClass\TerminalDB.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Catalogs.resx">
+    <EmbeddedResource Include="Catalogs\Catalogs.resx">
       <DependentUpon>Catalogs.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ConfigBoxes\AccountBox.resx">
       <DependentUpon>AccountBox.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EditBoxes\CancelBox.resx">
+      <DependentUpon>CancelBox.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="EditBoxes\CategoryBox.resx">
       <DependentUpon>CategoryBox.vb</DependentUpon>

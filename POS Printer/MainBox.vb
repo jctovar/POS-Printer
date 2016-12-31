@@ -327,7 +327,7 @@ Public Class MainBox
         If SaveFileDialog1.ShowDialog = DialogResult.OK Then
             ' If the file name is not an empty string open it for saving.
             If SaveFileDialog1.FileName <> "" Then
-                ExportExcel.Corte(SaveFileDialog1.FileName)
+                ExportExcel.Corte(SaveFileDialog1.FileName, Globales.SessionId)
 
             End If
         End If

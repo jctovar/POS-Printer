@@ -151,11 +151,23 @@ Public Class Catalogs
                     Me.FillDatagrid("")
                 End If
             Case "sessions"
-                Dim frmSession As New StoreBox
+                Console.WriteLine(DataGridView1(0, DataGridView1.CurrentRow.Index).Value)
+                'Dim frmReport As New ReportSales
 
-                frmSession.StoreId = DataGridView1(0, DataGridView1.CurrentRow.Index).Value
-                If frmSession.ShowDialog() = DialogResult.OK Then
-                    Me.FillDatagrid("")
+                'frmReport.ShowDialog()
+                Dim Name As String = System.DateTime.Now.ToString("yyyy-MM-dd")
+
+                SaveFileDialog1.Filter = "Libro de Excel|*.xlsx"
+                SaveFileDialog1.DefaultExt = "*.xlsx"
+                SaveFileDialog1.Title = "Guardar libro de excel como"
+                SaveFileDialog1.FileName = "CORTE_" & Globales.StoreName & "_" & Name
+
+                If SaveFileDialog1.ShowDialog = DialogResult.OK Then
+                    ' If the file name is not an empty string open it for saving.
+                    If SaveFileDialog1.FileName <> "" Then
+                        ExportExcel.Corte(SaveFileDialog1.FileName, DataGridView1(0, DataGridView1.CurrentRow.Index).Value)
+
+                    End If
                 End If
         End Select
     End Sub

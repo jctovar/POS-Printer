@@ -8,7 +8,7 @@ Public Class ExportExcel
             Using package As New ExcelPackage(newFile)
                 Dim ws As ExcelWorksheet = package.Workbook.Worksheets.Add("Inventario") 'or any other name for the WorkSheet  
                 Dim row As Int32 = 1
-                TableView = ProductDB.GetProductsList(1, "", True)
+                TableView = ProductDB.GetProductsList(Globales.AccountId, "", True)
 
                 ws.Cells.LoadFromDataTable(TableView, True)
 
@@ -46,7 +46,7 @@ Public Class ExportExcel
 
         Return True
     End Function
-    Public Shared Function Corte(Filename As String) As Boolean
+    Public Shared Function Corte(Filename As String, SessionId As Integer) As Boolean
         Dim TableView As New DataTable
         'Fill in the correct path and filename  
         Using newFile = New FileStream(Filename, FileMode.Create, FileAccess.ReadWrite, FileShare.ReadWrite)
@@ -55,7 +55,7 @@ Public Class ExportExcel
                 Dim row As Int32 = 1
                 Dim endrow As Int32
 
-                TableView = InvoiceDB.GetReportFromSession(Globales.SessionId)
+                TableView = InvoiceDB.GetReportFromSession(SessionId)
                 endrow = TableView.Rows.Count + 1
 
                 ws.Cells.LoadFromDataTable(TableView, True)
@@ -68,7 +68,7 @@ Public Class ExportExcel
                 ws.Cells("F1").Value = "Impuesto"
                 ws.Cells("G1").Value = "Subtotal"
                 ws.Column(2).AutoFit()
-                ws.Column(2).Style.Numberformat.Format = "yyyy-mm-dd"
+                ws.Column(2).Style.Numberformat.Format = "yyyy-mm-dd hh:MM"
                 ws.Column(3).AutoFit()
                 ws.Column(4).Style.Numberformat.Format = "0.00"
                 ws.Column(5).AutoFit()
@@ -85,7 +85,7 @@ Public Class ExportExcel
                 End With
 
                 For t = 2 To endrow
-                    ws.Cells("G" & t).Formula = String.Format("=(D{0}*E{0}*(1+(F{0}/100)))", t)
+                    ws.Cells("G" & t).Formula = String.Format("=(D{0}*E{0}*(1+F{0}%))", t)
                 Next
 
                 ws.Cells("G" & endrow + 1).Formula = String.Format("SUM(G2:G{0})", endrow)
