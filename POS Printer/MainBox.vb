@@ -359,4 +359,15 @@ Public Class MainBox
     Private Sub DataGridView1_CellDoubleClick(sender As Object, e As DataGridViewCellEventArgs) Handles DataGridView1.CellDoubleClick
         Me.EditSale()
     End Sub
+
+    Private Sub CancelarVentaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CancelarVentaToolStripMenuItem.Click
+
+        Dim frmCancel As New CancelBox
+        frmCancel.SaleId = DataGridView1(1, DataGridView1.CurrentRow.Index).Value
+
+        If frmCancel.ShowDialog() = DialogResult.OK Then
+            Me.FillDatagrid()
+        End If
+
+    End Sub
 End Class
