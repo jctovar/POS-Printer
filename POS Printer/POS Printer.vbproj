@@ -104,6 +104,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\..\..\Program Files (x86)\MySQL\MySQL Connector Net 6.9.9\Assemblies\v4.5\MySql.Data.dll</HintPath>
     </Reference>
+    <Reference Include="Syncfusion.Pdf.Base, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
+    <Reference Include="Syncfusion.PdfViewer.Windows, Version=14.4460.0.15, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -130,6 +132,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="Catalogs\SessionBox.Designer.vb">
+      <DependentUpon>SessionBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Catalogs\SessionBox.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ConfigBoxes\AccountBox.Designer.vb">
       <DependentUpon>AccountBox.vb</DependentUpon>
     </Compile>
@@ -346,6 +354,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Catalogs\Catalogs.resx">
       <DependentUpon>Catalogs.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Catalogs\SessionBox.resx">
+      <DependentUpon>SessionBox.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ConfigBoxes\AccountBox.resx">
       <DependentUpon>AccountBox.vb</DependentUpon>

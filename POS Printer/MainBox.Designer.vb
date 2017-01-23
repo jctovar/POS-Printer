@@ -22,6 +22,7 @@ Partial Class MainBox
     'No lo modifique con el editor de código.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
         Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle()
@@ -75,10 +76,13 @@ Partial Class MainBox
         Me.ToolStripSeparator11 = New System.Windows.Forms.ToolStripSeparator()
         Me.AcercaDeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.SaveFileDialog1 = New System.Windows.Forms.SaveFileDialog()
+        Me.mnuCell = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.CancelarVentaToolStripMenuItem1 = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.DataGridView1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ToolStrip1.SuspendLayout()
         Me.StatusStrip1.SuspendLayout()
         Me.MenuStrip1.SuspendLayout()
+        Me.mnuCell.SuspendLayout()
         Me.SuspendLayout()
         '
         'DataGridView1
@@ -447,6 +451,18 @@ Partial Class MainBox
         Me.AcercaDeToolStripMenuItem.Size = New System.Drawing.Size(203, 22)
         Me.AcercaDeToolStripMenuItem.Text = "&Acerca de..."
         '
+        'mnuCell
+        '
+        Me.mnuCell.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.CancelarVentaToolStripMenuItem1})
+        Me.mnuCell.Name = "mnuCell"
+        Me.mnuCell.Size = New System.Drawing.Size(153, 26)
+        '
+        'CancelarVentaToolStripMenuItem1
+        '
+        Me.CancelarVentaToolStripMenuItem1.Name = "CancelarVentaToolStripMenuItem1"
+        Me.CancelarVentaToolStripMenuItem1.Size = New System.Drawing.Size(152, 22)
+        Me.CancelarVentaToolStripMenuItem1.Text = "Cancelar venta"
+        '
         'MainBox
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -467,6 +483,7 @@ Partial Class MainBox
         Me.StatusStrip1.PerformLayout()
         Me.MenuStrip1.ResumeLayout(False)
         Me.MenuStrip1.PerformLayout()
+        Me.mnuCell.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -521,4 +538,7 @@ Partial Class MainBox
     Friend WithEvents ToolStripSeparator11 As ToolStripSeparator
     Friend WithEvents ToolStripStatusLabel1 As ToolStripStatusLabel
     Friend WithEvents SaveFileDialog1 As SaveFileDialog
+    Friend WithEvents mnuCell As ContextMenuStrip
+    Friend WithEvents ToolStripMenuItem1 As ToolStripMenuItem
+    Friend WithEvents CancelarVentaToolStripMenuItem1 As ToolStripMenuItem
 End Class

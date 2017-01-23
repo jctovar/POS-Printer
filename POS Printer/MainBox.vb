@@ -4,6 +4,7 @@ Public Class MainBox
     Dim ds As New DataSet
     WithEvents bsData As New BindingSource
     Private SaleId As Integer = 0
+    Private sale As New Invoice
     Private Sub MainBox_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Me.Size = My.Settings.mainbox
 
@@ -361,12 +362,35 @@ Public Class MainBox
     End Sub
 
     Private Sub CancelarVentaToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles CancelarVentaToolStripMenuItem.Click
+        Me.CancelSale()
+    End Sub
+    Private Sub DataGridView1_MouseDown(sender As Object, e As MouseEventArgs) Handles DataGridView1.MouseDown
+        If e.Button = MouseButtons.Right Then
+            Dim ht As DataGridView.HitTestInfo
+            ht = Me.DataGridView1.HitTest(e.X, e.Y)
+            If ht.Type = DataGridViewHitTestType.Cell Then
+                DataGridView1.ContextMenuStrip = mnuCell
+                'mnuCell.Items(0).Text = String.Format("This is the cell at {0}, {1}", ht.ColumnIndex, ht.RowIndex)
+            End If
+        End If
+    End Sub
+    Private Sub CancelarVentaToolStripMenuItem1_Click(sender As Object, e As EventArgs) Handles CancelarVentaToolStripMenuItem1.Click
+        Me.CancelSale()
+    End Sub
+    Private Sub CancelSale()
+        sale = InvoiceDB.GetInvoice(SaleId)
 
-        Dim frmCancel As New CancelBox
-        frmCancel.SaleId = DataGridView1(1, DataGridView1.CurrentRow.Index).Value
+        If sale.Status = 2 Then
+            MessageBox.Show("Esta venta ya fue cancelada anteriromente.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information)
+        Else
 
-        If frmCancel.ShowDialog() = DialogResult.OK Then
-            Me.FillDatagrid()
+            Dim frmCancel As New CancelBox
+
+            frmCancel.SaleId = DataGridView1(1, DataGridView1.CurrentRow.Index).Value
+
+            If frmCancel.ShowDialog() = DialogResult.OK Then
+                Me.FillDatagrid()
+            End If
         End If
 
     End Sub
